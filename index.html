@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Auditable research and submission readiness for the DOE GEMS Prize Challenge.">
+  <title>GEMSDOE72 — GEMS research & submission readiness</title>
+  <style>
+    :root{color-scheme:light;--ink:#17251f;--muted:#596a62;--paper:#f4f7f4;--card:#fff;--green:#176b4a;--line:#d8e2dc;--red:#8d2525;--redbg:#fff0ee;--gold:#765008;--goldbg:#fff5d9}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:#075b89}a:focus-visible,button:focus-visible{outline:3px solid #dba82d;outline-offset:3px}.wrap{max-width:1100px;margin:auto;padding:28px 22px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:12px 0 30px}.brand{font-size:1.08rem;font-weight:800;letter-spacing:.02em}.tag{color:var(--muted);font-size:.9rem}.hero{padding:30px 0 14px}.eyebrow{text-transform:uppercase;letter-spacing:.12em;color:var(--green);font-weight:800;font-size:.78rem}h1{font-size:clamp(2.1rem,5vw,3.7rem);line-height:1.06;max-width:850px;margin:.4rem 0 1rem;letter-spacing:-.04em}h2{font-size:1.45rem;line-height:1.2;margin:0 0 12px}h3{margin:.2rem 0 .5rem}.lead{font-size:1.12rem;max-width:780px;color:#40524a}.status{margin:20px 0 26px;background:var(--redbg);border:2px solid #db7770;border-radius:14px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start}.status .icon{font-size:1.55rem;line-height:1}.status strong{display:block;color:var(--red);font-size:1.08rem}.status p{margin:4px 0 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:22px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 4px 18px #16291e08}.card p:last-child{margin-bottom:0}.metric{font-size:1.85rem;font-weight:800;letter-spacing:-.04em}.pill{display:inline-block;padding:3px 9px;border-radius:999px;background:var(--goldbg);color:var(--gold);font-size:.78rem;font-weight:800}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}.btn{display:inline-block;text-decoration:none;background:var(--green);color:#fff;padding:11px 16px;border-radius:9px;font-weight:750}.btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}.note{color:var(--muted);font-size:.92rem}.section{margin-top:34px}.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 22px}.links a{padding:7px 0}.footer{margin-top:42px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:.88rem}ul{padding-left:1.2rem}@media(max-width:680px){.grid,.links{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.status{padding:16px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top"><div class="brand">GEMSDOE72 <span class="tag">Research • evidence • submission tools</span></div><div class="tag">Updated 20 Oct 2026 · evidence-classified</div></div>
+    <header class="hero">
+      <div class="eyebrow">DOE GEMS Prize Challenge · DrivenData #306</div>
+      <h1>Discover faults. Prove the method. Submit a valid raster.</h1>
+      <p class="lead">An auditable research workspace for identifying geothermal-relevant faults beyond the existing catalogue. Every result must be reproducible, spatially validated, and clearly distinguished from a leaderboard score.</p>
+    </header>
+
+    <section class="status" aria-labelledby="submission-status">
+      <div class="icon" aria-hidden="true">⛔</div>
+      <div><strong id="submission-status">NO SUBMISSION FILE — DO NOT DOWNLOAD OR SUBMIT</strong>
+        <p>This checkout has no GeoTIFF, competition sample grid, feature cache, holdout evaluator, or submission writer. We cannot verify the required CRS, grid, footprint, probability bounds, uniqueness, or holdout performance. No download link is offered. A fabricated blank/random raster would not be a valid scientific candidate.</p>
+      </div>
+    </section>
+
+    <div class="actions">
+      <a class="btn" href="docs/executive-summary.html">How to submit (when a validated file exists)</a>
+      <a class="btn secondary" href="docs/hypotheses.html">Review candidate hypotheses</a>
+      <a class="btn secondary" href="docs/review.html">Repository & evidence audit</a>
+    </div>
+
+    <section class="grid" aria-label="Current evidence">
+      <article class="card"><h2>Official public leaderboard</h2><div class="metric" id="leaderboard-score">0.4413</div>
+        <p><span class="pill">ORGANIZER-CONFIRMED · leaderboard listing</span></p>
+        <p>Top public DW-Tversky score in the latest available official leaderboard snapshot. This is a leaderboard entry, not our score and not a submission receipt. <span id="leaderboard-update">Snapshot checked 2026-10-20.</span> The reported 0.3195 is no longer the top entry on the cited live page.</p>
+        <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Open the official leaderboard</a>
+      </article>
+      <article class="card"><h2>GEMSDOE32 reference claim</h2><div class="metric">0.2778</div>
+        <p><span class="pill">OWNER/SITE-REPORTED · not receipt-confirmed</span></p>
+        <p>The cited sibling page reports this value for its named artifact, but also says no artifact there has an organizer score. Treat it as a claim, not confirmed competition performance. Do not reuse its raster.</p>
+        <a href="https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html">Inspect the cited sibling page</a>
+      </article>
+    </section>
+
+    <section class="card section">
+      <h2>What makes a candidate submission-ready?</h2>
+      <ul>
+        <li>One-band float32 GeoTIFF, EPSG:32611, 100 m, exactly matching the competition grid's CRS, shape, bounds, and geotransform.</li>
+        <li>Finite prediction values inside the footprint, all within [0, 1]; outside-footprint cells null/NaN as the official specification allows.</li>
+        <li>Written file reopened and checked against the official sample; file hash recorded.</li>
+        <li>Spatially blocked holdout reported with evaluator version, withheld-positive count, and 95% CI; individual-feature leakage checks; registry similarity/overlap audit.</li>
+        <li>Unique submission name and short note. Promotion is a separate decision; no slot is spent on an unvalidated idea.</li>
+      </ul>
+      <p class="note">The current repository has not passed these checks. The items above describe gates, not completed validations.</p>
+    </section>
+
+    <section class="section">
+      <h2>Official sources for verification</h2>
+      <div class="links">
+        <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Problem, metric & submission format</a>
+        <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/">About, task & background</a>
+        <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">Competition data page (login may be required)</a>
+        <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">Official rules PDF</a>
+        <a href="https://github.com/drivendataorg/gems-prize-reference-solution">Official reference solution</a>
+        <a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN data release</a>
+        <a href="https://gdr.openei.org/submissions/1391">INGENIOUS GDR 1391 datasets</a>
+      </div>
+    </section>
+    <footer class="footer">Core values: maximize P(Win) and own the outcome. Negative findings, blockers, and uncertainty are deliverables—not reasons to overstate evidence.</footer>
+  </main>
+  <script>
+    fetch('docs/leaderboard.json', { cache: 'no-store' })
+      .then(response => { if (!response.ok) throw new Error('snapshot unavailable'); return response.json(); })
+      .then(data => {
+        if (typeof data.score !== 'number' || !Number.isFinite(data.score)) return;
+        document.getElementById('leaderboard-score').textContent = data.score.toFixed(4);
+        const date = new Date(data.updated_at);
+        const stamp = Number.isNaN(date.getTime()) ? data.updated_at : date.toISOString().slice(0, 10);
+        const participant = data.participant ? ` (${data.participant})` : '';
+        document.getElementById('leaderboard-update').textContent = `Snapshot refreshed ${stamp}${participant}.`;
+      })
+      .catch(() => {}); // keep the dated, checked-in snapshot visible if offline
+  </script>
+</body>
+</html>
