@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE72 — Hypotheses H72-1…H72-5</title>
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #1a1a1a; background: #f7f8fa; }
+  .shell { max-width: 980px; margin: 0 auto; padding: 32px 20px; }
+  header { border-bottom: 1px solid #d1d5db; padding-bottom: 20px; margin-bottom: 32px; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  a { color: #0969da; text-decoration: underline; }
+  a.btn { display: inline-block; background: #0969da; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 1px solid #0550ae; }
+  a.btn:hover { background: #0550ae; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid #d1d5db; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f3f4f6; font-weight: 600; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; background: #f3f4f6; padding: 1px 5px; border-radius: 4px; }
+  .note { color: #444; font-size: 14px; }
+  .rank { font-weight: 700; color: #0969da; }
+  footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #d1d5db; color: #575757; font-size: 13px; }
+  ul { margin: 6px 0 14px 20px; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <h1>GEMSDOE72 — Candidate hypotheses (ranked)</h1>
+    <p class="note">Lane: holdout-DTI — hide-and-recover holdout (whole fault segments withheld behind a buffer), catalogue-based features derived only from visible faults, visible faults masked pixel-exactly, pooled DTI (alpha=0.2, beta=0.8, 300 m triangular kernel). Full definitions: <code>registry/hypotheses.json</code>.</p>
+    <p><a class="btn" href="index.html">← Back to submission download</a></p>
+  </header>
+
+  <table>
+    <tr><th style="width:8%">Rank</th><th style="width:26%">Id / title</th><th>Layers</th><th>Physical signature</th><th>Why it targets faults missing from the USGS/INGENIOUS catalogue</th><th>How it differs from prior GEMSDOE work</th><th>Expected DTI &amp; cost</th></tr>
+    <tr>
+      <td><span class="rank">1</span></td>
+      <td><b>H72-1</b> — Off-catalogue USGS SGMC geologic-map fault traces, dot-thinned to the credit bar</td>
+      <td>external/derived_sgmc_faults_100m_u8.tif (hash-pinned SGMC traces); labels.tif catalogue for masking</td>
+      <td>Trace presence on the 100 m grid, dilated 1 px, Poisson-disk thinned at 280 m</td>
+      <td>SGMC geologic-map compilation contains Quaternary structures never ingested into the competition labels</td>
+      <td>Earlier H41/SGMC arms emitted catalogue vectors; this arm emits only catalogue-excluded traces from an independent map compilation — not on any sister site</td>
+      <td><b>Measured holdout-DTI 0.1885, CI [0.166, 0.211], all 4 quadrants positive, on-catalogue 0, leakage AUC 0.498</b>. Cost: low (198 KB raster)</td>
+    </tr>
+    <tr>
+      <td><span class="rank">2</span></td>
+      <td><b>H72-2</b> — Aeromagnetic horizontal-gradient lineaments (tmi_hg band), top-k off-catalogue</td>
+      <td>training_features.tif band 03 tmi_hg</td>
+      <td>Magnetic-gradient magnitude edge (concealed basement faults)</td>
+      <td>Concealed/blind faults have no surface trace and are under-represented in the surface catalogue</td>
+      <td>No sister site publishes single-band tmi_hg emission with a holdout-DTI</td>
+      <td><b>Measured negative: 0.0046 at budget 8,000 — ruled out on this proxy truth.</b> Cost: low</td>
+    </tr>
+    <tr>
+      <td><span class="rank">3</span></td>
+      <td><b>H72-3</b> — Catalogue fault-tip and releasing step-over growth arms</td>
+      <td>labels.tif visible faults only (holdout-compliant)</td>
+      <td>Skeletonised trace endpoints + step-over relay ramps</td>
+      <td>A fault tip lies beyond the end of the mapped trace — off-catalogue by construction</td>
+      <td>GEMSDOE32 H33-5 registered this operator; never built standalone here</td>
+      <td>Unmeasured; expected small (tip population ~1–2% of catalogue mass). Cost: medium</td>
+    </tr>
+    <tr>
+      <td><span class="rank">4</span></td>
+      <td><b>H72-4</b> — USGS ANSS ComCat seismicity lineament density</td>
+      <td>USGS ANSS ComCat (earthquake.usgs.gov)</td>
+      <td>Kernel-smoothed (300 m) epicentre density</td>
+      <td>Located earthquakes occur on structures too small/blind for the Quaternary fault catalogue</td>
+      <td>Not implemented on any sister site; registered as free-official-source alternative</td>
+      <td>Unmeasured. Cost: medium. <span style="color:#92400e">Blocked: ComCat host not on this sandbox's allowed outbound hosts</span></td>
+    </tr>
+    <tr>
+      <td><span class="rank">5</span></td>
+      <td><b>H72-5</b> — Paleo-geothermal features (GDR 1391) as a before-you-build prior</td>
+      <td>GDR 1391 paleo-geothermal features (gdr.openei.org/submissions/1391)</td>
+      <td>Neighbourhood emission around sinter/travertine/tufa/spring mounds</td>
+      <td>Paleo-geothermal attributes are not in the fault compilation</td>
+      <td>GEMSDOE32 H33-4 registered the same premise; never built</td>
+      <td>Unmeasured. Cost: medium (82 kB download). Source verified obtainable (CC BY 4.0, DOI 10.15121/1881483); not downloaded from this sandbox</td>
+    </tr>
+  </table>
+
+  <section>
+    <h2>Named mimic process (per hypothesis)</h2>
+    <ul>
+      <li>H72-1: lithologic / map-unit boundaries drawn as fault linework on geologic maps.</li>
+      <li>H72-2: intrusive contacts and lithologic boundaries also produce magnetic gradient edges.</li>
+      <li>H72-3: random tip scatter with no geologic basis.</li>
+      <li>H72-4: aftershock clusters straddling mapped catalogue faults (leakage); non-tectonic swarms.</li>
+      <li>H72-5: fossil springs no longer active (no present-day permeability).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Shipped submission</h2>
+    <p>Winner H72-1 was packaged as <a href="index.html">gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5</a> — format-validated (12-point audit passed), holdout-DTI 0.1885 CI [0.166, 0.211], <span style="color:#92400e">UNSCORED — not an organizer-confirmed leaderboard number.</span></p>
+  </section>
+
+  <footer>
+    GEMSDOE72 · All numbers HOLDOUT-DTI unless labelled ORGANIZER-CONFIRMED. Negative results are deliverables (H72-2 measured negative).
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "filename": "gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif",
+  "size_bytes": 162845,
+  "sha256": "650b5ad2273f3634c15c0a97840ce36056906d3a2cedb110a77f8708c6783966",
+  "mode": "zeros",
+  "shape": [
+    3730,
+    3292
+  ],
+  "dtype": "float32",
+  "nodata_repr": "None",
+  "emitted_positive_pixels": 27823,
+  "footprint_fraction": 0.005384,
+  "on_catalogue_positive_pixels": 0,
+  "in_footprint_finite_pixels": 5167373,
+  "in_footprint_min": 0.0,
+  "in_footprint_max": 1.0,
+  "full_grid_finite_pixels": 12279160,
+  "checks": {
+    "single_band": true,
+    "dtype_float32": true,
+    "dimensions_3730x3292": true,
+    "crs_epsg_32611": true,
+    "in_footprint_all_finite": true,
+    "in_footprint_zero_nan": true,
+    "in_footprint_zero_inf": true,
+    "in_footprint_zero_sentinel": true,
+    "in_footprint_range_0_1": true,
+    "outside_footprint_compliant": true,
+    "zero_on_catalogue_leakage": true,
+    "validator_range_0_1_guaranteed": true
+  },
+  "all_checks_passed": true
+}

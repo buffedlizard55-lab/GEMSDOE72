@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "repo": "buffedlizard55-lab/GEMSDOE72",
+  "lane": "holdout-DTI: hide-and-recover holdout (whole fault segments withheld behind a 15 px / 1.5 km collar buffer), catalogue-based features derived only from visible faults, visible faults masked pixel-exactly, pooled DTI scored with alpha=0.2 (FP), beta=0.8 (FN), 300 m triangular kernel (3 px at 100 m).",
+  "leaderboard_context": {
+    "note": "labelled ORGANIZER-CONFIRMED only when copied from a submission-page receipt; everything else here is HOLDOUT-DTI, never a projection",
+    "cited_best_on_sister_sites": "0.2778 (GEMSDOE32 h33-h33-2-b2-zeros, listed on buffedlizard55-lab.github.io/GEMSDOE32); sister sites list further values up to 0.2750",
+    "prompt_cited_leaderboard_high": "0.4413 and 0.3195 are both cited in the prompt; the sister GEMSDOE32 registry snapshot (fetched 2026-10-04) reads #1 nchuzhoy 0.3262, #2 DARD 0.3195, #3 alexoktaba 0.3042. These conflict; see registry/irregularities.json IR-72-001. Neither value is organizer-confirmed in this repo.",
+    "driven_data_leaderboard_url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ (login-walled; not re-fetched from this sandbox)"
+  },
+  "hypotheses": [
+    {
+      "id": "H72-1",
+      "rank": 1,
+      "title": "Off-catalogue USGS SGMC geologic-map fault traces, dot-thinned to the credit bar",
+      "layers": [
+        "external/derived_sgmc_faults_100m_u8.tif (USGS SGMC 1:24k/1:250k geologic-map faults rasterised to the competition grid; hash-pinned mirror in buffedlizard55-lab/GEMSDOE24, sha256 643cbe992ef4ba37588fb469163ed8291e3ceb23d6c1f78a3cfaa462430c2da0)",
+        "labels.tif / existing_faults.tif (competition catalogue = USGS/INGENIOUS compilation; byte-identical pair, sha256 7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093)"
+      ],
+      "signature": "binary trace presence on the 100 m grid, dilated 1 px (to sit inside the 300 m kernel of a 1 px-wide truth line), Poisson-disk thinned at min_dist = 2.8 px (280 m) so no two dots compete for the same truth pixel; catalogue pixels masked pixel-exactly at scoring time",
+      "why_off_catalogue": "the SGMC geologic-map compilation contains Quaternary structures never ingested into the USGS Quaternary Fault & Fold Database that supplies the competition labels, so its traces are, by construction, a sample of faults missing from the catalogue",
+      "mimic_process": "lithologic and map-unit boundaries drawn as fault linework on geologic maps (non-tectonic contacts mimicking faults)",
+      "how_it_differs": "the GEMSDOE32/24 H41/SGMC arms emitted catalogue vectors without an off-catalogue restriction and lost their secondary proxy; this arm emits only catalogue-excluded traces from an independent map compilation, dot-thinned and evaluated on the spatially-blocked holdout. Not present on any sister GEMSDOE site.",
+      "expected_dti": "holdout-DTI 0.1885 (drift-corrected mean), 95% CI [0.1658, 0.2113], all 4 quadrants positive, on_catalogue_pixels = 0, leakage-canary AUC = 0.498 (no leakage); TMI-gradient variant H72-2 measured 0.0046 (negative)",
+      "cost": "low (one 198 KB raster + distance/thinning primitives already in the template)",
+      "data_status": "VERIFIED OBTAINABLE: hash-pinned owner mirror reachable via the GitHub API from this sandbox (restored and sha256-verified)",
+      "status": "PROMOTE - packaged as submission gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5 (zeros + nan variants, 12-point format audit passed)"
+    },
+    {
+      "id": "H72-2",
+      "rank": 2,
+      "title": "Aeromagnetic horizontal-gradient lineaments (GeoDAWN TMI tmi_hg band), top-k off-catalogue",
+      "layers": [
+        "training_features.tif band 03 tmi_hg (horizontal gradient of total magnetic intensity; 19-band pinned stack, sha256 4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5)"
+      ],
+      "signature": "threshold/top-k of the magnetic-gradient magnitude edge field; concealed faults offset magnetic basement and produce gradient edges with no surface expression",
+      "why_off_catalogue": "concealed or blind faults have no surface trace and are under-represented in a surface-expression catalogue",
+      "mimic_process": "intrusive contacts and lithologic boundaries also produce magnetic gradient edges",
+      "how_it_differs": "no sister site publication uses the tmi_hg band as an emission field; the reference solution uses all 19 bands in a U-Net but never reports a holdout-DTI for single-band gradient emission",
+      "expected_dti": "holdout-DTI 0.0046 at budget 8,000 (NEGATIVE - no signal on this proxy truth); kept on record as a ruled-out candidate",
+      "cost": "low (one band of the restored stack)",
+      "data_status": "restored and sha256-verified",
+      "status": "measured negative; not packaged"
+    },
+    {
+      "id": "H72-3",
+      "rank": 3,
+      "title": "Catalogue fault-tip and releasing step-over growth arms",
+      "layers": [
+        "labels.tif (visible faults only - holdout-compliant: derived from visible faults in each draw)"
+      ],
+      "signature": "skeletonise visible fault traces; extend short growth arms at trace endpoints and at releasing-bend step-overs (relay-ramp damage zones, the permeability target of geothermal systems)",
+      "why_off_catalogue": "a fault tip is by definition beyond the end of the mapped trace, so growth arms land off-catalogue by construction",
+      "mimic_process": "random tip scatter has no geologic basis; could mimic noise lineaments",
+      "how_it_differs": "GEMSDOE32 H33-5 registered this as a tip/step-over operator and falsified it as an addition arm (+0.0019 LM, 7x too expensive per dot) but never built it as a standalone lane; this registry entry builds it standalone",
+      "expected_dti": "unmeasured; expected small (tip population is ~1-2% of catalogue mass)",
+      "cost": "medium (skeletonisation + bend detection + extension rule)",
+      "data_status": "no external data needed; not yet built",
+      "status": "registered; not built; no slot"
+    },
+    {
+      "id": "H72-4",
+      "rank": 4,
+      "title": "USGS ANSS ComCat seismicity lineament density",
+      "layers": [
+        "USGS ANSS Comprehensive Earthquake Catalog (ComCat), free, official: https://earthquake.usgs.gov/earthquakes/search/"
+      ],
+      "signature": "kernel-smoothed (300 m) epicentre density; seismicity defines active structures independent of any fault map",
+      "why_off_catalogue": "instrumentally located earthquakes occur on structures too small or too blind to be in the Quaternary fault catalogue",
+      "mimic_process": "aftershock clusters straddling mapped catalogue faults (leakage) and non-tectonic swarms",
+      "how_it_differs": "not implemented on any sister site; registered here as a free-official-source alternative",
+      "expected_dti": "unmeasured",
+      "cost": "medium (ComCat API query + rasterisation + gate)",
+      "data_status": "source identified and free/official; ComCat API host is NOT reachable from this sandbox's allowed outbound hosts, so the arm is registered but not viable until the fetch step is added to CI",
+      "status": "registered; blocked by sandbox network policy; no slot"
+    },
+    {
+      "id": "H72-5",
+      "rank": 5,
+      "title": "Paleo-geothermal features (GDR 1391) as a before-you-build geological prior",
+      "layers": [
+        "GDR submission 1391 resource 'Paleo Geothermal Features' (silica sinter, travertine, tufa, spring mounds); DOI 10.15121/1881483, CC BY 4.0: https://gdr.openei.org/submissions/1391"
+      ],
+      "signature": "neighbourhood emission around paleo-geothermal features (where the crust has already leaked fluid) on range-front fault tips",
+      "why_off_catalogue": "paleo-geothermal attributes are not in the USGS/INGENIOUS fault compilation",
+      "mimic_process": "fossil springs no longer active (no present-day permeability)",
+      "how_it_differs": "GEMSDOE32 H33-4 registered the same premise; never built in this repo",
+      "expected_dti": "unmeasured",
+      "cost": "medium (82 kB download + rasterise + neighbourhood rule)",
+      "data_status": "VERIFIED OBTAINABLE (official, CC BY 4.0) but gdr.openei.org is not on this sandbox's allowed outbound hosts; not downloaded here",
+      "status": "registered; not built; no slot"
+    }
+  ],
+  "ranking_notes": "Ranked by expected holdout-DTI improvement (measured where available) and implementation cost. H72-1 measured best (0.1885 CI [0.166, 0.211]) at low cost; H72-2 measured negative (0.0046) and is ruled out; H72-3/H72-4/H72-5 are registered with specific free official sources named."
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-10-20T00:00:00Z",
+  "repo": "buffedlizard55-lab/GEMSDOE72",
+  "branch": "arena/64d4e8f7-gemsdoe72",
+  "lane": "holdout-DTI (hide-and-recover holdout; alpha=0.2 FP / beta=0.8 FN; 300 m triangular kernel; 3 px at 100 m)",
+  "hypothesis": "H72-1: off-catalogue USGS SGMC 1:24k/1:250k geologic-map fault traces, emitted only where absent from the competition catalogue and dot-thinned at 280 m, capture geothermal-indicative faults missing from the USGS/INGENIOUS labels.",
+  "mechanism": "SGMC traces are dilated 1 px (inside the 300 m kernel of a 1 px-wide truth line), dot-thinned with Poisson-disk min_dist=2.8 px so no two dots compete for one truth pixel, then masked pixel-exactly on labels.tif; score = pooled DTI over 8 spatially-blocked draws (4 quadrants x draws 20/21, 20% of segments hidden behind a 1.5 km collar).",
+  "named_non_fault_mimic_process": "lithologic / map-unit boundaries drawn as fault linework on geologic maps (non-tectonic contacts mimicking faults)",
+  "holdout_dti": 0.1885241363489814,
+  "holdout_95ci": [
+    0.16579536240117151,
+    0.2112529102967913
+  ],
+  "holdout_per_quadrant": {
+    "NW": 0.20781307689400225,
+    "NE": 0.16240069955067205,
+    "SW": 0.20730268566545335,
+    "SE": 0.17658008328579794
+  },
+  "emitted_pixels": 27823,
+  "on_catalogue_pixels": 0,
+  "leakage_canary_auc_mask_vs_hidden_truth": 0.49849564858242373,
+  "leakage_canary_flag": false,
+  "correlation_vs_registry_rasters": {
+    "max_spearman_rho": 0.007960892298721404,
+    "limit": 0.9,
+    "within_3px": "PASS"
+  },
+  "overlap_vs_registry_dots": {
+    "max_fraction_of_my_dots_within_3px_of_one_registry_raster": 0.6119038205800956,
+    "limit": 0.7,
+    "within_3px": "PASS"
+  },
+  "lane_verdict": "not a duplicate of any registry raster",
+  "raster_sha256_zeros": "650b5ad2273f3634c15c0a97840ce36056906d3a2cedb110a77f8708c6783966",
+  "raster_sha256_nan": "2fa38ef230bd4da5a1868bf6c4adbd625729f3ee6b9e3f3df10c9e118eab5010",
+  "validator_output": {
+    "single_band_float32_epsg32611_3730x3292": true,
+    "in_footprint_all_finite": true,
+    "in_footprint_range_0_1": true,
+    "outside_footprint_zeros_or_nan": true,
+    "zero_on_catalogue_pixels": true,
+    "full_grid_finite_and_in_0_1_zeros_variant": true,
+    "no_nan_inside_footprint": true,
+    "values_in_0_1_inside_footprint": true,
+    "crs_shape_transform_match_sample_submission": true,
+    "note": "DrivenData portal error 'Predicted values must be in range [0, 1]' is fixed by writing all-finite float32 [0,1] with nodata=None (zeros variant); see GEMSDOE32 docs mechanism 1/2"
+  },
+  "submission_name": "gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif",
+  "submission_note": "GEMSDOE72 H72-1 | off-catalogue SGMC faults, dot-thinned 280 m; 27,823 px, 0 on catalogue; holdout-DTI 0.1885 CI [0.166,0.211] | UNSCORED",
+  "submission_note_length": 140,
+  "experiments_run": 3,
+  "budget": "3 experiments / 2 hours - stop",
+  "verdict": "promote",
+  "promotion_note": "Packaged and format-validated. Promotion to a real DrivenData submission slot is a separate selector step within the weekly cap shown on the submission page; this repo does not auto-submit. Negative results are deliverables: H72-2 TMI gradient measured 0.0046 (ruled out); H72-3/H72-4/H72-5 registered with named free official sources, not built."
+}

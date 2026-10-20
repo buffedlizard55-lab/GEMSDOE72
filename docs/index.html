@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE72 — DOE GEMS Prize submission</title>
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #1a1a1a; background: #f7f8fa; }
+  .shell { max-width: 860px; margin: 0 auto; padding: 32px 20px; }
+  header { border-bottom: 1px solid #d1d5db; padding-bottom: 20px; margin-bottom: 32px; }
+  h1 { font-size: 24px; margin: 0 0 6px; letter-spacing: -0.3px; }
+  h2 { font-size: 18px; margin: 28px 0 12px; font-weight: 600; }
+  p { line-height: 1.6; margin: 0 0 14px; color: #2b2b2b; }
+  a { color: #0969da; text-decoration: underline; }
+  a.btn { display: inline-block; background: #0969da; color: #fff; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1px solid #0550ae; }
+  a.btn:hover { background: #0550ae; }
+  a.btn.secondary { background: #ffffff; color: #0969da; border: 1px solid #d1d5db; margin-left: 8px; }
+  .verdict { border: 1px solid #d1d5db; border-left: 5px solid; border-radius: 8px; padding: 16px 20px; margin: 24px 0; background: #fff; }
+  .verdict.yes { border-left-color: #1a7e47; background: #f0fdf4; }
+  .verdict h2 { margin-top: 0; font-size: 17px; }
+  .verdict .tag { font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .verdict.yes .tag { color: #1a7e47; }
+  .verdict .caution { color: #6f4e01; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid #d1d5db; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f3f4f6; font-weight: 600; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; background: #f3f4f6; padding: 1px 6px; border-radius: 4px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .note { color: #444; font-size: 14px; }
+  ul { margin: 6px 0 14px 20px; padding: 0; line-height: 1.7; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0; }
+  .card { border: 1px solid #d1d5db; border-radius: 8px; padding: 16px; background: #fff; }
+  .card h3 { margin: 0 0 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #0969da; }
+  footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #d1d5db; color: #575757; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <h1>GEMSDOE72 — DOE GEMS Prize submission</h1>
+    <p class="note">DrivenData competition #306, DOE GEMS Prize · GeoDAWN / NW Nevada fault discovery · single-band GeoTIFF submission</p>
+  </header>
+
+  <section class="verdict yes">
+    <h2><span class="tag">verdict</span> Is it OK to download and submit this TIF?</h2>
+    <p><strong>Download: yes.</strong> <strong>Submit: yes — as a format-validated, <em>unscored</em> candidate.</strong></p>
+    <p>The file below is a legal DrivenData submission: single-band float32 GeoTIFF, EPSG:32611, 100 m, 3730×3292, every cell finite and in [0, 1] (zeros outside the study footprint), no nodata sentinel, zero pixels on the competition catalogue. It passed a 12-point independent re-read audit (the check that fixes the portal's <code>"Predicted values must be in range [0, 1]"</code> error).</p>
+    <p class="caution"><strong>Caution:</strong> its quality number (holdout-DTI 0.1885, 95% CI [0.166, 0.211]) is our own spatially-blocked holdout measurement — it is <em>not</em> an organizer-confirmed leaderboard score. No organizer score exists for this artifact yet. Spend a weekly submission slot only after your own review of <a href="executive-summary.html">the submission steps</a> and <a href="irregularities.html">the irregularity register</a>.</p>
+  </section>
+
+  <section>
+    <h2>⬇ One-click submission file</h2>
+    <p>Download the <strong>-zeros.tif</strong> variant (all 12,279,160 cells satisfy 0 ≤ value ≤ 1, zero NaN anywhere — safest for the DrivenData validator).</p>
+    <a class="btn" href="downloads/gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif" download>Download submission GeoTIFF (zeros, all-finite, in [0,1])</a>
+    <a class="btn secondary" href="downloads/gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-nan.tif">Download variant (NaN outside footprint)</a>
+    <div class="grid">
+      <div class="card">
+        <h3>File</h3>
+        <div class="mono">gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif</div>
+        <p class="note">sha256: <code class="mono">650b5ad2273f3634c15c0a97840ce36056906d3a2cedb110a77f8708c6783966</code> · 162,845 bytes</p>
+      </div>
+      <div class="card">
+        <h3>Submission name</h3>
+        <div class="mono">gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5</div>
+      </div>
+      <div class="card">
+        <h3>Note for the submit form</h3>
+        <div class="mono" style="white-space:pre-wrap">GEMSDOE72 H72-1 | off-catalogue SGMC faults, dot-thinned 280 m; 27,823 px, 0 on catalogue; holdout-DTI 0.1885 CI [0.166,0.211] | UNSCORED</div>
+        <p class="note">137 characters (≤ 140 limit). Paste into the "Note (optional)" field.</p>
+      </div>
+      <div class="card">
+        <h3>Holdout result (HOLDOUT-DTI, not a score)</h3>
+        <p style="margin:4px 0">drift-corrected mean <strong>0.1885</strong>, 95% CI [0.1658, 0.2113]; all 4 quadrants positive; 0 pixels on the catalogue; leakage-canary AUC 0.498 (no leakage).</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How to submit (3 steps)</h2>
+    <ol>
+      <li>Download the <code>-zeros.tif</code> file above (button).</li>
+      <li>On the DrivenData submission page (<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank" rel="noopener">New submission</a>), upload the single GeoTIFF (or a .zip containing it).</li>
+      <li>Paste the submission note into "Note (optional)" and submit. The file must match the submission format's CRS, shape, and geotransform, and every predicted value must be in [0, 1] — this file satisfies both.</li>
+    </ol>
+    <p><a class="btn secondary" href="executive-summary.html">Executive summary: full submission guide</a></p>
+  </section>
+
+  <section>
+    <h2>What this is</h2>
+    <p>GEMSDOE72 is an auditable holdout-DTI system for the DOE GEMS Prize: emit geothermal-indicative faults that are <em>not</em> in the USGS/INGENIOUS catalogue, package them as a legal GeoTIFF, and report only holdout measurements — never a projection of an organizer score. Method, hypotheses, sources, and the irregularity register are in the repo:</p>
+    <ul>
+      <li><a href="executive-summary.html">Executive summary — how to make a submission</a></li>
+      <li><a href="sources.html">Sources — official verified links for manual review</a></li>
+      <li><a href="hypotheses.html">Hypotheses H72-1…H72-5 (ranked)</a></li>
+      <li><a href="irregularities.html">Irregularity register (incl. conflicting leaderboard citations)</a></li>
+      <li><a href="run_card.json">Run card (machine-readable)</a></li>
+      <li><a href="https://github.com/buffedlizard55-lab/GEMSDOE72">Repository (code, data restore, validator)</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    GEMSDOE72 · branch <code>arena/64d4e8f7-gemsdoe72</code> · Numbers labelled HOLDOUT-DTI are our own holdout measurements; numbers labelled ORGANIZER-CONFIRMED are copied from a submission-page receipt. No number here is written as a projection of an organizer score.
+  </footer>
+</div>
+</body>
+</html>

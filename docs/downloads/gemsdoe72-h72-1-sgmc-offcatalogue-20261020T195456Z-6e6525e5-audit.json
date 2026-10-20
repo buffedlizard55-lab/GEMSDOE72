@@ -1,0 +1,167 @@
+{
+  "candidate_id": "H72-1-h72-1-sgmc-offcatalogue",
+  "slug": "h72-1-sgmc-offcatalogue",
+  "content_digest8": "6e6525e5",
+  "timestamp_utc": "20261020T195456Z",
+  "files": [
+    {
+      "mode": "zeros",
+      "tif": "/home/user/GEMSDOE72/docs/downloads/gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif",
+      "checks": "/home/user/GEMSDOE72/docs/downloads/checks-gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif.json"
+    },
+    {
+      "mode": "nan",
+      "tif": "/home/user/GEMSDOE72/docs/downloads/gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-nan.tif",
+      "checks": "/home/user/GEMSDOE72/docs/downloads/checks-gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-nan.tif.json"
+    }
+  ],
+  "lane_check": {
+    "registry_rasters_checked": 24,
+    "max_spearman": 0.007960892298721404,
+    "max_overlap_frac": 0.6119038205800956,
+    "lane_ok": true,
+    "details": [
+      {
+        "raster": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+        "spearman_rho": 0.0022,
+        "my_dots_within_3px_frac": 0.2293
+      },
+      {
+        "raster": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
+        "spearman_rho": 0.0022,
+        "my_dots_within_3px_frac": 0.2293
+      },
+      {
+        "raster": "gems32-bayesopt-dilation-scarp-d28-20261004-nan.tif",
+        "spearman_rho": 0.008,
+        "my_dots_within_3px_frac": 0.6119
+      },
+      {
+        "raster": "gems32-bayesopt-dilation-scarp-d28-20261004-zeros.tif",
+        "spearman_rho": 0.008,
+        "my_dots_within_3px_frac": 0.6119
+      },
+      {
+        "raster": "gems32-lazygreedy-maxcov-44090-supconfined-zeros.tif",
+        "spearman_rho": 0.0025,
+        "my_dots_within_3px_frac": 0.2188
+      },
+      {
+        "raster": "gems32-probe-S1-ANCHOR-identical-to-live-02600.tif",
+        "spearman_rho": 0.0022,
+        "my_dots_within_3px_frac": 0.2293
+      },
+      {
+        "raster": "gems32-probe-S2-SCALE-lambda-0.5.tif",
+        "spearman_rho": 0.0022,
+        "my_dots_within_3px_frac": 0.0
+      },
+      {
+        "raster": "gems32-probe-S3-NULLADD-2000px.tif",
+        "spearman_rho": 0.0019,
+        "my_dots_within_3px_frac": 0.2297
+      },
+      {
+        "raster": "gemsdoe32-d28-ref02600-repro-44090-20261004T183200Z-426073b6-nan.tif",
+        "spearman_rho": 0.0022,
+        "my_dots_within_3px_frac": 0.2293
+      },
+      {
+        "raster": "gemsdoe32-d28-ref02600-repro-44090-20261004T183200Z-426073b6-zeros.tif",
+        "spearman_rho": 0.0022,
+        "my_dots_within_3px_frac": 0.2293
+      },
+      {
+        "raster": "gemsdoe32-h32a-dip-projected-step-46090-20261004T183200Z-838fcd84-nan.tif",
+        "spearman_rho": 0.002,
+        "my_dots_within_3px_frac": 0.2373
+      },
+      {
+        "raster": "gemsdoe32-h32a-dip-projected-step-46090-20261004T183200Z-838fcd84-zeros.tif",
+        "spearman_rho": 0.002,
+        "my_dots_within_3px_frac": 0.2373
+      },
+      {
+        "raster": "gemsdoe32-h32b-transtensional-swarm-45890-20261004T183200Z-27b7c9e6-nan.tif",
+        "spearman_rho": 0.0021,
+        "my_dots_within_3px_frac": 0.2382
+      },
+      {
+        "raster": "gemsdoe32-h32b-transtensional-swarm-45890-20261004T183200Z-27b7c9e6-zeros.tif",
+        "spearman_rho": 0.0021,
+        "my_dots_within_3px_frac": 0.2382
+      },
+      {
+        "raster": "gemsdoe32-h32c-mt-claycap-breach-45890-20261004T183200Z-a5963d0a-nan.tif",
+        "spearman_rho": 0.0025,
+        "my_dots_within_3px_frac": 0.2426
+      },
+      {
+        "raster": "gemsdoe32-h32c-mt-claycap-breach-45890-20261004T183200Z-a5963d0a-zeros.tif",
+        "spearman_rho": 0.0025,
+        "my_dots_within_3px_frac": 0.2426
+      },
+      {
+        "raster": "gemsdoe32-h32d-equalbudget-44090-20261004T183200Z-350cdc3f-nan.tif",
+        "spearman_rho": 0.0021,
+        "my_dots_within_3px_frac": 0.23
+      },
+      {
+        "raster": "gemsdoe32-h32d-equalbudget-44090-20261004T183200Z-350cdc3f-zeros.tif",
+        "spearman_rho": 0.0021,
+        "my_dots_within_3px_frac": 0.23
+      },
+      {
+        "raster": "gemsdoe32-h32d-submodular-multipysics-46090-20261004T183200Z-4de30601-nan.tif",
+        "spearman_rho": 0.002,
+        "my_dots_within_3px_frac": 0.2364
+      },
+      {
+        "raster": "gemsdoe32-h32d-submodular-multipysics-46090-20261004T183200Z-4de30601-zeros.tif",
+        "spearman_rho": 0.002,
+        "my_dots_within_3px_frac": 0.2364
+      },
+      {
+        "raster": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-nan.tif",
+        "spearman_rho": 0.0035,
+        "my_dots_within_3px_frac": 0.2203
+      },
+      {
+        "raster": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+        "spearman_rho": 0.0035,
+        "my_dots_within_3px_frac": 0.2203
+      },
+      {
+        "raster": "gemsdoe32-h33-h33-2b2-plus-h33-1-20261004T220000Z-31588dc7-nan.tif",
+        "spearman_rho": 0.0034,
+        "my_dots_within_3px_frac": 0.2231
+      },
+      {
+        "raster": "gemsdoe32-h33-h33-2b2-plus-h33-1-20261004T220000Z-31588dc7-zeros.tif",
+        "spearman_rho": 0.0034,
+        "my_dots_within_3px_frac": 0.2231
+      }
+    ]
+  },
+  "holdout_metrics": {
+    "drift_corrected_holdout_mean": 0.1885241363489814,
+    "drift_corrected_95ci": [
+      0.16579536240117151,
+      0.1885241363489814,
+      0.2112529102967913
+    ],
+    "drift_corrected_per_quadrant": {
+      "NW": 0.20781307689400225,
+      "NE": 0.16240069955067205,
+      "SW": 0.20730268566545335,
+      "SE": 0.17658008328579794
+    },
+    "catalogue_hidden_mean_dti": 0.002581206131541075,
+    "emitted_pixels": 27823,
+    "on_catalogue_pixels": 0,
+    "leakage_canary_auc": 0.49849564858242373,
+    "leakage_canary_flag": false
+  },
+  "numbers_are": "HOLDOUT-DTI for holdout_metrics; nothing here is an organizer score",
+  "submission_note": "GEMSDOE72 H72-1 | off-catalogue USGS SGMC geologic-map fault traces, dot-thinned at 280 m (27823 px), 0 on catalogue; holdout-DTI 0.188524 CI [0.165795,0.211253] | UNSCORED"
+}

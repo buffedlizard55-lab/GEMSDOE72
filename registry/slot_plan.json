@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "decision": "PROMOTE H72-1 to packaging (submission slot candidate). Promotion to a real DrivenData submission slot is a separate selector step, within the weekly cap shown on the submission page; this repo does not auto-submit.",
+  "preregistration_id": "GEMSDOE72-PREREG-1",
+  "winner": "H72-1 - off-catalogue USGS SGMC geologic-map fault traces, dot-thinned at 280 m",
+  "runner_up": "none measured above H72-1 (H72-2 = 0.0046, negative)",
+  "holdout_dti": 0.1885241363489814,
+  "holdout_95ci": [0.16579536240117151, 0.2112529102967913],
+  "per_quadrant": {"NW": 0.20781307689400225, "NE": 0.16240069955067205, "SW": 0.20730268566545335, "SE": 0.17658008328579794},
+  "on_catalogue_pixels": 0,
+  "leakage_canary_auc": 0.49849564858242373,
+  "leakage_canary_flag": false,
+  "lane_check": {"max_spearman_vs_registry": 0.0035, "max_my_dots_within_3px_of_registry_dots": 0.2426, "lane_ok": true},
+  "validator": "all 12 format checks passed on the -zeros.tif (single band float32, EPSG:32611, 3730x3292, footprint all finite in [0,1], 0.0 outside, zero on catalogue, no nodata sentinel)",
+  "submission_name": "gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif",
+  "submission_note": "GEMSDOE72 H72-1 | off-catalogue SGMC geologic faults, dot-thinned 280 m (27,823 px), 0 on catalogue; holdout-DTI 0.1885 CI [0.166,0.211] | UNSCORED",
+  "verdict": "promote",
+  "note": "Negative results are deliverables: H72-2 (TMI gradient) measured 0.0046 and is ruled out on this proxy truth; H72-3/H72-4/H72-5 are registered with named free official sources but not built."
+}
