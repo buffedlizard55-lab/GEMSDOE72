@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMSDOE72 — GEMS Prize Challenge fault-prediction submission</title>
+<style>
+  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:#f5f7fa;color:#1f2937;line-height:1.5}
+  .wrap{max-width:980px;margin:0 auto;padding:24px}
+  header{background:#0b3d62;color:#fff;padding:28px 24px;border-radius:10px;margin-bottom:20px}
+  header h1{margin:0 0 6px 0;font-size:22px}
+  header p{margin:0;opacity:.9;font-size:14.5px}
+  .core{background:#e8f2fb;border:1px solid #bcd6ea;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:13.5px}
+  .core b{color:#0b3d62}
+  .download-card{background:#fff;border:1px solid #d1d9e3;border-radius:10px;padding:22px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .download-card h2{margin:0 0 12px 0;font-size:17px;color:#0b3d62}
+  .big-btn{display:inline-block;background:#0b3d62;color:#fff;padding:14px 22px;border-radius:6px;text-decoration:none;font-weight:700;font-size:16px;margin-right:10px;margin-bottom:10px}
+  .big-btn:hover{background:#083152}
+  .btn-zip{display:inline-block;background:#2e7d46;color:#fff;padding:12px 18px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;margin-right:8px;margin-bottom:8px}
+  .btn-zip:hover{background:#256a38}
+  .status{margin-top:14px;padding:12px 14px;border-radius:6px;font-size:13px;display:inline-block}
+  .status-ok{background:#e7f7ec;border:1px solid #4ade80;color:#14532d}
+  .status-warn{background:#fdf4e5;border:1px solid #f59e0b;color:#7c3a12}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+  th,td{border:1px solid #d1d9e3;padding:7px 10px;text-align:left}
+  th{background:#eef3f8;color:#0b3d62;font-size:12px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12.5px;word-break:break-all}
+  .tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11.5px;font-weight:700;margin-right:6px}
+  .tag-blue{background:#dbeafe;color:#1e3a8a}
+  .tag-gray{background:#e5e7eb;color:#374151}
+  .nav{margin-bottom:16px}
+  .nav a{color:#0b3d62;text-decoration:none;margin-right:16px;font-weight:600;font-size:14px}
+  .nav a:hover{text-decoration:underline}
+  h3{font-size:15px;color:#0b3d62;margin:18px 0 6px 0}
+  p{margin:6px 0}
+  .small{font-size:12.5px;color:#4b5563}
+  .alert{background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive summary (how to submit)</a>
+    <a href="sources.html">Official sources</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="run-card.json">Run card (JSON)</a>
+  </nav>
+
+  <header>
+    <h1>GEMSDOE72 &middot; DOE GEMS Prize Challenge (DrivenData #306)</h1>
+    <p>GeoDAWN / northwestern Great Basin &middot; predict geological faults indicative of geothermal resources
+    &middot; single-band GeoTIFF submission &middot; <b>one-click download below</b></p>
+  </header>
+
+  <div class="core"><b>Core values.</b> Maximize P(Win) — every submission slot is an experiment, not a lottery ticket. Own the Outcome — every claim carries an evidence class; nothing here is offered as an organizer-confirmed score.</div>
+
+  <section class="download-card">
+    <h2>&#9679; One-click submission file (download &rarr; upload to DrivenData)</h2>
+    <p><b>This is the file to submit.</b> It is format-validated: single-band float32 GeoTIFF, every cell finite,
+    every value in [0, 1], no nodata tag, CRS/shape/transform match the competition grid.</p>
+
+    <a class="big-btn" href="downloads/gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.tif" download>
+      &#8594; Download submission .tif
+    </a>
+    <a class="btn-zip" href="downloads/gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.zip" download>
+      .zip (single GeoTIFF inside)
+    </a>
+
+    <table>
+      <tr><th style="width:30%">Property</th><th>Value</th></tr>
+      <tr><td><b>Filename</b></td><td class="mono">gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.tif</td></tr>
+      <tr><td><b>Unique submission name</b></td><td class="mono">GEMSDOE72-BASELINE-DOTTED-BUDGET</td></tr>
+      <tr><td><b>SHA-256</b></td><td class="mono">e05f56bceb31d8d5007ddda2069aaa8e9850a864f6c141d6f621c8ebe6c8209f</td></tr>
+      <tr><td><b>Format receipt</b></td><td><a href="downloads/gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.audit.json">independent re-read audit.json</a></td></tr>
+      <tr><td><b>Band / dtype</b></td><td>single band / float32</td></tr>
+      <tr><td><b>CRS</b></td><td>EPSG:32611 (UTM zone 11N)</td></tr>
+      <tr><td><b>Resolution</b></td><td>100 m x 100 m</td></tr>
+      <tr><td><b>Shape (H x W)</b></td><td>3730 x 3292 (12,279,160 cells)</td></tr>
+      <tr><td><b>Transform</b></td><td class="mono">[100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0]</td></tr>
+      <tr><td><b>Values</b></td><td>all finite; min 0.0, max 1.0; zero cells outside [0, 1]; zero NaN</td></tr>
+      <tr><td><b>Nodata tag</b></td><td>None (no float32 -3.4e38 sentinel)</td></tr>
+      <tr><td><b>Emitted positive pixels</b></td><td>6,000 (0.049% of grid)</td></tr>
+    </table>
+
+    <div class="status status-ok"><b>OK TO DOWNLOAD:</b> yes. &nbsp;<b>FORMAT-VALID (validator PASSED):</b> yes — safe to upload to DrivenData (will not trigger "Predicted values must be in range [0, 1]").</div>
+    <div class="status status-warn" style="margin-top:8px"><b>SCORE:</b> UNVERIFIED baseline — <b>not</b> an organizer-confirmed score and <b>not</b> a leaderboard claim. Competition training data is login-walled on DrivenData and could not be accessed from this sandbox, so this file was not trained on held-out features. Treat it as a format-check / baseline submission.</div>
+  </section>
+
+  <h3>How to submit</h3>
+    <ol>
+      <li>Download the <b>.tif</b> (or the .zip containing it) using the button above.</li>
+      <li>Go to the DrivenData submission page: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/</a> (log in first).</li>
+      <li>Choose the file and, in <b>Note (optional)</b>, paste:</li>
+    </ol>
+    <div style="background:#eef3f8;border:1px solid #d1d9e3;border-radius:6px;padding:10px 14px;font-family:monospace;font-size:12.5px;margin:8px 0;max-width:900px;white-space:pre-wrap;word-wrap:break-word">
+GEMSDOE72 baseline-dotted-budget | format-valid submission package (single-band float32, EPSG:32611, 100 m, 3730x3292, values in [0,1], all finite, no nodata). Baseline dotted emission; competition training data not accessible from this sandbox so score is UNVERIFIED and not a leaderboard claim.
+    </div>
+    <p class="small">Full step-by-step: <a href="executive-summary.html">Executive summary (how to submit)</a>.</p>
+
+  <h3>Evidence classes used on this site</h3>
+  <ul>
+    <li><span class="tag tag-blue">FORMAT-VALIDATED</span> checked by re-opening the written bytes from disk (CRS/shape/transform/range/[0,1]/finite/no-nodata).</li>
+    <li><span class="tag tag-gray">UNVERIFIED baseline</span> score not measured against competition truth; no organizer confirmation exists.</li>
+    <li><span class="tag tag-gray">ORGANIZER-CONFIRMED</span> — none claimed here (copied only from a DrivenData submission receipt if one existed).</li>
+  </ul>
+
+  <div class="alert"><b>Why a baseline, not a high score.</b> The public leaderboard leader is ~0.326 (GEMSDOE32 read, 2026-10-04; the brief also cites 0.3195 / 0.3774 / 0.4413 at later reads). Beating it requires a detector trained on the competition features and validated on a spatially-blocked holdout. That training data is login-walled and unreachable here, so this repository ships the complete, verified pipeline (metric + writer + validator + tests) plus this format-valid baseline, ready to become competitive once data is placed in <code>data/</code>.</div>
+
+  <p class="small" style="margin-top:22px">Sources: <a href="sources.html">official verified sources</a> &middot; <a href="run-card.json">run card</a> &middot; repo: <a href="https://github.com/buffedlizard55-lab/GEMSDOE72">buffedlizard55-lab/GEMSDOE72</a></p>
+</div>
+</body>
+</html>

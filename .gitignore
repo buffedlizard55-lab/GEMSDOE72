@@ -1,0 +1,15 @@
+# Competition training data (login-walled on DrivenData; do not commit)
+data/
+
+# Python build artifacts
+__pycache__/
+*.py[cde]
+.venv/
+venv/
+.env
+.pytest_cache/
+.coverage
+.ipynb_checkpoints/
+
+# OS
+.DS_Store

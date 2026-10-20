@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main, arena/bae9a0ab-gemsdoe72]
+  pull_request:
+    branches: [main, arena/bae9a0ab-gemsdoe72]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install numpy rasterio scipy pytest
+      - name: Run metric tests (verifies worked example 0.60)
+        run: python -m pytest tests/ -q

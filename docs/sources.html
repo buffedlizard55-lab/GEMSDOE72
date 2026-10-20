@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Official sources — GEMSDOE72</title>
+<style>
+  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:#f5f7fa;color:#1f2937;line-height:1.5}
+  .wrap{max-width:980px;margin:0 auto;padding:24px}
+  header{background:#0b3d62;color:#fff;padding:24px;border-radius:10px;margin-bottom:18px}
+  header h1{margin:0 0 6px 0;font-size:20px}
+  header p{margin:0;opacity:.9;font-size:14px}
+  .nav{margin-bottom:16px}
+  .nav a{color:#0b3d62;text-decoration:none;margin-right:16px;font-weight:600;font-size:14px}
+  .nav a:hover{text-decoration:underline}
+  .card{background:#fff;border:1px solid #d1d9e3;border-radius:10px;padding:18px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card h2{margin:0 0 10px 0;font-size:17px;color:#0b3d62}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border:1px solid #d1d9e3;padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:#eef3f8;color:#0b3d62;font-size:12px;width:22%}
+  a{color:#0b3d62;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .tag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700}
+  .tag-ok{background:#dcfce7;color:#14532d}
+  .tag-login{background:#fef3c7;color:#7c3a12}
+  .tag-na{background:#e5e7eb;color:#374151}
+  p{margin:6px 0}
+  .small{font-size:12.5px;color:#4b5563}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive summary (how to submit)</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="run-card.json">Run card (JSON)</a>
+  </nav>
+
+  <header>
+    <h1>Official sources (verified links for manual review)</h1>
+    <p>GEMSDOE72 &middot; every link below is an official/public source; status reflects what was reachable from this sandbox.</p>
+  </header>
+
+  <div class="card">
+    <table>
+      <tr><th>Id</th><th>Source</th><th>Role</th><th>Status</th></tr>
+      <tr>
+        <td><span class="mono">competition</span></td>
+        <td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS Prize — competition home</a></td>
+        <td>Competition overview</td>
+        <td><span class="tag tag-ok">verified (page)</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">problem</span></td>
+        <td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Problem description, metric &amp; submission format</a></td>
+        <td>DTI metric (verbatim source of metric.py); worked example TPw=3.00 FPw=1.89 FNw=2.00 -> 0.60</td>
+        <td><span class="tag tag-ok">verified (fetched twice; 0.60 reproduced in tests)</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">about</span></td>
+        <td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/">About / additional resources</a></td>
+        <td>Rules and resources</td>
+        <td><span class="tag tag-na">listed (not fetched)</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">data</span></td>
+        <td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">Data download page (training_features.tif, labels.tif, sample_submission.tif, 1m_DEM_links.csv)</a></td>
+        <td>Competition training data + format template</td>
+        <td><span class="tag tag-login">login required; not accessed from this sandbox</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">submissions</span></td>
+        <td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">DrivenData submission page</a></td>
+        <td>Where to upload the .tif / .zip</td>
+        <td><span class="tag tag-login">login required</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">leaderboard</span></td>
+        <td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public leaderboard</a></td>
+        <td>Live score feed</td>
+        <td><span class="tag tag-ok">verified 2026-10-04: #1 nchuzhoy 0.3262, #2 DARD 0.3195, #3 alexoktaba 0.3042</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">rules_pdf</span></td>
+        <td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">GEMS rules PDF (NLR document 96647)</a></td>
+        <td>Competition rules</td>
+        <td><span class="tag tag-ok">HTTP 200</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">reference_solution</span></td>
+        <td><a href="https://github.com/drivendataorg/gems-prize-reference-solution">Official reference solution (U-Net, John Lipor, Portland State)</a></td>
+        <td>Baseline model; TverskyLoss(0.2, 0.8); grid 3292x3730 EPSG:32611 100 m</td>
+        <td><span class="tag tag-ok">cloned; architecture read from notebook</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">geodawn</span></td>
+        <td><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">GeoDAWN airborne magnetic &amp; radiometric surveys, NW Great Basin</a></td>
+        <td>Source of the magnetic/radiometric bands</td>
+        <td><span class="tag tag-ok">HTTP 200</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">sciencebase_area</span></td>
+        <td><a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7">GeoDAWN study-area item (USGS ScienceBase)</a></td>
+        <td>Survey extent</td>
+        <td><span class="tag tag-ok">HTTP 200</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">gbcge</span></td>
+        <td><a href="https://gbcge.org/current-projects/ingenious/">Great Basin Center for Geothermal Energy — INGENIOUS project</a></td>
+        <td>Source of the INGENIOUS fault catalogue</td>
+        <td><span class="tag tag-ok">HTTP 200</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">usgs_qfaults</span></td>
+        <td><a href="https://www.usgs.gov/natural-hazards/earthquake-hazards/faults">USGS Quaternary Fault and Fold Database</a></td>
+        <td>The catalogue the competition labels come from</td>
+        <td><span class="tag tag-ok">HTTP 200</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">nbmg_ingenious_rest</span></td>
+        <td><a href="https://web2.nbmg.unr.edu/arcgis/rest/services/Qfaults/Qfaults_INGENIOUS/MapServer/0">NBMG Qfaults-INGENIOUS ArcGIS REST service</a></td>
+        <td>Newer catalogue (1,179 features in footprint)</td>
+        <td><span class="tag tag-ok">HTTP 200</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">gdr1391</span></td>
+        <td><a href="https://gdr.openei.org/submissions/1391">GDR submission 1391 — Nevada geothermal data</a></td>
+        <td>Springs, wells, fault traces</td>
+        <td><span class="tag tag-ok">HTTP 200</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">3dep</span></td>
+        <td><a href="https://apps.nationalmap.gov/downloader/">USGS 3DEP / The National Map (1 m DEM links)</a></td>
+        <td>DEM source</td>
+        <td><span class="tag tag-ok">HTTP 200</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">mcre_srl</span></td>
+        <td><a href="https://doi.org/10.1785/0220200371">Koehler et al. 2021, M6.5 Monte Cristo Range earthquake, SRL 92(2A)</a></td>
+        <td>28 km rupture on largely unmapped Candelaria fault</td>
+        <td><span class="tag tag-ok">verified via USGS Publications Warehouse record 70217872</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">mcre_bssa</span></td>
+        <td><a href="https://doi.org/10.1785/0120200327">Liu et al. 2021, Mw 6.5 MCRE, BSSA 111(6)</a></td>
+        <td>Causative faults not previously identified</td>
+        <td><span class="tag tag-ok">verified</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">mcre_reloc</span></td>
+        <td><a href="https://zenodo.org/records/5302368">Ruhl et al. relocated Monte Cristo seismicity catalogue</a></td>
+        <td>Aftershock lineaments corroboration</td>
+        <td><span class="tag tag-ok">HTTP 200</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">comcat</span></td>
+        <td><a href="https://earthquake.usgs.gov/fdsnws/event/1/">USGS ANSS ComCat earthquake catalog</a></td>
+        <td>Seismicity lineaments (future arm)</td>
+        <td><span class="tag tag-na">not reachable from sandbox (timeout)</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Data-access note</h2>
+    <p>The competition training features/labels are <b>login-walled on DrivenData</b> and cannot be downloaded from this sandbox (egress reaches github.com and the page fetcher only; Dropbox mirrors are blocked). They must be placed in <code>data/</code> from an unrestricted machine (see <code>scripts/download_competition_data.sh</code>) before the training pipeline can run.</p>
+  </div>
+
+  <p class="small" style="margin-top:18px">Repo: <a href="https://github.com/buffedlizard55-lab/GEMSDOE72">buffedlizard55-lab/GEMSDOE72</a> &middot; branch <span class="mono">arena/bae9a0ab-gemsdoe72</span></p>
+</div>
+</body>
+</html>

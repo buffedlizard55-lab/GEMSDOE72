@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive summary — how to submit to the GEMS Prize Challenge</title>
+<style>
+  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:#f5f7fa;color:#1f2937;line-height:1.5}
+  .wrap{max-width:980px;margin:0 auto;padding:24px}
+  header{background:#0b3d62;color:#fff;padding:24px;border-radius:10px;margin-bottom:18px}
+  header h1{margin:0 0 6px 0;font-size:20px}
+  header p{margin:0;opacity:.9;font-size:14px}
+  .nav{margin-bottom:16px}
+  .nav a{color:#0b3d62;text-decoration:none;margin-right:16px;font-weight:600;font-size:14px}
+  .nav a:hover{text-decoration:underline}
+  .card{background:#fff;border:1px solid #d1d9e3;border-radius:10px;padding:20px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card h2{margin:0 0 10px 0;font-size:17px;color:#0b3d62}
+  .card h3{font-size:14px;color:#0b3d62;margin:14px 0 6px 0}
+  .step{background:#eef3f8;border:1px solid #d1d9e3;border-radius:6px;padding:10px 14px;margin:8px 0}
+  .step b{color:#0b3d62}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12.5px;white-space:pre-wrap;word-wrap:break-word;background:#eef3f8;border:1px solid #d1d9e3;border-radius:6px;padding:10px 14px;display:inline-block;max-width:100%}
+  .btn{display:inline-block;background:#0b3d62;color:#fff;padding:12px 20px;border-radius:6px;text-decoration:none;font-weight:700;margin-right:8px;margin-bottom:8px}
+  .btn:hover{background:#083152}
+  .btn-zip{background:#2e7d46}
+  .btn-zip:hover{background:#256a38}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+  th,td{border:1px solid #d1d9e3;padding:7px 10px;text-align:left}
+  th{background:#eef3f8;color:#0b3d62;font-size:12px}
+  .status-ok{background:#e7f7ec;border:1px solid #4ade80;color:#14532d;padding:10px 14px;border-radius:6px;font-size:13px;margin-top:8px;display:inline-block}
+  .status-warn{background:#fdf4e5;border:1px solid #f59e0b;color:#7c3a12;padding:10px 14px;border-radius:6px;font-size:13px;margin-top:8px;display:inline-block}
+  ul,ol{margin:6px 0 6px 18px}
+  li{margin:3px 0}
+  p{margin:6px 0}
+  .small{font-size:12.5px;color:#4b5563}
+  .alert{background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="sources.html">Official sources</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="run-card.json">Run card (JSON)</a>
+  </nav>
+
+  <header>
+    <h1>Executive summary — how to make a GEMS Prize submission</h1>
+    <p>DOE GEMS Prize Challenge (DrivenData #306) &middot; submit a single-band GeoTIFF of fault probabilities</p>
+  </header>
+
+  <div class="card">
+    <h2>&#9679; The one thing to do first: download the submission file</h2>
+    <p>Go to the <a href="index.html">home page</a>. At the very top is a <b>one-click download button</b> for the submission GeoTIFF.</p>
+    <a class="btn" href="index.html#">Open home page &rarr;</a>
+    <a class="btn btn-zip" href="downloads/gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.zip" download>Download .zip</a>
+    <p class="small">The .tif and .zip contain the same single-band float32 GeoTIFF. DrivenData accepts either a single .tif or a .zip containing one .tif.</p>
+  </div>
+
+  <div class="card">
+    <h2>Step-by-step: submit on DrivenData</h2>
+    <div class="step"><b>1. Log in.</b> Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the DrivenData submissions page</a> and sign in.</div>
+    <div class="step"><b>2. Choose file.</b> Click "File to submit" and select <span class="mono">gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.tif</span> (or the .zip).</div>
+    <div class="step"><b>3. Add a note.</b> In "Note (optional)" paste a short comment so you can tell submissions apart (e.g. the hypothesis / clustering label). Suggested note below.</div>
+    <div class="step"><b>4. Submit.</b> Click submit. DrivenData checks the format: single-band float32 GeoTIFF, EPSG:32611, 100 m, same bounds/transform as the training data, values in [0, 1].</div>
+  </div>
+
+  <div class="card">
+    <h2>Suggested note (paste into "Note (optional)")</h2>
+    <div class="mono">GEMSDOE72 baseline-dotted-budget | format-valid submission package (single-band float32, EPSG:32611, 100 m, 3730x3292, values in [0,1], all finite, no nodata). Baseline dotted emission; competition training data not accessible from this sandbox so score is UNVERIFIED and not a leaderboard claim.</div>
+    <p class="small">(248 characters. Edit the trailing clause to label your own clustering/k-value experiment.)</p>
+  </div>
+
+  <div class="card">
+    <h2>Submission file specification (verified)</h2>
+    <table>
+      <tr><th style="width:34%">Property</th><th>Value</th></tr>
+      <tr><td><b>Filename</b></td><td class="mono">gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.tif</td></tr>
+      <tr><td><b>Unique submission name</b></td><td class="mono">GEMSDOE72-BASELINE-DOTTED-BUDGET</td></tr>
+      <tr><td><b>SHA-256</b></td><td class="mono">e05f56bceb31d8d5007ddda2069aaa8e9850a864f6c141d6f621c8ebe6c8209f</td></tr>
+      <tr><td><b>Band / datatype</b></td><td>single band / 32-bit float (float32)</td></tr>
+      <tr><td><b>CRS</b></td><td>EPSG:32611 (UTM zone 11N)</td></tr>
+      <tr><td><b>Resolution</b></td><td>100 m x 100 m</td></tr>
+      <tr><td><b>Shape</b></td><td>3730 rows x 3292 columns</td></tr>
+      <tr><td><b>Geotransform</b></td><td class="mono">[100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0]</td></tr>
+      <tr><td><b>Value range</b></td><td>all finite; min 0.0, max 1.0; zero cells outside [0, 1]; zero NaN</td></tr>
+      <tr><td><b>Nodata</b></td><td>None (no float32 -3.4028234663852886e+38 sentinel)</td></tr>
+      <tr><td><b>Format validator</b></td><td>PASSED (independent re-read from disk)</td></tr>
+    </table>
+    <div class="status-ok"><b>OK TO DOWNLOAD AND SUBMIT:</b> yes — format-valid, will not trigger "Predicted values must be in range [0, 1]".</div>
+    <div class="status-warn" style="margin-top:8px"><b>Score status:</b> UNVERIFIED baseline. Not organizer-confirmed; not a leaderboard claim. Training data is login-walled on DrivenData and was unreachable from this sandbox, so this file was not trained on held-out features.</div>
+  </div>
+
+  <div class="alert"><b>Known submission error and the fix.</b> DrivenData rejects a raster whose values fall outside [0, 1] <i>or</i> whose nodata tag is a large negative float32 sentinel (-3.4028234663852886e+38, as used in training_features.tif). Both produce the same "Predicted values must be in range [0, 1]" message. This site's file is written all-finite with <b>nodata=None</b>, so neither failure mode applies (verified by re-reading the bytes).</div>
+
+  <p class="small" style="margin-top:20px">More detail: <a href="sources.html">official sources</a> &middot; <a href="run-card.json">run card</a> &middot; repo <a href="https://github.com/buffedlizard55-lab/GEMSDOE72">buffedlizard55-lab/GEMSDOE72</a></p>
+</div>
+</body>
+</html>

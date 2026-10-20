@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hypotheses — GEMSDOE72</title>
+<style>
+  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:#f5f7fa;color:#1f2937;line-height:1.5}
+  .wrap{max-width:980px;margin:0 auto;padding:24px}
+  header{background:#0b3d62;color:#fff;padding:24px;border-radius:10px;margin-bottom:18px}
+  header h1{margin:0 0 6px 0;font-size:20px}
+  header p{margin:0;opacity:.9;font-size:14px}
+  .nav{margin-bottom:16px}
+  .nav a{color:#0b3d62;text-decoration:none;margin-right:16px;font-weight:600;font-size:14px}
+  .nav a:hover{text-decoration:underline}
+  .card{background:#fff;border:1px solid #d1d9e3;border-radius:10px;padding:18px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card h2{margin:0 0 10px 0;font-size:17px;color:#0b3d62}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th,td{border:1px solid #d1d9e3;padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#eef3f8;color:#0b3d62;font-size:11.5px}
+  a{color:#0b3d62;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .rank{font-weight:700;color:#0b3d62}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}
+  h3{font-size:14px;color:#0b3d62;margin:12px 0 4px 0}
+  p{margin:5px 0}
+  .small{font-size:12.5px;color:#4b5563}
+  .tag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10.5px;font-weight:700;color:#fff}
+  .tag-low{background:#2e7d46}
+  .tag-med{background:#b45309}
+  .tag-high{background:#b91c1c}
+  .alert{background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive summary (how to submit)</a>
+    <a href="sources.html">Official sources</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="run-card.json">Run card (JSON)</a>
+  </nav>
+
+  <header>
+    <h1>Candidate geological hypotheses (not yet validated)</h1>
+    <p>GEMSDOE72 &middot; each names the layer(s), physical signature, why it catches faults <b>missing</b> from the USGS/INGENIOUS catalogue, how it differs from anything in this repo, and expected DTI improvement vs implementation cost. <b>None is validated yet</b> — the training data is login-walled on DrivenData and unreachable from this sandbox, so the holdout cannot be run here.</p>
+  </header>
+
+  <div class="card">
+    <h2>Ranked summary</h2>
+    <table>
+      <tr><th style="width:6%">Rank</th><th style="width:24%">Hypothesis</th><th style="width:22%">Layers targeted</th><th style="width:18%">Physical signature</th><th style="width:14%">Expected DTI gain</th><th style="width:16%">Implementation cost</th></tr>
+      <tr><td class="rank">1</td><td>Dilatational step-over / relay-ramp fracture zones</td><td class="mono">geodetic dilatation, shear rate, 2nd invariant; TMI vert/horiz gradient</td><td>Localized extension & high curvature at fault step-overs; distributed fracture fabric</td><td class="mono">medium</td><td class="mono">medium</td></tr>
+      <tr><td class="rank">2</td><td>Hydrothermal demagnetization halos</td><td class="mono">RTP anomaly, TMI, TMI vert/horiz gradient, depth to magnetic source</td><td>Low-amplitude demag halo around faults (magnetite destroyed by alteration); broader than trace</td><td class="mono">medium</td><td class="mono">low-med</td></tr>
+      <tr><td class="rank">3</td><td>Conductivity-surface anomalies</td><td class="mono">conductivity surface; depth to conductive basement</td><td>Elevated conductivity from clay alteration + hydrothermal fluids (direct geothermal indicator)</td><td class="mono">low-med</td><td class="mono">low</td></tr>
+      <tr><td class="rank">4</td><td>Seismicity lineaments</td><td class="mono">distance to earthquake; earthquake density (+ ComCat)</td><td>Linear microseismicity swarms outlining active structures</td><td class="mono">low-med</td><td class="mono">med-high</td></tr>
+      <tr><td class="rank">5</td><td>Detrended-elevation scarps + curvature</td><td class="mono">detrended elevation; detrended elevation slope (+ 1 m DEM)</td><td>Subtle scarps/lineaments from recent faulting, blurred at 100 m</td><td class="mono">low</td><td class="mono">high</td></tr>
+    </table>
+    <p class="small">Expected DTI gain is an informed prior only — no holdout has been run. The metric is a budget (alpha 0.2, beta 0.8, 300 m triangular kernel); gains must come from higher credit density per emitted pixel, not more mass.</p>
+  </div>
+
+  <div class="card">
+    <h2>H1 — Dilatational step-over / relay-ramp fracture zones (top candidate)</h2>
+    <p><b>Mechanism.</b> Geothermal permeability is focused where fault segments step over or relay; these zones host distributed dilatational fractures rather than a single mapped trace, so they are systematically absent from a discrete-trace catalogue.</p>
+    <p><b>Layers.</b> Geodetic dilatation rate, shear strain rate, second invariant of the strain-rate tensor; total-magnetic-intensity vertical and horizontal gradient (magnetic edges mark the bounding faults).</p>
+    <p><b>Why off-catalogue.</b> USGS/INGENIOUS map traces; a step-over fracture zone is a permeability fabric with no through-going line — the catalogue omission is the signal.</p>
+    <p><b>Differs from repo.</b> The repo baseline emits dots with no physical detector; this targets strain-localization geometry computed from the geodetic + magnetic bands.</p>
+    <p><b>Named non-fault mimic.</b> Sedimentary basin-edge flexure / alluvial-fan coalescence can produce broad low-strain zones that look like step-overs without a fault.</p>
+    <p><b>Validation.</b> Spatially-blocked holdout: withhold whole fault segments with a buffer; derive catalogue-based features only from visible faults; mask visible faults pixel-exactly; score pooled DTI. Leakage canary: any single feature with holdout AUC > 0.90 is leakage until proven otherwise.</p>
+    <p><b>Data needed.</b> Competition training features (login-walled). No new external data required for H1.</p>
+    <div class="tag tag-med">Priority: validate first &middot; cost: medium</div>
+  </div>
+
+  <div class="card">
+    <h2>H2 — Hydrothermal demagnetization halos</h2>
+    <p><b>Mechanism.</b> Hydrothermal alteration destroys magnetite, producing a low-magnetic-amplitude halo around faults and geothermal systems that is broader than the fault trace itself.</p>
+    <p><b>Layers.</b> Reduced-to-pole anomaly, total magnetic intensity, TMI vertical/horizontal gradient, depth to magnetic source.</p>
+    <p><b>Why off-catalogue.</b> The halo extends beyond the mapped trace; catching the alteration envelope targets off-catalogue area.</p>
+    <p><b>Named non-fault mimic.</b> Lithologic magnetic lows (e.g., felsic intrusions, sedimentary cover) produce demag-like signatures without a fault.</p>
+    <div class="tag tag-med">Priority: second &middot; cost: low-med</div>
+  </div>
+
+  <div class="card">
+    <h2>H3 — Conductivity-surface anomalies</h2>
+    <p><b>Mechanism.</b> Clay alteration and hydrothermal fluids raise bulk electrical conductivity; the conductivity surface band is a direct geothermal indicator that need not coincide with a mapped fault.</p>
+    <p><b>Layers.</b> Conductivity surface; depth to conductive (basement) surface.</p>
+    <p><b>Named non-fault mimic.</b> Saline groundwater / conductive sedimentary basins produce broad conductivity highs unrelated to faulting.</p>
+    <div class="tag tag-med">Priority: third &middot; cost: low</div>
+  </div>
+
+  <div class="card">
+    <h2>H4 — Seismicity lineaments</h2>
+    <p><b>Mechanism.</b> Microseismicity swarms delineate active structures too young or small for Quaternary catalogue mapping.</p>
+    <p><b>Layers.</b> Distance to earthquake, earthquake density; supplemented by USGS ComCat.</p>
+    <p><b>Named non-fault mimic.</b> Volcanic or induced seismicity clusters not on a fault plane.</p>
+    <p><b>Data needed.</b> USGS ComCat (reachable from official sources but timed out from this sandbox).</p>
+    <div class="tag tag-high">Priority: fourth &middot; cost: med-high &middot; needs ComCat</div>
+  </div>
+
+  <div class="card">
+    <h2>H5 — Detrended-elevation scarps + curvature</h2>
+    <p><b>Mechanism.</b> Recent faulting leaves subtle scarps/lineaments in detrended elevation and its slope, blurred at 100 m resolution.</p>
+    <p><b>Layers.</b> Detrended elevation; detrended elevation slope; 1 m DEM links for finer curvature.</p>
+    <p><b>Named non-fault mimic.</b> Erosional / depositional geomorphology (alluvial scarps, landslide scarps).</p>
+    <p><b>Data needed.</b> 1 m DEM links from the competition (login-walled) + DEM processing.</p>
+    <div class="tag tag-high">Priority: fifth &middot; cost: high &middot; needs 1 m DEM</div>
+  </div>
+
+  <div class="alert"><b>Protocol note.</b> Per the parallel-run protocol: validate the top candidate (H1) on the spatially-blocked holdout <i>before</i> spending a weekly submission slot. Do not submit an idea that has not beaten the current holdout best. Holdout numbers must be labelled HOLDOUT-DTI (evaluator version, withheld positives, 95% CI); a projection is never written as a score.</div>
+
+  <p class="small" style="margin-top:18px">Repo: <a href="https://github.com/buffedlizard55-lab/GEMSDOE72">buffedlizard55-lab/GEMSDOE72</a> &middot; branch <span class="mono">arena/bae9a0ab-gemsdoe72</span></p>
+</div>
+</body>
+</html>

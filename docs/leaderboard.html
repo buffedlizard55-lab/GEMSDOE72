@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard — GEMSDOE72</title>
+<style>
+  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:#f5f7fa;color:#1f2937;line-height:1.5}
+  .wrap{max-width:980px;margin:0 auto;padding:24px}
+  header{background:#0b3d62;color:#fff;padding:24px;border-radius:10px;margin-bottom:18px}
+  header h1{margin:0 0 6px 0;font-size:20px}
+  header p{margin:0;opacity:.9;font-size:14px}
+  .nav{margin-bottom:16px}
+  .nav a{color:#0b3d62;text-decoration:none;margin-right:16px;font-weight:600;font-size:14px}
+  .nav a:hover{text-decoration:underline}
+  .card{background:#fff;border:1px solid #d1d9e3;border-radius:10px;padding:18px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card h2{margin:0 0 10px 0;font-size:17px;color:#0b3d62}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border:1px solid #d1d9e3;padding:7px 10px;text-align:left}
+  th{background:#eef3f8;color:#0b3d62;font-size:12px}
+  a{color:#0b3d62;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .tag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700;color:#fff}
+  .tag-org{background:#0b3d62}
+  .tag-claim{background:#6b7280}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}
+  p{margin:6px 0}
+  .small{font-size:12.5px;color:#4b5563}
+  .alert{background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="executive-summary.html">Executive summary (how to submit)</a>
+    <a href="sources.html">Official sources</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="run-card.json">Run card (JSON)</a>
+  </nav>
+
+  <header>
+    <h1>Leaderboard — GEMS Prize Challenge</h1>
+    <p>Public leaderboard: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">DrivenData #306</a></p>
+  </header>
+
+  <div class="card">
+    <h2>Public leaderboard (organizer-confirmed reads)</h2>
+    <table>
+      <tr><th style="width:8%">Rank</th><th style="width:30%">Team</th><th style="width:14%">Score (DTI)</th><th>Source / note</th></tr>
+      <tr><td>#1</td><td>nchuzhoy</td><td><b>0.3262</b></td><td class="mono">GEMSDOE32 docs, read 2026-10-04</td></tr>
+      <tr><td>#2</td><td>DARD</td><td><b>0.3195</b></td><td class="mono">GEMSDOE32 docs / cited as current high</td></tr>
+      <tr><td>#3</td><td>alexoktaba</td><td><b>0.3042</b></td><td class="mono">GEMSDOE32 docs, read 2026-10-04</td></tr>
+    </table>
+    <p class="small">The brief also cites later reads of 0.3774 and 0.4413 as "current competition leaderboard GEMSDOE high score"; these conflict with the 2026-10-04 read and are flagged as irregularities (the leaderboard is a moving target and reads differ by snapshot). Treat any single snapshot as indicative, not final.</p>
+  </div>
+
+  <div class="card">
+    <h2>GEMSDOE72 submission (this repo)</h2>
+    <table>
+      <tr><th style="width:30%">Property</th><th>Value</th></tr>
+      <tr><td><b>Submission name</b></td><td class="mono">GEMSDOE72-BASELINE-DOTTED-BUDGET</td></tr>
+      <tr><td><b>File</b></td><td class="mono">gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.tif</td></tr>
+      <tr><td><b>Score status</b></td><td><span class="tag tag-claim">UNVERIFIED baseline</span> — not organizer-confirmed</td></tr>
+      <tr><td><b>Organizer-confirmed score</b></td><td><span class="tag tag-org">none</span> — no submission receipt from DrivenData</td></tr>
+      <tr><td><b>Expected vs leader</b></td><td class="mono">baseline; not claimed to beat 0.3195 / 0.3262</td></tr>
+    </table>
+  </div>
+
+  <div class="alert"><b>Evidence-class rule (from the parallel-run protocol).</b> Label every number as HOLDOUT-DTI (evaluator version, withheld positives, 95% CI) or ORGANIZER-CONFIRMED (copied from a submission-page receipt). A projection is never written as a score. No number on this page is organizer-confirmed except the public-leaderboard reads cited above.</div>
+
+  <p class="small" style="margin-top:18px">Repo: <a href="https://github.com/buffedlizard55-lab/GEMSDOE72">buffedlizard55-lab/GEMSDOE72</a> &middot; branch <span class="mono">arena/bae9a0ab-gemsdoe72</span></p>
+</div>
+</body>
+</html>
