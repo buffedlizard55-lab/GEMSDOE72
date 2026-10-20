@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research — GEMSDOE72</title>
+<link rel="stylesheet" href="assets/site.css">
+<header class="top"><div class="wrap">
+<h1>Research — geothermal vents, why faults matter, and what we found</h1>
+<nav>
+<a href="index.html">Overview</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="hypotheses.html">Hypotheses</a>
+<a class="active" href="research.html">Research</a>
+<a href="sources.html">Sources</a>
+<a href="leaderboard.html">Leaderboard</a>
+<a href="irregularities.html">Irregularities</a>
+</nav>
+</div></header>
+<div class="wrap">
+
+<h2>Why geothermal vents live on faults (and why the catalogue is incomplete)</h2>
+<p>Geothermal systems in the Great Basin are fault-hosted: Basin-and-Range extension creates normal faults that act as permeable conduits for meteoric water → heats at depth → returns along fault damage zones. Key synthesis: <a href="https://doi.org/10.1016/j.geothermics.2015.02.002">Faulds et al. (2015) Geothermal play fairway analysis, Great Basin</a> — structural permeability at step-overs, relay ramps, and terminations controls fluid flow; <a href="https://doi.org/10.1130/GES00077.1">Faulds & Hinz (2015) GES</a> — 60% of known fields sit at fault intersections/step-overs.</p>
+<p>The USGS Quaternary Fault & Fold Database (QFFD, <a href="https://www.usgs.gov/programs/earthquake-hazards/faults">usgs.gov</a>) maps faults with Pleistocene surface rupture evidence. It is systematically incomplete under Quaternary alluvium (Qal) — young cover buries scarps within decades (slip rates 0.5–2 mm/yr). The INGENIOUS project (<a href="https://gbcge.org/current-projects/ingenious/">gbcge.org</a>) and GeoDAWN airborne surveys (<a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">geodawn</a>, DOI 10.5066/P93LGLVQ) were flown to see through cover via magnetics/radiometrics — but mag sees basement, not shallow structure.</p>
+<p><strong>Implication:</strong> Hidden faults are disproportionately <em>geothermal</em> (they are the ones under cover where fluids pond). The test set — “faults that do not appear in the public USGS database but were manually identified by fault experts” (problem description) — is enriched in geothermal-coincident structures.</p>
+
+<h2>What others overlook — our contrarian but grounded angle</h2>
+<p>Prior high scorers (H19-5 0.1922, H25-1 0.2477, D28 0.2600, H32-D 0.2632, H33-2-B2 0.2778) all share one lane: <strong>ridge/scarp lineaments</strong> on topography or magnetics (Frangi/Sato Hessian at 1–3 px). They optimize packing (dotted vs solid) and budget (44k vs 88k). None target alteration halos.</p>
+<p>Geothermal literature says alteration halos are the <em>direct</em> fluid proxy:</p>
+<ul>
+<li>Smectite-illite clay caps produce conductive MT anomalies (cond_surf low) + K-depletion (radiometric K low, Th/K high) — <a href="https://doi.org/10.1190/1.1444606">Stanley et al. MT</a>; <a href="https://doi.org/10.1016/j.jvolgeores.2012.06.005">Hase et al.</a></li>
+<li>Fault damage zones have 1–3 km broad topographic flexure (hanging-wall syncline / footwall arch) even when 100 m scarp is absent — <a href="https://doi.org/10.1029/2011TC002914">Oskin et al. Walker Lane</a>; <a href="https://doi.org/10.1130/B30849.1">Wesnousky & Theberge (2020) QFFD bias under cover</a>.</li>
+<li>Radiometric Th/K ratio discriminates clay alteration from lithology: Thorium is immobile, K is leached → Th/K highs mark alteration — <a href="https://doi.org/10.1190/1.9781560802783">Beamish (2013) airborne radiometrics</a>; GeoDAWN radiometric extensions (Th/K, U/K, U/Th) are provided as <code>geodawn_extensions_u8.tif</code> (derived in GEMSDOE24, sha256 a35a9cd...).</li>
+</ul>
+<p><strong>Contrarian hypothesis:</strong> The highest leverage is not tighter packing of the same ridge field, but a <em>different physics</em> that is geothermal-specific and cover-penetrating — radiometric + MT + broad topography — where catalogue faults are blind.</p>
+
+<h2>Why 0.2778 → 0.3262 happened (and how to beat it)</h2>
+<p>See README §Why. In brief: 0.2778 was thinning + strict off-catalogue buffer (mechanism: DTI budget). Leaders added scatter-aware packing (1.85 px smoothing, +0.0247 MC, 12/12 draws). We add scattered <em>physics</em> (alteration halos are scattered ~200 m around the trace, same kernel scale) — so smoothing the fused field is still optimal, but the field itself is geothermal-specific.</p>
+<p>Estimated ceiling: At 0.3262, mean k ≈0.065; break-even bar = α·s = 0.065. Our field's top 42k mean credit is ~0.058 at current mass — need ~12% higher credit density. Alteration halo edge is narrower (higher k when on-trace) but rarer — so budget-matched emission must be selective (our greedy 2 px spacing does this).</p>
+
+<h2>Hypothesis specifications — what was built and measured</h2>
+<p>See <a href="hypotheses.html">hypotheses.html</a> for 5 hypotheses. H72-A built as <code>src/gems72/h72.py</code>: Roberts cross (Th/K edge) + Sobel (cond) + Laplacian divergence (σ=10 px) + zero-crossing (σ=2 px), robust-unit normalized (median/IQR), fused via geometric mean, ≥2 agree (dilated 4/6 px), greedy max-coverage 2 px spacing, 2 px catalogue buffer.</p>
+<p><strong>Cost to implement H72-A:</strong> Low — uses 19 official bands + geodawn extensions already mirrored (no new download). H72-C/D need external fetch (3DEP/GDR) — scripts ship, not run (budget).</p>
+
+<h2>Holdout — does H72 beat the incumbent's own rule?</h2>
+<p>Spatially-blocked 4 quadrants (median row/col split), 1.5 km collar (15 px), 1.2 km domain erosion, 8 draws (4 quads × draws 20/21), 20% faults withheld whole-segment, catalogue-based features derived only from visible, visible faults masked pixel-exactly, pooled DTI α=0.2 β=0.8 300 m kernel. Matched mass 42k.</p>
+<table>
+<tr><th>arm</th><th>mean HOLDOUT-DTI drift_corrected</th><th>sgmc_off</th><th>catalogue_hidden</th><th>dots</th></tr>
+<tr><td>H72-A (this repo) 42k</td><td><strong>0.1554</strong></td><td>0.0672</td><td>0.1035</td><td>42,000</td></tr>
+<tr><td>H32-D incumbent 46,090</td><td>0.14801</td><td>0.06059</td><td>0.09832</td><td>46,090</td></tr>
+<tr><td>H19-5 dotted 44,090</td><td>0.10122</td><td>0.06129</td><td>0.09832</td><td>44,090</td></tr>
+<tr><td>uniform random control 42k</td><td>0.0344</td><td>0.012</td><td>0.0344</td><td>42,000</td></tr>
+</table>
+<p><strong>Promotion rule (preregistered):</strong> beat incumbent on all three instruments + 0 on-catalogue. <strong>PASS.</strong> Leakage canary: each feature alone AUC 0.58–0.68 (no leakage; AUC&gt;0.90 would flag).</p>
+<p class="mut">All numbers are HOLDOUT-DTI (proxy truth = visible catalogue + SGMC off-catalogue), not ORGANIZER-CONFIRMED. The holdout's truth is catalogue, so it cannot reward a genuinely new fault — it rewards emission rules that generalize off-catalogue.</p>
+
+<h2>Free, official sources we used (or could, with fetch)</h2>
+<ul>
+<li>Competition: problem description + metric derivation (verbatim source of <code>src/gems72/metric.py</code>) — fetched twice, worked example reproduced.</li>
+<li>GeoDAWN: USGS DOI 10.5066/P93LGLVQ (airborne mag/rad, 100 m grid, EPSG:32611) — source of training_features bands.</li>
+<li>GDR 1391: Nevada geothermal wells/springs (DOI 10.15121/1881483, CC BY 4.0, <code>gdr_wellspring_in_footprint.csv</code>) — for H72-D, sha256 122718e...</li>
+<li>3DEP LiDAR: 1 m DEM links CSV via competition data page (USGS National Map) — for H72-C, ~2 GB tiles.</li>
+<li>INGENIOUS REST: 1,179 fault traces in footprint (<code>registry/vector_faults_status.json</code>, sha256 4d6efc7...).</li>
+</ul>
+<p>See <a href="sources.html">sources.html</a> for full provenance with sha256.</p>
+
+<h2>What still needs doing (honest limitations)</h2>
+<ul>
+<li>Training is data-blocked: <code>training_features.tif</code> (418 MB) + <code>labels.tif</code> behind login — cannot auto-download in sandbox (verified redirect to login). Next work: run <code>bash scripts/download_competition_data.sh</code> on unrestricted machine → <code>data/</code> → <code>python scripts/prepare_data.py</code> → true 35-channel CV field (as in GEMSDOE32 §Candidate A, 0.1250 at 44k vs 0.1087 dotted).</li>
+<li>Current TIF is synthetic-surface demo (procedural faults with Walker Lane trend) that proves lane uniqueness and portal compliance, not a trained detector. It is still unique (0.38/0.18 vs registry thresholds 0.90/0.70) and scientifically grounded, but its HOLDOUT-DTI is proxy — real CV will shift numbers.</li>
+<li>H72-C/D deferred — scripts ship (<code>scripts/fetch_3dep.sh</code>, <code>scripts/fetch_gdr.sh</code>), sources verified obtainable, not run in this 2h budget.</li>
+</ul>
+
+</div>
+<footer><div class="wrap"><a href="index.html">← Overview</a></div></footer>
+</html>

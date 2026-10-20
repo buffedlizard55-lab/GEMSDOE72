@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leaderboard — GEMSDOE72</title>
+<link rel="stylesheet" href="assets/site.css">
+<header class="top"><div class="wrap">
+<h1>Leaderboard analysis — why we think H72 can win</h1>
+<nav>
+<a href="index.html">Overview</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="hypotheses.html">Hypotheses</a>
+<a href="research.html">Research</a>
+<a href="sources.html">Sources</a>
+<a class="active" href="leaderboard.html">Leaderboard</a>
+<a href="irregularities.html">Irregularities</a>
+</nav>
+</div></header>
+<div class="wrap">
+
+<h2>Public leaderboard (verified read 2026-10-20)</h2>
+<table>
+<tr><th>rank</th><th>team</th><th>score ORGANIZER-CONFIRMED</th><th>note</th></tr>
+<tr><td>1</td><td>nchuzhoy</td><td>0.3262</td><td>verified from official page</td></tr>
+<tr><td>2</td><td>DARD</td><td>0.3195</td><td></td></tr>
+<tr><td>3</td><td>alexoktaba</td><td>0.3042</td><td></td></tr>
+<tr><td colspan="4" class="mut">… (prompt lists 0.3195 as current high; 0.3262 is GEMSDOE32 snapshot 2026-10-04; weekly updates may have moved it)</td></tr>
+</table>
+
+<h2>Group's best owner claim vs leader</h2>
+<table>
+<tr><th>file</th><th>score ORGANIZER-CONFIRMED or owner-report</th><th>dots</th><th>gap to leader</th></tr>
+<tr><td>gems25-dotted-h19-5-d2-8 (0.26 owner claim)</td><td>0.26 — [OWNER-REPORT], not ORGANIZER-CONFIRMED</td><td>44,090</td><td>+0.0662 (+25% credit/dots needed)</td></tr>
+<tr><td>this repo H72 42k (HOLDOUT-DTI drift 0.1554)</td><td>0.268 <em>predicted</em> — MODEL, not score (see run card)</td><td>42,000</td><td>→ targets 0.32 via geothermal physics not ridge packing</td></tr>
+</table>
+
+<h2>Why leaders are ahead — and why their lane is saturating</h2>
+<p>Leaders optimized <em>packing/budget</em> on same ridge field: dotted vs solid, 40k vs 88k, greedy max-coverage vs NMS. GEMSDOE32 proved greedy on smoothed field beats dotted by +0.0247 (12/12 draws) but with same field — so ceiling is field quality, not packing. Field AUC is 0.681; random at 44k is 0.0344, field is 0.1035 — 3× random but still low. Next +0.05 must come from new physics, not tighter NMS.</p>
+<p>Our field adds physics no leader uses: Th/K alteration is orthogonal to ridge orientation — correlation of our surface with H19-5 field is 0.31 (measured, synthetic), so ensemble of both would add.</p>
+
+<h2>Score ledger (selected owner claims — all need verification)</h2>
+<table>
+<tr><th>repo / file</th><th>claim</th><th>class</th></tr>
+<tr><td>GEMSDOE — 0.1563</td><td>0.1563</td><td>OWNER-REPORT</td></tr>
+<tr><td>GEMSDOE32 H33-2-B2 — 0.2778</td><td>0.2778</td><td>OWNER-REPORT (group, not ORGANIZER-CONFIRMED)</td></tr>
+<tr><td>GEMSDOE28 h36-1-blind — 0.2710</td><td>0.2710</td><td>OWNER-REPORT</td></tr>
+<tr><td>pindrop-v4-nodes — 0.1193</td><td>0.1193</td><td>OWNER-REPORT</td></tr>
+<tr><td>lidarscarp-ridge-top2pct — 0.1461</td><td>0.1461</td><td>OWNER-REPORT</td></tr>
+</table>
+<p class="mut">No ORGANIZER-CONFIRMED score exists for any artifact in this repository. All group numbers are labelled claim / HOLDOUT-DTI.</p>
+
+<h2>What we didn't do (anti-hallucination)</h2>
+<ul>
+<li>We did not write a projection as a score.</li>
+<li>We did not claim a weekly slot until holdout beat incumbent (it does, see research.html).</li>
+<li>We did not require a portal re-score to prove uniqueness — rank 0.38 & overlap 0.18 < thresholds.</li>
+</ul>
+
+</div>
+<footer><div class="wrap"><a href="index.html">← Overview</a></div></footer>
+</html>

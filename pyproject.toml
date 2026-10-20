@@ -1,0 +1,6 @@
+[project]
+name="gemsdoe72"
+version="72.0.0"
+dependencies=["numpy","scipy","rasterio"]
+[build-system]
+requires=["setuptools"]

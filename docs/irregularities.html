@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Irregularities — GEMSDOE72</title>
+<link rel="stylesheet" href="assets/site.css">
+<header class="top"><div class="wrap">
+<h1>Irregularities — flagged for review</h1>
+<nav>
+<a href="index.html">Overview</a>
+<a href="executive-summary.html">Executive summary</a>
+<a href="hypotheses.html">Hypotheses</a>
+<a href="research.html">Research</a>
+<a href="sources.html">Sources</a>
+<a href="leaderboard.html">Leaderboard</a>
+<a class="active" href="irregularities.html">Irregularities</a>
+</nav>
+</div></header>
+<div class="wrap">
+<p class="mut">We own defects — we measure, publish, and fix them rather than quietly drop.</p>
+
+<h2>Inherited from GEMSDOE32 (35)</h2>
+<p class="mut">See <a href="https://buffedlizard55-lab.github.io/GEMSDOE32/docs/irregularities.html">GEMSDOE32 irregularities</a> for 35 registered issues (portal sentinel, buffer switch, leakage canary thresholds, etc.). Key ones we inherit:</p>
+<ul>
+<li>IR-32-BAR-01 — marginal bar was α·s/(1−α·s) vs correct α·s; fixed (verify_theorems.py).</li>
+<li>IR-32-INSTR-01 — one dot on catalogue flips drift estimator 0.14801→0.07831 — fixed by zero-on-catalogue rule.</li>
+<li>IR-32-MANIFEST-01 — missing scored raster in registry, fixed.</li>
+<li>IR-32-SITE-01 — site offered wrong file vs README slot, fixed by build_slot_plan receipt.</li>
+</ul>
+
+<h2>New in GEMSDOE72 (4)</h2>
+<table>
+<tr><th>id</th><th>what</th><th>impact</th><th>mitigation</th></tr>
+<tr><td>IR-72-FOOT-01</td><td>Footprint in prepared_manifest 5,167,373 vs GEMSDOE32 feature_receipt 5,165,852 vs docs 5,167,373 — 1,521 px delta due to which band defines footprint (band1 vs any finite).</td><td>1,521/12M = 0.01% area; outside-footprint handling still compliant (all finite).</td><td>We define footprint from sample_submission.tif NaN (5,167,373) and verify identical inside values for both variants.</td></tr>
+<tr><td>IR-72-CAT-01</td><td>Synthetic catalogue proxy (13,257 px) vs real labels.tif 60,988 px — demo catalogue is sparser and trend-matched, not USGS-accurate.</td><td>Overstates off-catalogue space; real catalogue has denser Walker Lane — buffer still holds but real clearance may be tighter.</td><td>Flag HOLDOUT-DTI as synthetic-proxy; with real labels.tif, re-run <code>generate_tif.py</code> with real catalogue (code already branches on data/labels.tif existence).</td></tr>
+<tr><td>IR-72-HOLD-01</td><td>Holdout DTI values are synthetic-proxy (labels + SGMC estimated) not measured against real withheld faults — truth is catalogue, not hidden set.</td><td>Cannot prove live score; only that emission rule generalizes vs catalogue.</td><td>Label every number HOLDOUT-DTI; do not spend slot without live-anchored calibration (GEMSDOE32 ρ=0.53).</td></tr>
+<tr><td>IR-72-DATA-01</td><td>Training data behind login not present — cannot train true detector, so TIF is procedural not learned.</td><td>Ceiling is lower than learned CV field (0.1250 at 44k in GEMSDOE32).</td><td>Provide fetch script and “next work” plan; TIF still unique and portal-valid.</td></tr>
+</table>
+
+<h2>What we checked</h2>
+<ul>
+<li>Every raster re-read after write — min/max/NaN/count vs expectations.</li>
+<li>Correlation/overlap vs registry: max 0.38/0.18 &lt; 0.90/0.70 — unique.</li>
+<li>Leakage canary: single-feature AUC ≤0.68 — no leakage.</li>
+<li>12 portal checks: all PASS (see audit json).</li>
+</ul>
+</div>
+<footer><div class="wrap"><a href="index.html">← Overview</a></div></footer>
+</html>

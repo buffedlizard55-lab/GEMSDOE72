@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "generated_utc": "2026-10-20T19:50:00Z",
+  "lane": "H72-hydrothermal-alteration-halo-divergence",
+  "sources": [
+    {"id": "competition", "title": "DOE GEMS Prize overview", "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/", "status": "verified 2026-10-20"},
+    {"id": "problem", "title": "Problem description, metric and submission format", "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/", "status": "verified 2026-10-20 (TP 3.00 FP 1.89 FN 2.00 -> 0.60 reproduced)"},
+    {"id": "leaderboard", "title": "Public leaderboard", "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/", "status": "verified 2026-10-20: #1 nchuzhoy 0.3262"},
+    {"id": "rules_pdf", "title": "GEMS rules NLR 96647", "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf", "status": "mirrored sha256 50d854b1..."},
+    {"id": "reference_solution", "title": "Official reference solution (U-Net)", "url": "https://github.com/drivendataorg/gems-prize-reference-solution", "status": "cloned 2026-10-20"},
+    {"id": "geodawn", "title": "GeoDAWN mag+rad surveys", "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and", "status": "listed DOI 10.5066/P93LGLVQ"},
+    {"id": "gbcge", "title": "GBCGE INGENIOUS", "url": "https://gbcge.org/current-projects/ingenious/", "status": "listed"},
+    {"id": "epsg32611", "title": "EPSG:32611", "url": "https://epsg.io/32611", "status": "listed"},
+    {"id": "tversky", "title": "Tversky index", "url": "https://en.wikipedia.org/wiki/Tversky_index", "status": "listed"},
+    {"id": "gdr1391", "title": "GDR 1391 wells+springs", "url": "https://gdr.openei.org/submissions/1391", "status": "listed DOI 10.15121/1881483"},
+    {"id": "3dep", "title": "USGS 3DEP", "url": "https://www.usgs.gov/core-science-systems/ngp/3dep", "status": "listed"}
+  ],
+  "artifacts": [
+    {"filename": "gemsdoe72-h72-hydrothermal-halo-divergence-42k-20261020T194529Z-1ad095fc-zeros.tif", "sha256": "see audit json", "bytes": 156160, "dots": 42000}
+  ]
+}
