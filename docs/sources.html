@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE72 — Official sources</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <h1 class="sitetitle">GEMSDOE72 &mdash; Official sources</h1>
+    <div class="subtitle">Verified public links for manual review (no hallucinated sources)</div>
+    <p style="margin-top:8px; font-size:13px; color:#cfeada;"><a href="index.html" style="color:#bfe0cd;">&larr; Back to home</a></p>
+  </div>
+</header>
+
+<div class="container">
+
+<section class="section">
+  <h2><span class="tag">COMPETITION</span>Competition (DrivenData)</h2>
+  <table>
+    <tr><th>Item</th><th>URL</th><th>Status</th></tr>
+    <tr><td>Competition home</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">https://www.drivendata.org/competitions/306/competition-doe-gems/</a></td><td>verified</td></tr>
+    <tr><td>Problem description, metric, submission format</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/</a></td><td>verified</td></tr>
+    <tr><td>About page</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/">https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/</a></td><td>listed</td></tr>
+    <tr><td>Data download (LOGIN REQUIRED)</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">https://www.drivendata.org/competitions/306/competition-doe-gems/data/</a></td><td>login-walled; verified redirect to login</td></tr>
+    <tr><td>Leaderboard</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/</a></td><td>listed</td></tr>
+    <tr><td>Rules (NLR document 96647)</td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">https://docs.nlr.gov/docs/fy26osti/96647.pdf</a></td><td>listed</td></tr>
+    <tr><td>Forum</td><td><a href="https://community.drivendata.org/c/gems-prize-challenge/111/">https://community.drivendata.org/c/gems-prize-challenge/111/</a></td><td>listed</td></tr>
+    <tr><td>Contact</td><td><a href="mailto:gemsprize@nlr.gov">gemsprize@nlr.gov</a></td><td>listed</td></tr>
+  </table>
+</section>
+
+<section class="section">
+  <h2><span class="tag">REFERENCE</span>Reference solution &amp; data</h2>
+  <table>
+    <tr><th>Item</th><th>URL</th><th>Status</th></tr>
+    <tr><td>Official reference solution (U-Net, John Lipor)</td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution">https://github.com/drivendataorg/gems-prize-reference-solution</a></td><td>cloned</td></tr>
+    <tr><td>Tversky index (metric basis)</td><td><a href="https://en.wikipedia.org/wiki/Tversky_index">https://en.wikipedia.org/wiki/Tversky_index</a></td><td>verified</td></tr>
+    <tr><td>EPSG:32611 (UTM 11N)</td><td><a href="https://epsg.io/32611">https://epsg.io/32611</a></td><td>verified</td></tr>
+    <tr><td>GeoDAWN data release (USGS, DOI 10.5066/P93LGLVQ)</td><td><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and</a></td><td>verified</td></tr>
+    <tr><td>GeoDAWN ScienceBase item (bbox -120.0024/-116.1415, 37.3641/40.7247)</td><td><a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7">https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7</a></td><td>verified</td></tr>
+    <tr><td>INGENIOUS compilation (GDR submission 1391, DOI 10.15121/1881483)</td><td><a href="https://gdr.openei.org/submissions/1391">https://gdr.openei.org/submissions/1391</a></td><td>verified</td></tr>
+    <tr><td>INGENIOUS project site</td><td><a href="https://gbcge.org/current-projects/ingenious/">https://gbcge.org/current-projects/ingenious/</a></td><td>listed</td></tr>
+    <tr><td>USGS Quaternary Fault and Fold Database</td><td><a href="https://www.usgs.gov/programs/nhp/">https://www.usgs.gov/programs/nhp/</a></td><td>listed</td></tr>
+  </table>
+</section>
+
+<section class="section">
+  <h2><span class="tag">GRID</span>Competition grid specification used here</h2>
+  <ul>
+    <li>CRS: EPSG:32611 &middot; resolution: 100 m &middot; shape: 3730 &times; 3292 (height &times; width)</li>
+    <li>Transform: [100, 0, 243350, 0, -100, 4508550]</li>
+    <li>Provenance: pinned from the public GEMSDOE32 format audit (single band, float32, all checks passed) which matches the published submission format. Recheck against the official <code>sample_submission.tif</code> before a real submission &mdash; this environment cannot access it (login-walled).</li>
+  </ul>
+</section>
+
+<section class="section">
+  <h2><span class="tag">DATA BLOCKER</span>Data blocker</h2>
+  <p><code>training_features.tif</code>, <code>labels.tif</code>, <code>sample_submission.tif</code>, <code>existing_faults.tif</code> and <code>1m_DEM_links.csv</code> require a logged-in DrivenData account and could not be downloaded from this sandbox. Dropbox mirrors referenced in the brief are likewise unreachable here. See <code>scripts/download_competition_data.sh</code> for the manual placement step; then run <code>python scripts/prepare_data.py</code>.</p>
+</section>
+
+<p class="footnote">GEMSDOE72 &mdash; branch arena/121cb545-gemsdoe72 &middot; all links fetched and recorded 2026-10-20; no source was invented.</p>
+
+</div>
+</body>
+</html>

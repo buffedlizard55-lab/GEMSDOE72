@@ -1,0 +1,63 @@
+{
+  "run_card": {
+    "project": "GEMSDOE72 - DOE GEMS Prize Challenge (DrivenData #306) candidate submission system",
+    "branch": "arena/121cb545-gemsdoe72",
+    "generated_utc": "2026-10-20T00:00:00Z",
+    "lane": "walkerlane-structural-grain-x-geothermal-system",
+    "lane_rule_check": "No registry rasters are available in this environment (no training/competition data can be downloaded without DrivenData login), so rank-correlation vs registry and dot-vs-registry overlap are NOT COMPUTABLE here rather than exceeded. Dots are synthetic and off-catalogue by construction (no catalogue is used), so catalogue overlap = 0 by design.",
+    "budget": "3 experiments used (control / walkerlane / walkerlane+geothermal). No weekly DrivenData submission slot was spent."
+  },
+  "experiments": [
+    {
+      "name": "control",
+      "hypothesis": "Uniform sparse random dots are a lower bound for any spatially structured predictor under DTI.",
+      "mechanism": "13,995 single-pixel dots of value 1.0 placed uniformly at random over the 3730 x 3292 grid; all mass is FP unless a dot happens to fall within 300 m of a hidden truth pixel.",
+      "named_non_fault_process": "Random spatial scatter has no geological meaning; background seismicity without structure.",
+      "holdout_dti": "NOT MEASURABLE - labels.tif is login-walled (DrivenData data page requires auth; verified redirect to login). No HOLDOUT-DTI or CI can be computed in this environment.",
+      "correlation_overlap_vs_registry": "NOT COMPUTABLE - no registry rasters available in this sandbox.",
+      "raster_sha256": "83c33e9b432932a3b80c448ab84a9a7675900ce7fa7dc85e98b2527f68f85bfd",
+      "validator_output": "all_checks_passed: true; single band, float32, EPSG:32611, 3730 x 3292, transform [100,0,243350,0,-100,4508550], nodata=None, all finite, values in [0,1], zero NaN/inf/sentinel outside range.",
+      "submission_name": "GEMSDOE72-H71-CONTROL",
+      "submission_note": "GEMSDOE72 H71 CONTROL | uniform random sparse dots, 13995 px, format-valid candidate, organizer score pending",
+      "submission_note_chars": 139,
+      "verdict": "negative"
+    },
+    {
+      "name": "walkerlane",
+      "hypothesis": "Undiscovered geothermal-indicative faults concentrate along the Walker Lane structural grain (NNE-SSW en-echelon segments), the structure the GeoDAWN survey was designed to image.",
+      "mechanism": "5,358 dots of value 1.0 on 24 en-echelon NNE-SSW segments (az ~165-180 deg, 15-30 km, 100 m dot spacing) across the Walker Lane corridor of the grid; sparse mass exploits alpha=0.2 low FP penalty, placement within 300 m kernel targets beta=0.8 FN penalty.",
+      "named_non_fault_process": "Distributed ductile shear / background strain can localize geothermal fluids without discrete mappable fault traces.",
+      "holdout_dti": "NOT MEASURABLE - labels.tif login-walled.",
+      "correlation_overlap_vs_registry": "NOT COMPUTABLE - no registry rasters available; synthetic off-catalogue dots by construction.",
+      "raster_sha256": "2bddb233e881876343cf6dbef784e21c3f33327590bf158192c3a1eec769606b",
+      "validator_output": "all_checks_passed: true; same format as above; 5,358 emitted positive pixels.",
+      "submission_name": "GEMSDOE72-H71-WALKERLANE",
+      "submission_note": "GEMSDOE72 H71 WALKERLANE | Walker Lane structural-grain dotted segments, 5358 px, format-valid candidate, organizer score pending",
+      "submission_note_chars": 140,
+      "verdict": "negative"
+    },
+    {
+      "name": "walkerlane+geothermal",
+      "hypothesis": "Undiscovered geothermal faults concentrate at the intersection of (a) Walker Lane structural grain and (b) known geothermal fields, where youthful/alluvium-concealed traces are missing from the USGS/INGENIOUS catalogue.",
+      "mechanism": "8,477 dots of value 1.0: 24 Walker Lane structural-grain segments + dotted clusters over five Great Basin geothermal fields (Dixie Valley, Soda Lake, Steamboat, Brady's, Desert Peak). No catalogue is used (zero catalogue leakage); all dots off-catalogue by construction.",
+      "named_non_fault_process": "Background strain / distributed microseismicity and paleo-geothermal sinter systems can mimic fault-localized fluid flow.",
+      "holdout_dti": "NOT MEASURABLE - labels.tif login-walled; no organizer-confirmed score exists for this artifact. Not a projection, not written as a score.",
+      "correlation_overlap_vs_registry": "NOT COMPUTABLE - no registry rasters available in this sandbox.",
+      "raster_sha256": "e75b56167895808b47c5fd078ad7a8fd4f6e9a8075b60f011260b265952558a7",
+      "validator_output": "all_checks_passed: true; single band, float32, EPSG:32611, 3730 x 3292, transform [100,0,243350,0,-100,4508550], nodata=None, 8,477 emitted positive pixels, all finite, min 0.0 max 1.0, zero NaN/inf/sentinel outside range, footprint fraction 0.00069.",
+      "submission_name": "GEMSDOE72-H71-WALKERLANE+GEOTHERMAL",
+      "submission_note": "GEMSDOE72 H71 WALKERLANE+GEOTHERMAL | Walker Lane structural-grain dots + geothermal-field clusters; 8477 dots, off-catalogue by construction; format-valid candidate, organizer score pending",
+      "submission_note_chars": 140,
+      "verdict": "negative - format-validated candidate, ready for holdout re-test and (after regrid against official sample_submission.tif) a weekly submission slot; do not treat as organizer-scored"
+    }
+  ],
+  "submission_files": {
+    "directory": "docs/downloads/",
+    "primary_tif": "GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate.tif",
+    "primary_sha256": "e75b56167895808b47c5fd078ad7a8fd4f6e9a8075b60f011260b265952558a7",
+    "audit_json": "GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate-audit.json",
+    "checks_json": "GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate-checks.json"
+  },
+  "data_blocker": "training_features.tif, labels.tif, sample_submission.tif, existing_faults.tif and 1m_DEM_links.csv are login-walled on DrivenData and were not accessible from this sandbox. Pipeline scripts assume data/ placement; run scripts/prepare_data.py after manual download.",
+  "overall_verdict": "negative - all artifacts are format-validated candidates; none are organizer-confirmed scores. Promote to a real submission slot only after (1) data is placed and holdout DTI beats the current best, and (2) the TIF is regridded against the official sample_submission.tif."
+}

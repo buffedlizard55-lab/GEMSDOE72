@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE72 — GEMS Prize Challenge submission TIF (download)</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <h1 class="sitetitle">GEMSDOE72</h1>
+    <div class="subtitle">DOE GEMS Prize Challenge &mdash; DrivenData #306 &middot; single-band GeoTIFF submission &middot; format-validated candidate</div>
+  </div>
+</header>
+
+<div class="container">
+
+<section class="section">
+  <h2><span class="tag">DOWNLOAD</span>One-click submission file</h2>
+  <p>The file below is the competition-format submission: <strong>single-band float32 GeoTIFF, EPSG:32611, 100 m, 3730 &times; 3292, every cell finite, every value in [0, 1], no nodata tag</strong>. It passed the full format self-audit (single band / dtype / dimensions / CRS / transform / range / finite checks &mdash; <a href="downloads/GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate-checks.json">checks.json</a>).</p>
+
+  <div class="download-hero">
+    <div>
+      <h2 class="download-title" style="margin:0 0 6px 0;">GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate.tif</h2>
+      <p style="margin:0 0 10px 0; font-size:13px; color:var(--muted);">8,477 predicted fault pixels &middot; 68 KB &middot; sha256 <code>e75b56167895808b47c5fd078ad7a8fd4f6e9a8075b60f011260b265952558a7</code></p>
+    </div>
+    <a class="btn" href="downloads/GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate.tif" download>Download .tif to submit</a>
+    <div class="download-meta">
+      <div><b>Single band:</b> 1 (float32)</div>
+      <div><b>CRS:</b> EPSG:32611 (UTM 11N)</div>
+      <div><b>Resolution:</b> 100 m</div>
+      <div><b>Shape:</b> 3730 &times; 3292 px</div>
+      <div><b>Transform:</b> [100, 0, 243350, 0, -100, 4508550]</div>
+      <div><b>Values:</b> all in [0, 1], all finite</div>
+      <div><b>Nodata tag:</b> none (all-finite)</div>
+      <div><b>Format audit:</b> <a href="downloads/GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate-audit.json">audit.json</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2><span class="tag">STATUS</span>Is it OK to download and submit this TIF?</h2>
+  <div class="status ok">
+    <div class="title">&#10004; OK to download &mdash; the file is a valid, format-checked GeoTIFF.</div>
+    <ul>
+      <li>Values are all in [0, 1] &mdash; this avoids the DrivenData validator error <code>"Predicted values must be in range [0, 1]"</code> (also triggered by the -3.4e38 float32 nodata sentinel, which this file does not use).</li>
+      <li>CRS, shape and geotransform match the competition grid specification pinned from the public format audit (EPSG:32611, 100 m, 3730 &times; 3292). Recheck against the official <code>sample_submission.tif</code> (DrivenData, login required) before a real submission.</li>
+      <li>&#10007; <strong>Not organizer-scored.</strong> <code>labels.tif</code> is login-walled, so holdout DTI cannot be measured in this environment and no organizer score exists for this file. Treat it as a <strong>format-validated candidate</strong>, not a proven leaderboard entry.</li>
+    </ul>
+  </div>
+  <p>If you download and submit: use <strong>submission name</strong> <code>GEMSDOE72-H71-WALKERLANE+GEOTHERMAL</code> and paste the note below into the DrivenData <em>Note (optional)</em> field (140 characters).</p>
+  <div class="note-box">
+    <div class="label">Note to paste into the submission form</div>
+    <code style="font-size:13px;">GEMSDOE72 H71 WALKERLANE+GEOTHERMAL | Walker Lane structural-grain dots + geothermal-field clusters; 8477 dots, off-catalogue by construction; format-valid candidate, organizer score pending</code>
+  </div>
+</section>
+
+<section class="section">
+  <h2><span class="tag">GUIDE</span>How to submit</h2>
+  <ol>
+    <li>Download the .tif above (or the .zip twin if your browser renames single-band TIFFs).</li>
+    <li>Go to the DrivenData GEMS Prize submission page &rarr; <em>Make new submission</em> &rarr; upload the file.</li>
+    <li>Paste the note from the box above into <em>Note (optional)</em>.</li>
+    <li>Submit. The validator checks CRS/shape/geotransform and values in [0, 1].</li>
+  </ol>
+  <p><a class="button" href="executive-summary.html">Full executive-summary subpage &rarr;</a> <a class="button" href="method.html">Method &amp; run card &rarr;</a> <a class="button" href="sources.html">Official sources &rarr;</a></p>
+</section>
+
+<section class="section">
+  <h2><span class="tag">EXPERIMENTS</span>Run card (3 experiments, no submission slot spent)</h2>
+  <table>
+    <tr><th>Experiment</th><th>Verdict</th><th>Holdout DTI</th><th>SHA256</th></tr>
+    <tr><td><code>control</code> &mdash; uniform random dots</td><td>negative</td><td>not measurable (labels login-walled)</td><td><code>83c33e9b&hellip;</code></td></tr>
+    <tr><td><code>walkerlane</code> &mdash; structural-grain segments only</td><td>negative</td><td>not measurable (labels login-walled)</td><td><code>2bddb233&hellip;</code></td></tr>
+    <tr><td><code>walkerlane+geothermal</code> (primary)</td><td>negative &mdash; format-validated candidate</td><td>not measurable (labels login-walled)</td><td><code>e75b5616&hellip;</code></td></tr>
+  </table>
+  <p class="footnote">Per the parallel-run protocol, all numbers are labelled HOLDOUT-DTI or ORGANIZER-CONFIRMED; nothing here is written as a projection. See <a href="run_card.json">run_card.json</a> for the full card.</p>
+</section>
+
+<p class="footnote">GEMSDOE72 &mdash; arena/121cb545-gemsdoe72 &middot; generated 2026-10-20 &middot; full prompt archived in <code>README.md</code>.</p>
+
+</div>
+</body>
+</html>

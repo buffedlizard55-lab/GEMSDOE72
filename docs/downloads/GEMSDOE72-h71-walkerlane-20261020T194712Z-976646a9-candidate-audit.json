@@ -1,0 +1,59 @@
+{
+  "candidate_id": "H71-WALKERLANE",
+  "slug": "h71-walkerlane",
+  "content_digest8": "976646a9",
+  "lane": "walkerlane-structural-grain-x-geothermal-system",
+  "hypothesis": "Undiscovered geothermal-indicative faults concentrate along the Walker Lane structural grain and at known geothermal fields, where youthful/concealed traces are missing from the USGS/INGENIOUS catalogue.",
+  "mechanism": "Sparse high-confidence dots (value 1.0) on en-echelon NNE-SSW segments following the Walker Lane shear-zone grain, plus dotted clusters over five Great Basin geothermal fields; targets the metric's low FP penalty (alpha=0.2) with sparse mass and the high FN penalty (beta=0.8) by placing mass within the 300 m triangular kernel of plausible new faults.",
+  "named_non_fault_process": "Distributed microseismicity / background strain can produce geothermal fluid pathways without discrete mappable faults -- the main process that could mimic this signal.",
+  "differs_from_listed_submissions": "No catalogue-proximal dots (zero catalogue leakage), no ridge/curvature surfaces, no ML heatmap: a structural-grain x geothermal-system prior built without labels.tif.",
+  "description": "5358 dots: Walker Lane structural-grain NNE-SSW segments",
+  "submission_name": "GEMSDOE72-H71-WALKERLANE",
+  "submission_note": "GEMSDOE72 WALKERLANE | Walker Lane structural-grain dotted segments + geothermal-field clusters (Dixie Valley, Soda Lake, Steamboat, Brady'\u2026",
+  "submission_note_chars": 140,
+  "grid": {
+    "width": 3292,
+    "height": 3730,
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "resolution_m": 100.0,
+    "source": "competition grid specification (pinned from GEMSDOE32 format audit, matching the published submission format)"
+  },
+  "status": "FORMAT-VALIDATED CANDIDATE -- not organizer-scored; labels.tif is login-walled, so holdout DTI is not measurable in this environment. Regrid against official sample_submission.tif (DrivenData, login required) before any real submission.",
+  "generated_at_utc": "20261020T194712Z",
+  "tif": {
+    "filename": "GEMSDOE72-h71-walkerlane-20261020T194712Z-976646a9-candidate.tif",
+    "size_bytes": 66853,
+    "sha256": "2bddb233e881876343cf6dbef784e21c3f33327590bf158192c3a1eec769606b"
+  },
+  "format_checks": {
+    "single_band": true,
+    "dtype_float32": true,
+    "dimensions_match": true,
+    "crs_epsg_32611": true,
+    "transform_matches": true,
+    "all_finite": true,
+    "range_0_1": true,
+    "zero_nan": true,
+    "zero_inf": true,
+    "zero_sentinel_outside_range": true,
+    "nodata_none": true,
+    "all_checks_passed": true
+  },
+  "format_stats": {
+    "emitted_positive_pixels": 5358,
+    "min": 0.0,
+    "max": 1.0,
+    "finite_pixels": 12279160,
+    "total_pixels": 12279160,
+    "footprint_fraction": 0.0004363490662227709
+  },
+  "all_checks_passed": true
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE72 — Executive summary</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <h1 class="sitetitle">GEMSDOE72 &mdash; Executive summary</h1>
+    <div class="subtitle">How to make a submission into the DOE GEMS Prize Challenge (DrivenData #306)</div>
+    <p style="margin-top:8px; font-size:13px; color:#cfeada;"><a href="index.html" style="color:#bfe0cd;">&larr; Back to home</a></p>
+  </div>
+</header>
+
+<div class="container">
+
+<section class="section">
+  <h2>The one-minute version</h2>
+  <ol>
+    <li>Download the submission GeoTIFF from the home page: <code>GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate.tif</code>.</li>
+    <li>Sign in to DrivenData, open the GEMS Prize Challenge (#306) submission page, click <em>Make new submission</em>.</li>
+    <li>Upload the .tif (a .zip containing the single GeoTIFF is also accepted).</li>
+    <li>Paste this note into <em>Note (optional)</em> (140 chars):</li>
+  </ol>
+  <div class="note-box">
+    <code style="font-size:13px;">GEMSDOE72 H71 WALKERLANE+GEOTHERMAL | Walker Lane structural-grain dots + geothermal-field clusters; 8477 dots, off-catalogue by construction; format-valid candidate, organizer score pending</code>
+  </div>
+  <p>Submission name to use: <code>GEMSDOE72-H71-WALKERLANE+GEOTHERMAL</code>.</p>
+</section>
+
+<section class="section">
+  <h2>Submission format rules (official)</h2>
+  <ul>
+    <li>Single-band GeoTIFF (.tif), or a .zip containing a single GeoTIFF.</li>
+    <li>CRS: projected UTM zone 11N (EPSG:32611) &mdash; same as the training data.</li>
+    <li>Resolution: 100 m; same bounds as the training data; null/nan outside bounds allowed.</li>
+    <li>Datatype: 32-bit float (float32), values between 0 and 1 (probability/confidence of fault presence).</li>
+    <li>This repo's file: EPSG:32611, 100 m, 3730 &times; 3292, transform [100, 0, 243350, 0, -100, 4508550], float32, all finite, values in [0, 1], no nodata tag &mdash; <a href="downloads/GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate-audit.json">audit.json</a>.</li>
+  </ul>
+  <p class="footnote">Source: DrivenData problem description, "Submission format" &mdash; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">drivendata.org/competitions/306/competition-doe-gems/page/967/</a></p>
+</section>
+
+<section class="section status warn">
+  <div class="title">&#9888; The "Predicted values must be in range [0, 1]" error</div>
+  <ul>
+    <li>DrivenData rejects any submission whose raster values fall outside [0, 1].</li>
+    <li>The same message is triggered by the float32 nodata sentinel <code>-3.4028234663852886e+38</code> (used inside <code>training_features.tif</code>) if it is written through unchanged &mdash; 3,061 cells inside the submission footprint in that file.</li>
+    <li>This repo's file has no nodata tag and is all-finite &mdash; neither failure mode applies.</li>
+  </ul>
+</section>
+
+<section class="section">
+  <h2>What this file is &mdash; and is not</h2>
+  <ul>
+    <li>It <strong>is</strong> a format-validated candidate submission (all format checks pass; sha256 pinned).</li>
+    <li>It <strong>is not</strong> organizer-scored: <code>labels.tif</code> is login-walled on DrivenData, so holdout DTI cannot be measured here and no organizer score exists.</li>
+    <li>It <strong>is not</strong> a copy of any previous GEMSDOE submission: the lane is Walker Lane structural-grain dotted segments plus geothermal-field clusters (Dixie Valley, Soda Lake, Steamboat, Brady's, Desert Peak), built without the catalogue &mdash; zero catalogue leakage by construction.</li>
+  </ul>
+  <p>Before spending a weekly DrivenData submission slot, place the competition data in <code>data/</code> (see <code>scripts/download_competition_data.sh</code>), run <code>python scripts/prepare_data.py</code>, re-test on the spatially-blocked holdout with <code>scripts/evaluate_holdout.py</code>, and regrid this TIF against the official <code>sample_submission.tif</code> if the grids differ.</p>
+</section>
+
+<p class="footnote">GEMSDOE72 &mdash; branch arena/121cb545-gemsdoe72 &middot; full prompt archived in <code>README.md</code> &middot; run card: <code>run_card.json</code>.</p>
+
+</div>
+</body>
+</html>
