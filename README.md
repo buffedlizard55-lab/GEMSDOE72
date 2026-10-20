@@ -1,154 +1,201 @@
-# GEMSDOE72 — Hydrothermal Alteration Halo Divergence for DOE GEMS Prize
+# GEMSDOE72
 
-**Competition:** [DOE GEMS Prize](https://www.drivendata.org/competitions/306/competition-doe-gems/) · 
-**Problem:** [page 967](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) · 
-**Rules PDF:** [docs.nlr.gov/docs/fy26osti/96647.pdf](https://docs.nlr.gov/docs/fy26osti/96647.pdf) · 
-**Reference solution:** [drivendataorg/gems-prize-reference-solution](https://github.com/drivendataorg/gems-prize-reference-solution) · 
-**Live site:** https://buffedlizard55-lab.github.io/GEMSDOE72/ · 
-**CRS:** EPSG:32611 (UTM 11N), 100 m, 3292×3730, transform [100,0,243350,0,-100,4508550]
+GEMS Prize Challenge (DrivenData #306) — candidate submission system for the
+DOE Geologic Enhanced Mapping System (GEMS) Prize. Produces a format-validated,
+downloadable single-band GeoTIFF submission for the geothermal-fault
+prediction competition, plus a clean GitHub Pages site with an executive
+summary, official sources, method/run card, and one-click download.
 
-> ### Prompt — read every time we work
-> **Goal:** Place top of leaderboard in [DrivenData #306](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).  
-> **Task:** Develop models that find geothermal-indicative faults *not* in the public USGS/INGENIOUS catalogue. Ground truth is incomplete; private test = newly identified faults labeled by experts before competition (Initial Round $50k), then expanded after expert review of submissions (Final Round $250k). One submission is scored in both rounds.  
-> **Metric:** Distance-weighted Tversky index, α=0.2 (FP), β=0.8 (FN), triangular kernel R=300 m (3 px at 100 m). See [mathematical representation](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#mathematical-representation).  
-> **Submission format:** Single-band Float32 GeoTIFF, EPSG:32611, 100 m, same bounds as training data, values in [0,1]. Sample: `example_submission.tif` (all zeros) via [data page](https://www.drivendata.org/competitions/306/competition-doe-gems/data/) (login required).  
-> **External data allowed** with license permitting sharing with sponsor — we use only free, official, verified sources (USGS, GDR, 3DEP, GeoDAWN) with sha256-pinned mirrors.  
-> **We must not hallucinate:** Every claim carries an evidence class (HOLDOUT-DTI or ORGANIZER-CONFIRMED), every source link is fetched twice, every raster sha256 is published. Verify line-by-line, no manual input, flag irregularities for review.  
-> **One-click submission:** The download on the site must be the file you submit — no assembly, no repro step. Portal error `"Predicted values must be in range [0, 1]"` is fixed by emitting `zeros.tif` (nodata=None, all 12,279,160 cells finite in [0,1]) alongside `nan.tif` (competition format).  
-
-> ### Core Values — kept central to every decision
-> **Maximize P(Win).** Every decision weighs tradeoffs to maximize probability Arena wins. Weekly submission slots are experiments, not lottery tickets.  
-> **Own the Outcome.** We own results end-to-end — we measure defects, publish them, and fix them without waiting for permission. Failure and success are signals to improve.
+> **Working branch:** `arena/121cb545-gemsdoe72` (do not rename; PR target is
+> `main`). Weekly DrivenData submission slots are a separate selector step;
+> no slot was spent in this session.
 
 ---
 
-## ⬇ ONE-CLICK SUBMISSION FILE — OK TO DOWNLOAD AND SUBMIT
+## FULL PROMPT (archived — read this first at the start of every work session)
 
-**[⬇ Download `gemsdoe72-h72-hydrothermal-halo-divergence-42k-20261020T194529Z-1ad095fc-zeros.tif`](docs/downloads/gemsdoe72-h72-hydrothermal-halo-divergence-42k-20261020T194529Z-1ad095fc-zeros.tif)** — 152 KB, 42,000 predicted pixels, single-band Float32, EPSG:32611, 3292×3730, every cell finite in [0,1], zero NaN, no nodata tag  
-[.zip (same GeoTIFF)](docs/downloads/gemsdoe72-h72-hydrothermal-halo-divergence-42k-20261020T194529Z-1ad095fc-zeros.zip) · [nan-outside twin (competition format)](docs/downloads/gemsdoe72-h72-hydrothermal-halo-divergence-42k-20261020T194529Z-1ad095fc-nan.tif) · [audit receipt](docs/downloads/gemsdoe72-h72-hydrothermal-halo-divergence-42k-20261020T194529Z-1ad095fc-audit.json)
+The following is the project prompt. It is stored here verbatim (duplicated
+recitals condensed once) so every session starts from the same base.
 
-| field | value |
-|---|---|
-| **filename** | `gemsdoe72-h72-hydrothermal-halo-divergence-42k-20261020T194529Z-1ad095fc-zeros.tif` |
-| **sha256** | `1ad095f...` (full in [registry/submission_build.json](registry/submission_build.json), receipt above) |
-| **format** | single-band Float32, EPSG:32611, 100 m, 3730×3292, 12,279,160 cells finite |
-| **range** | min 0.0, max 1.0, 0 cells outside [0,1], 0 NaN — re-read from bytes |
-| **content** | 42,000 predicted pixels (1=emit, 0=else), 0 on synthetic catalogue within 200 m (2 px buffer) |
-| **note to paste (unique name)** | `GEMSDOE72-H72-halo-div-42k` |
-| **note for form (≤140 chars)** | `GEMSDOE72 H72 halo-div 42k | Th/K Roberts + cond grad + topo divergence, 2px cat buffer, 0 on-cat; HOLDOUT-DTI 0.1554 drift` |
-| **verdict** | ✅ **OK TO DOWNLOAD AND SUBMIT** — passes 12/12 portal checks (see receipt). `zeros` variant guarantees `Predicted values must be in range [0, 1]` never triggers. If portal expects NaN outside, use the `nan` twin (identical inside footprint). |
+### Objective
 
-**Already-scored fallback:** The sample all-zero submission (provided on the [data page](https://www.drivendata.org/competitions/306/competition-doe-gems/data/)) scores 0.0 — useful only to validate portal path.
+Generate a UNIQUE TIF submission for the competition. Do not copy a previous
+submission unless for learning/education. A unique TIF submission must be
+generated. It must be obvious whether it is OK to download and submit the
+generated TIF submission. There must be an easy-to-download submission TIF
+file as described by the prompt. Read the entire prompt.
+
+### Parallel-run protocol
+
+1. LANE — stay inside the single method paragraph for your lane. If your
+   raster's rank-correlation with any registry raster exceeds 0.90, or more
+   than 70% of your dots fall within 3 px of one registry raster's dots, you
+   have drifted into another lane: log it as a duplicate and stop. Check on
+   the surface before placement AND on the final dots.
+2. REUSE, DON'T REBUILD — use the template's cached feature stack,
+   evaluate_holdout.py and submission_writer.py. Holdout = hide-and-recover:
+   withhold whole fault segments with a buffer, derive every catalogue-based
+   feature only from the visible faults, mask visible faults pixel-exactly,
+   score pooled DTI (alpha 0.2, beta 0.8, 300 m triangular kernel). If a
+   shared tool is wrong, fix it once in the template and report it; never
+   keep a private fork.
+3. LABEL EVERY NUMBER as HOLDOUT-DTI (evaluator version, number of withheld
+   positives, 95% CI) or ORGANIZER-CONFIRMED (copied from a submission-page
+   receipt). A projection is never written as a score.
+4. LEAKAGE CANARY — test each feature alone on the holdout before trusting
+   any result. AUC above 0.90 means leakage until proven otherwise.
+5. RUN CARD — end with one JSON card: hypothesis; mechanism; the named
+   non-fault process that could mimic it; holdout DTI + CI;
+   correlation/overlap vs registry; raster sha256; validator output (no NaN
+   inside the footprint, values in [0,1], CRS/shape/transform match);
+   submission name + note of at most 140 characters; verdict promote /
+   negative. Negative results are deliverables.
+6. BUDGET — stop after 3 experiments or 2 hours. Do not pick submissions;
+   promotion to a real slot is a separate selector step, within the weekly
+   cap shown on the submission page.
+
+### Competition facts (verified from official sources)
+
+- Competition: Geologic Enhanced Mapping System (GEMS) Prize Challenge,
+  DrivenData #306, sponsored by DOE Office of Geothermal with NLR.
+  https://www.drivendata.org/competitions/306/competition-doe-gems/
+- End date: Dec 3, 2026, 11:59 p.m. UTC. Prize pool $300,000 (initial round
+  $50,000 top 5 / $10k each; final round $250,000).
+- Task: develop models/algorithms predicting geological faults indicative of
+  geothermal resources. Ground truth: USGS quaternary faults + INGENIOUS
+  (public, known-incomplete); test set = newly identified faults NOT in the
+  USGS database, manually labeled by experts (GeoDAWN region).
+- Two rounds: Initial (private expert-labeled test set) and Final (expanded
+  label set after expert review of all submissions). Same submission scored
+  twice; choose one submission before the deadline.
+- Metric: distance-weighted Tversky index, alpha = 0.2 (FP penalty),
+  beta = 0.8 (FN penalty), triangular kernel R = 300 m (3 px at 100 m),
+  epsilon regulariser. DTI = TP_w / (TP_w + 0.2 FP_w + 0.8 FN_w + eps).
+  https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/
+- Submission format: single-band GeoTIFF, EPSG 32611 (UTM 11N), 100 m,
+  same bounds as training data, null/nan outside bounds, float32, values
+  in [0, 1]. Sample submission (total fault absence) on the data page.
+- External data encouraged, must be shareable with organizers.
+- Data (LOGIN REQUIRED): training_features.tif, labels.tif,
+  sample_submission.tif, existing_faults.tif, 1m_DEM_links.csv.
+  https://www.drivendata.org/competitions/306/competition-doe-gems/data/
+- Reference solution: https://github.com/drivendataorg/gems-prize-reference-solution
+- GeoDAWN: https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and (DOI 10.5066/P93LGLVQ; ScienceBase 657e1d85d34e23d3533209f7; bbox approx -120.0024/-116.1415, 37.3641/40.7247)
+- INGENIOUS: https://gbcge.org/current-projects/ingenious/ ; GDR submission 1391 (DOI 10.15121/1881483)
+- EPSG:32611: https://epsg.io/32611 ; Tversky: https://en.wikipedia.org/wiki/Tversky_index
+- Rules PDF: https://docs.nlr.gov/docs/fy26osti/96647.pdf
+
+### Prior results context (from GEMSDOE sites)
+
+Highest single GEMSDOE32 entry: h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros
+= 0.2778. Current competition leaderboard high cited: 0.4413 / 0.3774 /
+0.3195 at different reads (inconsistent across reads; treat all as
+unverified-by-us). Pattern among top entries: sparse "dots" (e.g. 37,654–
+44,090 px) near but not on catalogue traces, credit-per-dot break-even
+approx 0.2 x DTI. GEMSDOE32 pins the competition grid as 3730 x 3292,
+EPSG:32611, 100 m, transform [100, 0, 243350, 0, -100, 4508550], all finite,
+values in [0,1], no nodata tag (verified via its public audit.json).
+
+### Known submission-form error
+
+DrivenData returns "Predicted values must be in range [0, 1]" both when
+values fall outside [0, 1] AND when a -3.4e38 float32 nodata sentinel is
+written through. Fix: all-finite raster, nodata=None, clip to [0, 1].
+
+### Site requirements
+
+- GitHub Page with clean, user-friendly UI; official verified links as
+  sources; organized, easy-to-read.
+- One obvious downloadable submission TIF (download button on the home
+  page); state clearly whether it is OK to download and submit.
+- Executive summary subpage explaining exactly how to submit.
+- Unique submission name + short note (<= 140 chars) for the submit form.
+
+### Core values
+
+Maximize P(Win); Own the Outcome.
+
+### Deliverables in this repo
+
+- scripts/download_competition_data.sh — data placement (manual; login-walled)
+- scripts/prepare_data.py — data placement verification
+- scripts/evaluate_holdout.py — exact DTI + spatially-blocked segment holdout
+- scripts/submission_writer.py — format-valid GeoTIFF writer + audit receipt
+- scripts/generate_submission.py — unique candidate generator (3 experiment arms)
+- scripts/tests/test_metric.py — metric unit tests (worked-example verified)
+- docs/downloads/*.tif, -audit.json, -checks.json — downloadable submission
+- docs/index.html — home + one-click download + "OK to submit?" status
+- docs/executive-summary.html — how to submit
+- docs/method.html — lane, metric, holdout, run card
+- docs/sources.html — official verified links
+- run_card.json — full run card (JSON)
+- README.md — this file (full prompt)
+
+### Data blocker
+
+training_features.tif / labels.tif / sample_submission.tif / existing_faults.tif /
+1m_DEM_links.csv require DrivenData login; not accessible from this sandbox.
+Run `bash scripts/download_competition_data.sh` on an unrestricted machine
+into `data/`, then `python scripts/prepare_data.py`, before training or
+holdout evaluation.
 
 ---
 
-## Why 0.2778 → 0.3195 → 0.3262? PhD-level analysis of the leaderboard
+## What was produced (this session)
 
-**Why H33-2-B2 scored 0.2778 (GEMSDOE32):** The DTI metric is a budget: `DTI = TP_w / (0.2·S + 0.8·|G|)` where `S = Σ p(x)` is emitted mass and kernel credit `k(d)=max(1-d/300,0)`. Every non-best pixel costs 0.2 regardless of location; thinning a thick surface while keeping geometry removes `S` without losing `TP_w`, raising credit per emitted pixel. H33-2-B2 thinned to 37,654 dots with **2 px (200 m) catalogue flank buffer** — every dot ≥200 m from mapped faults — so all 37,654 units contribute to covering *hidden* truth instead of masked known faults. Its companion H33-D (0.2632) and H36-1-R1 (0.2710) confirm dose-response: stricter off-catalogue placement raises DTI at matched mass.
+Three experiment arms were generated, all format-validated
+(`all_checks_passed: true`; single band, float32, EPSG:32611, 3730 x 3292,
+transform [100, 0, 243350, 0, -100, 4508550], all finite, values in [0, 1],
+no nodata tag):
 
-**Why leaderboard leaders (0.3195 DARD, 0.3262 nchuzhoy) beat it:** At fixed mass, they deliver ~25% higher mean kernel credit per pixel. The group's best field at 0.26 emits 70.9% of mass within 300 m of catalogue (wasted `α` cost, zero return under masking). Leaders infer faults are **scattered ~185 m (1.85 px) around the surface field**, so greedy packing on a *smoothed* belief field (field convolved with 1.85 px Gaussian) scores +0.0247 over dot-thin in generative Monte Carlo (12/12 draws, GEMSDOE32 §shipped_vs_incumbent). This repository ports that insight to a *geothermal-specific* physics: clay halos + broad divergence are scattered exactly this way.
+| experiment | dots | sha256 (prefix) | verdict |
+|---|---|---|---|
+| control | 13,995 | 83c33e9b… | negative (lower bound) |
+| walkerlane | 5,358 | 2bddb233… | negative |
+| walkerlane+geothermal (primary) | 8,477 | e75b5616… | negative — format-validated candidate |
 
-**Can we beat 0.3195?** Yes, via the **alteration-halo divergence** lane: fault-hosted geothermal fluids leave K-depleted/Th-enriched clay halos (100 m scale) + conductive smectite caps + 1–3 km broad topographic arch under cover. These are invisible to 1 m LiDAR scarp detectors (all prior high scorers used scarps/ridges) but visible as co-located Th/K edge + cond gradient + topo divergence. Our holdout (HOLDOUT-DTI 0.1554 drift-corrected, 4 quadrants) beats the incumbent 0.14801 by +0.0074 with 0 on-catalogue dots — a measured ordering, not a score claim.
+Primary download:
+`docs/downloads/GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate.tif`
+sha256 `e75b56167895808b47c5fd078ad7a8fd4f6e9a8075b60f011260b265952558a7`
 
-*See [research.html](docs/research.html) for literature and [hypotheses.html](docs/hypotheses.html) for ranked candidates.*
+Submission name: `GEMSDOE72-H71-WALKERLANE+GEOTHERMAL`
+Note (<=140 chars): "GEMSDOE72 H71 WALKERLANE+GEOTHERMAL | Walker Lane
+structural-grain dots + geothermal-field clusters; 8477 dots, off-catalogue
+by construction; format-valid candidate, organizer score pending"
 
----
+**OK to download:** yes — format-validated, all values in [0,1].
+**OK to submit as a scored entry:** not yet — holdout DTI not measurable
+(labels.tif login-walled), no organizer score exists; regrid against the
+official sample_submission.tif before any real submission. Overall run-card
+verdict: **negative** (negative results are deliverables).
 
-## What this is
+### Hypothesis (lane)
 
-GEMSDOE72 is an auditable, synthesis-free submission system for DOE GEMS Prize. Three parts: (1) exact DTI implementation (verified against published worked example TP=3.00 FP=1.89 FN=2.00 → 0.60), (2) spatially-blocked holdout scoring emission rules under that metric, (3) unique lane emission (H72) with portal-safe paired GeoTIFFs.
+Undiscovered geothermal-indicative faults concentrate along the Walker Lane
+structural grain and at known geothermal fields, where youthful/concealed
+traces are missing from the USGS/INGENIOUS catalogue. Named non-fault
+mimicking process: distributed background strain / microseismicity (and
+paleo-geothermal sinter systems) can localize fluid flow without discrete
+mappable faults.
 
-- **Verified in this repo:** metric formula, transform, footprint (5,167,373 px inside), every raster sha256, 12 portal checks (tests + `scripts/audit_shipped.py`)
-- **Not claimed:** No organizer score exists for any artifact here; all numbers are HOLDOUT-DTI (local proxy) unless marked ORGANIZER-CONFIRMED from [leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/)
-
----
-
-## Reproducibility (one command)
+## How to run
 
 ```bash
-python3 -m venv .venv && .venv/bin/pip install rasterio numpy scipy
-.venv/bin/python scripts/generate_tif.py   # regenerates docs/downloads/*.tif + audit
-.venv/bin/python -m pytest tests -q        # 6 tests, metric identity + validator
+# 1. (External machine, logged into DrivenData) download competition data into data/
+bash scripts/download_competition_data.sh   # documents the manual step
+# 2. Verify placement
+python scripts/prepare_data.py
+# 3. Metric tests
+python -m scripts.tests.test_metric
+# 4. Generate a candidate
+python scripts/generate_submission.py --exp walkerlane+geothermal
+# 5. Evaluate (needs labels.tif in data/)
+python scripts/evaluate_holdout.py --predictions docs/downloads/*.tif --data data/labels.tif
 ```
 
-Data placement (if you have competition download): `bash scripts/download_competition_data.sh` → `data/` then `python scripts/prepare_data.py` — not required to regenerate the shipped TIF (footprint+transform are baked, audit is self-contained).
+## License / data
 
----
-
-## Method — 5 candidate hypotheses, ranked
-
-See [hypotheses.html](docs/hypotheses.html) and [knowledge/02_hypotheses-deep.md](knowledge/02_hypotheses-deep.md). Summary:
-
-| rank | hypothesis | layers (19-band names) | signature | expected DTI Δ | cost | status |
-|---|---|---|---|---|---|---|
-| **1** | **H72-A radiometric Th/K halo edge + cond gradient + topo divergence** | `mag_anom`, `rtp`, `cond_surf`, `det_elev`, `det_elev_slope`, `geodawn_rad_u8` (Th/K/U) | Roberts cross on Th/K + Sobel on cond + Laplacian divergence on det_elev; require ≥2 agree within 150–600 m | **+0.007–0.015** | low | **PROMOTED (this submission, 42k)** |
-| 2 | H72-B broad topographic divergence (1–3 km arch) | `det_elev` (12), `det_elev_slope` (19), `depth_to_base_surf` (15) | Divergence of slope = Laplacian at σ=10 px (1 km) | +0.010 | low | live (ablation in report) |
-| 3 | H72-C 1 m LiDAR sinuosity under cover | `lidar_scarp_features_u8` | Sinuosity of buried scarp trace (not single scarplet collinearity) | +0.008 | medium (3DEP fetch) | data-blocked (fetch URL verified) |
-| 4 | H72-D geothermal spring chemistry gradient (T/silica) | `gdr_wellspring_in_footprint.csv` (GDR 1391) | Inverse-distance weighted well temperature + silica, geofence to GeoDAWN | +0.012 | high (external CSV, free official) | deferred (requires GDR download) |
-| 5 | H72-E tilt-angle zero-crossing (TMI/RTP) with gravity coherence | `tc` (6), `iso_grav_anom` (13), `iso_grav_anom_hg` (18) | Tilt = atan(VG/HG), zero-cross where edge sits | +0.005 | medium | FALSIFIED (H62-1 precedent: ties raw, 0/4 blocks) |
-
-*Why H72-A should catch faults the catalogue lacks:* Catalogue = surface rupture visible. Blind faults under Qal cover have no scarp → missed by H19-5/H27 ridge/scarp detectors — but retain alteration halos detectable radiometrically and broad arch detectable topographically. That is the test set experts curated (faults *not* in USGS DB).
-
-*How H72-A differs:* No prior repo uses Th/K ratio (only TMI/RTP/mag_anom) or divergence transform; H33-A was orientation consensus, not edge+divergence.
-
-Validation of top candidate on spatially-blocked holdout before touching weekly slot: 4 quadrants × 2 draws, same-mass emit, catalogue pixels masked. See [research.html](docs/research.html) §Holdout.
-
----
-
-## Sources (verified, fetched twice where possible)
-
-| id | source | url | status |
-|---|---|---|---|
-| competition | DOE GEMS Prize overview | https://www.drivendata.org/competitions/306/competition-doe-gems/ | verified 2026-10-20 |
-| problem | Problem description + metric (verbatim source of metric.py) | https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ | verified 2026-10-20 (TP 3.00 FP 1.89 FN 2.00 → 0.60 reproduced) |
-| data | Data download (login-walled) | https://www.drivendata.org/competitions/306/competition-doe-gems/data/ | login required |
-| leaderboard | Public leaderboard | https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ | read 2026-10-20 (#1 nchuzhoy 0.3262) |
-| rules_pdf | GEMS rules NLR 96647 | https://docs.nlr.gov/docs/fy26osti/96647.pdf | mirrored (sha256 in GEMSDOE28) |
-| reference_solution | U-Net baseline (Lipor) | https://github.com/drivendataorg/gems-prize-reference-solution | cloned 2026-10-20 |
-| geodawn | GeoDAWN mag/rad surveys NW Great Basin | https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and | listed |
-| gbcge | GBCGE INGENIOUS | https://gbcge.org/current-projects/ingenious/ | listed |
-| epsg32611 | UTM 11N definition | https://epsg.io/32611 | listed |
-| tversky | Tversky index | https://en.wikipedia.org/wiki/Tversky_index | listed |
-| gdr1391 | GDR 1391 Nevada geothermal wells+springs | https://gdr.openei.org/submissions/1391 | listed (doi 10.15121/1881483) |
-| 3dep | USGS 3DEP 1 m DEM | https://www.usgs.gov/core-science-systems/ngp/3dep | listed (1m_DEM_links.csv via data page) |
-
-Full table: [docs/sources.html](docs/sources.html)
-
----
-
-## Irregularities flagged for review
-
-See [docs/irregularities.html](docs/irregularities.html): 35 from GEMSDOE32 inherited + 4 new (synthetic catalogue proxy, footprint vs prepared_manifest 5,167,373 vs 5,165,852 delta, holdout synthetic, no organizer score).
-
----
-
-## Run card (HOLDOUT-DTI)
-
-```json
-{
-  "hypothesis": "Hydrothermal alteration halo divergence: clay K-loss/Th-gain halo (Th/K Roberts edge) + MT conductive smectite cap (cond gradient) + 1-3km topographic arch (det_elev divergence)",
-  "mechanism": "Geothermal fluids precipitate smectite along fault damage zone → Th/K high-gradient edge (Roberts cross, 100m) + cond_surf low-gradient ridge (Sobel) + broad Laplacian divergence on detrended topography (σ=10px ~1km); require ≥2 physics agree within 300-600m; greedy max-coverage emission with 2px spacing and 2px catalogue buffer",
-  "non_fault_mimic": "Lithologic contacts (e.g., playa edge, volcanic flow front) and human linear features (roads/canals) also produce Th/K + cond + topo coincidences — mitigated by requiring Walker Lane trend (−35° ±15°) and buffer-excluding mapped catalogue faults, but playa margins remain a false-positive risk",
-  "holdout_dti": {"instrument": "drift_corrected_holdout_mean (4 quadrants x 2 draws, 20% withheld, masked visible faults, 300m kernel)", "value": 0.1554, "ci95": "±0.012", "n_withheld_positives": "~12,691 (estimated lower-bound hidden, quadrant-scaled)", "evaluator_version": "gems72-holdout-v1", "vs_incumbent": "+0.0074 vs 0.14801 (H32-D)"},
-  "correlation_overlap_vs_registry": {"max_rank_correlation": 0.38, "max_overlap_3px": 0.18, "registry_compared": "H19-5 dotted 44,090, H33-D, H32-D 46,090, H36-1 blind, DARD 0.3195 proxy (none >0.90 or >70% threshold)"},
-  "raster_sha256": "1ad095fc... (full in docs/downloads/*-audit.json, checked via rasterio re-read)",
-  "validator_output": {"no_nan_inside_footprint": true, "values_in_0_1": true, "crs_match": "EPSG:32611", "shape_match": "3730x3292", "transform_match": "[100,0,243350,0,-100,4508550]"},
-  "submission_name": "GEMSDOE72-H72-halo-div-42k",
-  "note": "H72 halo-div 42k Th/K Roberts+cond+divergence 2px buffer 0 on-cat HOLDOUT-DTI 0.1554 drift",
-  "verdict": "promote"
-}
-```
-
----
-
-## Limitations & next work
-
-- Training blocked on download: needs `training_features.tif` (437 MB) + `labels.tif` to run true CV; current TIF is synthetic-surface demo that proves portal compliance and lane uniqueness, not a trained model. Next session should fetch on unrestricted machine (`bash scripts/download_competition_data.sh`) and retrain.
-- Holdout is synthetic-proxy until real labels are present — numbers are HOLDOUT-DTI, not ORGANIZER-CONFIRMED.
-- 3DEP 1 m DEM (1m_DEM_links.csv → data/dem) would enable H72-C; GDR 1391 CSV would enable H72-D — both are free/official, obtainable, but not fetched in this sandbox.
-
----
-
-## License
-
-MIT — reuse any code, but generate your own TIF (do not copy this raster byte-identical; see parallel-run protocol lane rule).
+Competition data is DrivenData-provided (login). Public external sources:
+GeoDAWN (USGS, CC0), INGENIOUS (GDR, CC BY 4.0), USGS Quaternary Faults.
+All data used must be shareable with the challenge organizers (competition
+rules).

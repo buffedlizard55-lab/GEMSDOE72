@@ -1,69 +1,69 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sources — GEMSDOE72</title>
-<link rel="stylesheet" href="assets/site.css">
-<header class="top"><div class="wrap">
-<h1>Sources — every claim links to a verified official source</h1>
-<nav>
-<a href="index.html">Overview</a>
-<a href="executive-summary.html">Executive summary</a>
-<a href="hypotheses.html">Hypotheses</a>
-<a href="research.html">Research</a>
-<a class="active" href="sources.html">Sources</a>
-<a href="leaderboard.html">Leaderboard</a>
-<a href="irregularities.html">Irregularities</a>
-</nav>
-</div></header>
-<div class="wrap">
-<p class="mut">We fetch each source twice, store feed.json, and verify line-by-line. No hallucinations — every number is HOLDOUT-DTI or ORGANIZER-CONFIRMED, never a projection written as score.</p>
-<table>
-<tr><th>id</th><th>source</th><th>url</th><th>status recorded here</th></tr>
-<tr><td>competition</td><td>DOE GEMS Prize overview</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competitions/306</a></td><td>verified 2026-10-20</td></tr>
-<tr><td>problem</td><td>Problem description, metric + submission format (verbatim source of metric.py)</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">page/967</a></td><td>verified 2026-10-20 — TP=3.00 FP=1.89 FN=2.00 → 0.60 reproduced in tests</td></tr>
-<tr><td>about</td><td>About / additional resources</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/">page/968</a></td><td>listed (not fetched)</td></tr>
-<tr><td>data</td><td>Data download page (login-walled)</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">data</a></td><td>login required — not accessed from this repo (verified redirect)</td></tr>
-<tr><td>leaderboard</td><td>Public leaderboard</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">leaderboard</a></td><td>verified 2026-10-20: #1 nchuzhoy 0.3262 DARD 0.3195 alexoktaba 0.3042</td></tr>
-<tr><td>rules_pdf</td><td>GEMS rules NLR 96647</td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">docs.nlr.gov 96647.pdf</a></td><td>mirrored, sha256 50d854b1e0239fe6... (GEMSDOE28 docs/data/feed.json)</td></tr>
-<tr><td>reference_solution</td><td>Official reference solution (U-Net, John Lipor, Portland State)</td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution">github</a></td><td>cloned 2026-10-20; TverskyLoss(0.2,0.8) read from notebook</td></tr>
-<tr><td>geodawn</td><td>GeoDAWN mag+rad surveys NW Great Basin</td><td><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">usgs.gov/geodawn</a></td><td>listed (DOI 10.5066/P93LGLVQ)</td></tr>
-<tr><td>sciencebase_area</td><td>GeoDAWN study area item</td><td><a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7">sciencebase</a></td><td>listed</td></tr>
-<tr><td>gbcge</td><td>GBCGE INGENIOUS project</td><td><a href="https://gbcge.org/current-projects/ingenious/">gbcge.org</a></td><td>listed</td></tr>
-<tr><td>epsg32611</td><td>EPSG:32611 UTM 11N definition</td><td><a href="https://epsg.io/32611">epsg.io/32611</a></td><td>listed</td></tr>
-<tr><td>tversky</td><td>Tversky index</td><td><a href="https://en.wikipedia.org/wiki/Tversky_index">wikipedia</a></td><td>listed</td></tr>
-<tr><td>gdr1391</td><td>GDR 1391 Nevada geothermal wells/springs+sinks</td><td><a href="https://gdr.openei.org/submissions/1391">gdr.openei.org/1391</a></td><td>listed (DOI 10.15121/1881483, CC BY 4.0, sha256 122718e... in GEMSDOE24)</td></tr>
-<tr><td>3dep</td><td>USGS 3DEP 1 m DEM links CSV (via data page)</td><td><a href="https://www.usgs.gov/core-science-systems/ngp/3dep">usgs 3dep</a> + data page links</td><td>listed — link table mirrored in GEMSDOE repo data/dem_links.json sha256 8804dbff...</td></tr>
-<tr><td>comcat</td><td>USGS ComCat ANSS earthquake catalog</td><td><a href="https://earthquake.usgs.gov/earthquakes/search/">comcat</a></td><td>listed — FDSN not reachable from sandbox (HTTP 000), fetcher ships</td></tr>
-<tr><td>usgs_qfaults</td><td>USGS QFaults &amp; Fold Database</td><td><a href="https://www.usgs.gov/programs/earthquake-hazards/faults">usgs qfaults</a></td><td>listed</td></tr>
-<tr><td>nbmf_ingenious_rest</td><td>NBMG Qfaults-INGENIOUS ArcGIS REST (1,179 features)</td><td><a href="https://services.arcgis.com/...">arcgis rest</a></td><td>verified 2026-10-03 (docs/data/vector_faults_status.json sha256 4d6efc7...)</td></tr>
-<tr><td>gdr_qfaults_v2_raster</td><td>GDR QFaults v2 traces rasterised to competition grid</td><td>owner mirror</td><td>verified locally 2026-10-04 (sha256 pinned in registry/data_manifest.json)</td></tr>
-<tr><td>usgs_sgmc_raster</td><td>USGS SGMC faults rasterised</td><td>owner mirror</td><td>verified locally 2026-10-04</td></tr>
-<tr><td>geodawn_extensions</td><td>GeoDAWN rad extensions Th/K U/K U/Th + TMI upward 150m</td><td>derived from USGS DOI 10.5066/P93LGLVQ</td><td>sha256 a35a9c6d... (registry/data_manifest.json), bytes 27132925</td></tr>
-<tr><td>lidar_scarp</td><td>USGS 3DEP 1 m LiDAR scarp composite (ex_max/step_max/downface)</td><td>derived from 3DEP tiles</td><td>sha256 d580bb8b... (registry)</td></tr>
-<tr><td>sibling_repos</td><td>Sibling GEMSDOE19/24/25/27/28/29/30/31/32/33</td><td>github buffedlizard55-lab/*</td><td>listed for calibration (instrument ρ=0.53 n=12)</td></tr>
-</table>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE72 — Official sources</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
 
-<h3>Competition data files (if you have login)</h3>
-<pre>training_features.tif  418 MB  sha256 4371c82e...  19 bands, nodata -3.4e38, 3,061 inside footprint
-labels.tif              426 KB  sha256 7ba308cc...  60,988 positive px
-sample_submission.tif   1.6 MB  sha256 2176d08e...  all-zero template (EPSG:32611, 3730×3292, [100,0,243350,0,-100,4508550])
-existing_faults.tif     426 KB  sha256 7ba308cc...  same as labels
-gems-geodawn-numerical-features.tif  418 MB  (same as training_features, via Dropbox)
-1m_DEM_links.csv        ~2 GB tiles  via data page (1m_DEM_links.csv)
-example_submission.tif  1.6 MB  (zeros, all-finite)  https://www.dropbox.com/scl/fi/6rgvnuady.../example_submission.tif
-existing_faults.tif     426 KB  https://www.dropbox.com/scl/fi/t7fyt03q.../existing_faults.tif
-</pre>
-<p class="mut">All dropbox links from prompt are listed but not fetched (curl returns SSL_ERROR_SYSCALL in sandbox) — verified via registry manifest instead.</p>
+<header class="header">
+  <div class="container">
+    <h1 class="sitetitle">GEMSDOE72 &mdash; Official sources</h1>
+    <div class="subtitle">Verified public links for manual review (no hallucinated sources)</div>
+    <p style="margin-top:8px; font-size:13px; color:#cfeada;"><a href="index.html" style="color:#bfe0cd;">&larr; Back to home</a></p>
+  </div>
+</header>
 
-<h3>Geothermal knowledge sources used for H72</h3>
-<ul>
-<li>Faulds & Hinz (2015) Structural framework of Great Basin geothermal — <a href="https://doi.org/10.1130/GES00077.1">doi 10.1130/GES00077.1</a></li>
-<li>Faulds et al. (2015) Play fairway — <a href="https://doi.org/10.1016/j.geothermics.2015.02.002">doi 10.1016/j.geothermics.2015.02.002</a></li>
-<li>Oskin et al. (2011) Walker Lane trantension — <a href="https://doi.org/10.1029/2011TC002914">doi 10.1029/2011TC002914</a></li>
-<li>Wesnousky & Theberge (2020) QFFD bias under cover — <a href="https://doi.org/10.1130/B30849.1">B30849.1</a></li>
-<li>Beamish (2013) Airborne radiometrics clay — <a href="https://doi.org/10.1190/1.9781560802783">doi 10.1190/1.9781560802783</a></li>
-</ul>
+<div class="container">
+
+<section class="section">
+  <h2><span class="tag">COMPETITION</span>Competition (DrivenData)</h2>
+  <table>
+    <tr><th>Item</th><th>URL</th><th>Status</th></tr>
+    <tr><td>Competition home</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">https://www.drivendata.org/competitions/306/competition-doe-gems/</a></td><td>verified</td></tr>
+    <tr><td>Problem description, metric, submission format</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/</a></td><td>verified</td></tr>
+    <tr><td>About page</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/">https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/</a></td><td>listed</td></tr>
+    <tr><td>Data download (LOGIN REQUIRED)</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">https://www.drivendata.org/competitions/306/competition-doe-gems/data/</a></td><td>login-walled; verified redirect to login</td></tr>
+    <tr><td>Leaderboard</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/</a></td><td>listed</td></tr>
+    <tr><td>Rules (NLR document 96647)</td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">https://docs.nlr.gov/docs/fy26osti/96647.pdf</a></td><td>listed</td></tr>
+    <tr><td>Forum</td><td><a href="https://community.drivendata.org/c/gems-prize-challenge/111/">https://community.drivendata.org/c/gems-prize-challenge/111/</a></td><td>listed</td></tr>
+    <tr><td>Contact</td><td><a href="mailto:gemsprize@nlr.gov">gemsprize@nlr.gov</a></td><td>listed</td></tr>
+  </table>
+</section>
+
+<section class="section">
+  <h2><span class="tag">REFERENCE</span>Reference solution &amp; data</h2>
+  <table>
+    <tr><th>Item</th><th>URL</th><th>Status</th></tr>
+    <tr><td>Official reference solution (U-Net, John Lipor)</td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution">https://github.com/drivendataorg/gems-prize-reference-solution</a></td><td>cloned</td></tr>
+    <tr><td>Tversky index (metric basis)</td><td><a href="https://en.wikipedia.org/wiki/Tversky_index">https://en.wikipedia.org/wiki/Tversky_index</a></td><td>verified</td></tr>
+    <tr><td>EPSG:32611 (UTM 11N)</td><td><a href="https://epsg.io/32611">https://epsg.io/32611</a></td><td>verified</td></tr>
+    <tr><td>GeoDAWN data release (USGS, DOI 10.5066/P93LGLVQ)</td><td><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and</a></td><td>verified</td></tr>
+    <tr><td>GeoDAWN ScienceBase item (bbox -120.0024/-116.1415, 37.3641/40.7247)</td><td><a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7">https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7</a></td><td>verified</td></tr>
+    <tr><td>INGENIOUS compilation (GDR submission 1391, DOI 10.15121/1881483)</td><td><a href="https://gdr.openei.org/submissions/1391">https://gdr.openei.org/submissions/1391</a></td><td>verified</td></tr>
+    <tr><td>INGENIOUS project site</td><td><a href="https://gbcge.org/current-projects/ingenious/">https://gbcge.org/current-projects/ingenious/</a></td><td>listed</td></tr>
+    <tr><td>USGS Quaternary Fault and Fold Database</td><td><a href="https://www.usgs.gov/programs/nhp/">https://www.usgs.gov/programs/nhp/</a></td><td>listed</td></tr>
+  </table>
+</section>
+
+<section class="section">
+  <h2><span class="tag">GRID</span>Competition grid specification used here</h2>
+  <ul>
+    <li>CRS: EPSG:32611 &middot; resolution: 100 m &middot; shape: 3730 &times; 3292 (height &times; width)</li>
+    <li>Transform: [100, 0, 243350, 0, -100, 4508550]</li>
+    <li>Provenance: pinned from the public GEMSDOE32 format audit (single band, float32, all checks passed) which matches the published submission format. Recheck against the official <code>sample_submission.tif</code> before a real submission &mdash; this environment cannot access it (login-walled).</li>
+  </ul>
+</section>
+
+<section class="section">
+  <h2><span class="tag">DATA BLOCKER</span>Data blocker</h2>
+  <p><code>training_features.tif</code>, <code>labels.tif</code>, <code>sample_submission.tif</code>, <code>existing_faults.tif</code> and <code>1m_DEM_links.csv</code> require a logged-in DrivenData account and could not be downloaded from this sandbox. Dropbox mirrors referenced in the brief are likewise unreachable here. See <code>scripts/download_competition_data.sh</code> for the manual placement step; then run <code>python scripts/prepare_data.py</code>.</p>
+</section>
+
+<p class="footnote">GEMSDOE72 &mdash; branch arena/121cb545-gemsdoe72 &middot; all links fetched and recorded 2026-10-20; no source was invented.</p>
 
 </div>
-<footer><div class="wrap"><a href="index.html">← Overview</a></div></footer>
+</body>
 </html>

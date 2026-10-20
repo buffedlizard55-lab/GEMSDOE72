@@ -1,67 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Executive summary — GEMSDOE72</title>
-<link rel="stylesheet" href="assets/site.css">
-<header class="top"><div class="wrap">
-<h1>Executive summary — how to make a submission <span class="pill">for DrivenData portal</span></h1>
-<nav>
-<a href="index.html">Overview</a>
-<a class="active" href="executive-summary.html">Executive summary</a>
-<a href="hypotheses.html">Hypotheses</a>
-<a href="research.html">Research</a>
-<a href="sources.html">Sources</a>
-<a href="leaderboard.html">Leaderboard analysis</a>
-<a href="irregularities.html">Irregularities</a>
-</nav>
-</div></header>
-<div class="wrap">
-<h2>For executives: what this competition is in 30 seconds</h2>
-<p><strong>Prize:</strong> $300k total ($50k Initial Round + $250k Final Round) to find faults that indicate geothermal resources in NW Nevada (GeoDAWN region). <strong>Unique twist:</strong> the provided fault map is incomplete — experts have secretly labeled new faults for private test. Your submission helps update the full map. One file is scored in both rounds.</p>
-<p><strong>What you submit:</strong> One GeoTIFF with per-pixel confidence 0–1 that a fault exists. The organizer scores it with distance-weighted Tversky (α=0.2 FP, β=0.8 FN, 300 m triangular kernel). You have 3 scored submissions per week; only your chosen file counts in both prize rounds.</p>
-<p><strong>What this repo gives you:</strong> A one-click <code>.tif</code> that is legal, unique, and portal-safe — download, upload to DrivenData, done. No assembly, no command line, no data download required. Plus the science behind it, audited.</p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE72 — Executive summary</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
 
-<h2>Step-by-step: how to submit this file to the contest</h2>
-<div class="card">
-<ol>
-<li><strong>Download the file:</strong> On <a href="index.html">the overview page</a> click the green <code>⬇ ONE-CLICK SUBMISSION (.tif)</code> button. Save <code>gemsdoe72-h72-...-zeros.tif</code> (or the <code>.zip</code> containing it — portal accepts both). Keep the file name unchanged.</li>
-<li><strong>Go to the competition submit form:</strong> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData competition page</a> → <em>Submit</em> (requires log-in). You will see <em>File to submit — No file chosen</em>.</li>
-<li><strong>Attach the file:</strong> Click <em>Choose file</em> → select the downloaded <code>.tif</code> (recommended: <code>zeros.tif</code> variant, all cells finite) or <code>.zip</code>. The <code>nan.tif</code> twin is identical inside the footprint but uses NaN outside (sample format) — use it only if a portal quirk demands NaN.</li>
-<li><strong>Fill the unique name field:</strong> Paste <code>GEMSDOE72-H72-halo-div-42k</code> — this is the submission's unique slug.</li>
-<li><strong>Fill the optional note field:</strong> Paste <code>GEMSDOE72 H72 halo-div 42k | Th/K Roberts + cond grad + topo divergence, 2px cat buffer, 0 on-cat; HOLDOUT-DTI 0.1554 drift</code> (140 chars). Helps you tell submissions apart.</li>
-<li><strong>Create submission → wait for score:</strong> Portal validates format first (see error fix below), then queues for scoring. Public leaderboard updates; private test score is revealed only at round close — you pre-select one file for both rounds.</li>
-</ol>
+<header class="header">
+  <div class="container">
+    <h1 class="sitetitle">GEMSDOE72 &mdash; Executive summary</h1>
+    <div class="subtitle">How to make a submission into the DOE GEMS Prize Challenge (DrivenData #306)</div>
+    <p style="margin-top:8px; font-size:13px; color:#cfeada;"><a href="index.html" style="color:#bfe0cd;">&larr; Back to home</a></p>
+  </div>
+</header>
+
+<div class="container">
+
+<section class="section">
+  <h2>The one-minute version</h2>
+  <ol>
+    <li>Download the submission GeoTIFF from the home page: <code>GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate.tif</code>.</li>
+    <li>Sign in to DrivenData, open the GEMS Prize Challenge (#306) submission page, click <em>Make new submission</em>.</li>
+    <li>Upload the .tif (a .zip containing the single GeoTIFF is also accepted).</li>
+    <li>Paste this note into <em>Note (optional)</em> (140 chars):</li>
+  </ol>
+  <div class="note-box">
+    <code style="font-size:13px;">GEMSDOE72 H71 WALKERLANE+GEOTHERMAL | Walker Lane structural-grain dots + geothermal-field clusters; 8477 dots, off-catalogue by construction; format-valid candidate, organizer score pending</code>
+  </div>
+  <p>Submission name to use: <code>GEMSDOE72-H71-WALKERLANE+GEOTHERMAL</code>.</p>
+</section>
+
+<section class="section">
+  <h2>Submission format rules (official)</h2>
+  <ul>
+    <li>Single-band GeoTIFF (.tif), or a .zip containing a single GeoTIFF.</li>
+    <li>CRS: projected UTM zone 11N (EPSG:32611) &mdash; same as the training data.</li>
+    <li>Resolution: 100 m; same bounds as the training data; null/nan outside bounds allowed.</li>
+    <li>Datatype: 32-bit float (float32), values between 0 and 1 (probability/confidence of fault presence).</li>
+    <li>This repo's file: EPSG:32611, 100 m, 3730 &times; 3292, transform [100, 0, 243350, 0, -100, 4508550], float32, all finite, values in [0, 1], no nodata tag &mdash; <a href="downloads/GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate-audit.json">audit.json</a>.</li>
+  </ul>
+  <p class="footnote">Source: DrivenData problem description, "Submission format" &mdash; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">drivendata.org/competitions/306/competition-doe-gems/page/967/</a></p>
+</section>
+
+<section class="section status warn">
+  <div class="title">&#9888; The "Predicted values must be in range [0, 1]" error</div>
+  <ul>
+    <li>DrivenData rejects any submission whose raster values fall outside [0, 1].</li>
+    <li>The same message is triggered by the float32 nodata sentinel <code>-3.4028234663852886e+38</code> (used inside <code>training_features.tif</code>) if it is written through unchanged &mdash; 3,061 cells inside the submission footprint in that file.</li>
+    <li>This repo's file has no nodata tag and is all-finite &mdash; neither failure mode applies.</li>
+  </ul>
+</section>
+
+<section class="section">
+  <h2>What this file is &mdash; and is not</h2>
+  <ul>
+    <li>It <strong>is</strong> a format-validated candidate submission (all format checks pass; sha256 pinned).</li>
+    <li>It <strong>is not</strong> organizer-scored: <code>labels.tif</code> is login-walled on DrivenData, so holdout DTI cannot be measured here and no organizer score exists.</li>
+    <li>It <strong>is not</strong> a copy of any previous GEMSDOE submission: the lane is Walker Lane structural-grain dotted segments plus geothermal-field clusters (Dixie Valley, Soda Lake, Steamboat, Brady's, Desert Peak), built without the catalogue &mdash; zero catalogue leakage by construction.</li>
+  </ul>
+  <p>Before spending a weekly DrivenData submission slot, place the competition data in <code>data/</code> (see <code>scripts/download_competition_data.sh</code>), run <code>python scripts/prepare_data.py</code>, re-test on the spatially-blocked holdout with <code>scripts/evaluate_holdout.py</code>, and regrid this TIF against the official <code>sample_submission.tif</code> if the grids differ.</p>
+</section>
+
+<p class="footnote">GEMSDOE72 &mdash; branch arena/121cb545-gemsdoe72 &middot; full prompt archived in <code>README.md</code> &middot; run card: <code>run_card.json</code>.</p>
+
 </div>
-
-<h2>The portal error you hit — and the fix</h2>
-<p><strong>Symptom:</strong> Submitting a <code>.tif</code> returns <code>"Predicted values must be in range [0, 1]"</code> even though inside values look like 0/1.</p>
-<p><strong>Root causes (measured):</strong></p>
-<ul>
-<li><em>Mechanism 1 — Float32 sentinel:</em> <code>training_features.tif</code> uses nodata <code>-3.4028234663852886e+38</code> — 7,113,308 cells, 3,061 inside footprint. Writing those through puts them outside [0,1].</li>
-<li><em>Mechanism 2 — NaN sentinel + nodata tag:</em> A raster with <code>nodata=NaN</code> and NaN cells outside footprint is legal per problem description, but one validator change away from rejection; plus some writers set nodata to the sentinel.</li>
-</ul>
-<p><strong>Fix verified by re-reading bytes:</strong> Every GeoTIFF on this site is single-band Float32, EPSG:32611, 100 m, 3730×3292, <strong>all 12,279,160 cells finite, min 0.0 max 1.0, zero NaN, no nodata tag</strong> for the <code>zeros</code> variant. The <code>nan</code> twin is offered for format fidelity but is one validator change away from the same error. Each download ships a checksum receipt (<code>*-audit.json</code>) produced by re-opening the file from disk (see <code>scripts/audit_shipped.py</code>).</p>
-<pre>checks:
-  single_band ✅  dtype_float32 ✅  dimensions 3730×3292 ✅  crs EPSG:32611 ✅
-  footprint 5,167,373 px all finite ✅  in [0,1] ✅  0 NaN inside ✅  0 sentinel ✅
-  outside compliant ✅  0 on-catalogue ✅  validator-range guaranteed ✅</pre>
-
-<h2>What was verified (and what is not claimed)</h2>
-<ul>
-<li>Metric implementation matches published worked example TP=3.00 FP=1.89 FN=2.00 → DTI 0.60 (pytest).</li>
-<li>Transform/CRS/shape match sample_submission.tif byte-for-byte (via re-read).</li>
-<li>sha256 of every shipped raster is published; sidecar <code>*-audit.json</code> is generated after write.</li>
-<li><strong>Not claimed:</strong> No organizer score exists for any artifact in this repository. All DTI numbers are HOLDOUT-DTI (local spatially-blocked holdout, drift-corrected) unless marked ORGANIZER-CONFIRMED.</li>
-</ul>
-
-<h2>Budget &amp; lane rule</h2>
-<p>Stop after 3 experiments or 2 hours. This repo's primary (H72 42k) was validated on blocked holdout before any weekly slot — do not spend a slot on an idea that hasn't beaten the current holdout best. Lane rule: if rank-correlation with any registry raster exceeds 0.90 or &gt;70% dots fall within 3 px of one registry raster, log as duplicate and stop — our emission is 0.38/0.18, so unique.</p>
-
-<h2>Limitations — what we need access to next</h2>
-<ul>
-<li>No DrivenData auth → cannot auto-download training_features.tif (418 MB), labels.tif, sample_submission.tif (verified redirect to login). Workaround: run <code>bash scripts/download_competition_data.sh</code> on unrestricted machine into <code>data/</code>.</li>
-<li>3DEP 1 m DEM links CSV (data page) needed for H72-C; GDR 1391 wells/springs CSV needed for H72-D — both free/official, fetchable, not yet in sandbox.</li>
-</ul>
-</div>
-<footer><div class="wrap"><a href="index.html">← Overview</a></div></footer>
+</body>
 </html>

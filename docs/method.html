@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE72 — Method, lane, run card</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <h1 class="sitetitle">GEMSDOE72 &mdash; Method &amp; run card</h1>
+    <div class="subtitle">Geological hypothesis, evaluation protocol, and experiment results</div>
+    <p style="margin-top:8px; font-size:13px; color:#cfeada;"><a href="index.html" style="color:#bfe0cd;">&larr; Back to home</a></p>
+  </div>
+</header>
+
+<div class="container">
+
+<section class="section">
+  <h2><span class="tag">LANE</span>Lane (unique vs all GEMSDOE sites)</h2>
+  <p><strong>Walker Lane structural-grain &times; geothermal-system prior.</strong> The GeoDAWN region is the Walker Lane / western Great Basin shear zone. Instead of dots on/near catalogue traces (GEMSDOE32 flank dots), generic ridge/curvature surfaces, or ML heatmaps, this lane emits sparse high-confidence dots on:</p>
+  <ul>
+    <li>24 en-echelon NNE-SSW segments (azimuth ~165&ndash;180&deg;, 15&ndash;30 km, 100 m dot spacing) following the Walker Lane structural grain across the grid &mdash; where new faults are expected to be found;</li>
+    <li>dotted clusters over five known Great Basin geothermal fields (Dixie Valley, Soda Lake, Steamboat, Brady's, Desert Peak), where youthful, alluvium-concealed, unmapped faults host geothermal plumbing.</li>
+  </ul>
+  <p><strong>Targets faults missing from the USGS/INGENIOUS catalogue</strong>: short, young, concealed traces near geothermal systems. <strong>No catalogue is used &mdash; zero catalogue leakage by construction.</strong> Differs from every listed GEMSDOE submission (all are catalogue-proximal dots, ridge/scattering surfaces, or ML fields).</p>
+</section>
+
+<section class="section">
+  <h2><span class="tag">METRIC</span>Metric (exact re-implementation)</h2>
+  <p>Distance-weighted Tversky index, alpha = 0.2 (FP penalty), beta = 0.8 (FN penalty), triangular kernel k(d) = max(1 &ndash; d/R, 0), R = 300 m = 3 px at 100 m resolution &mdash; verbatim from the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">official problem description</a>. Implemented in <code>scripts/evaluate_holdout.py</code> and verified against the published worked example (TP_w = 3.00, FP_w = 1.89, FN_w = 2.00 &rarr; 0.60) in <code>scripts/tests/test_metric.py</code>.</p>
+  <pre>DTI = TP_w / (TP_w + 0.2 * FP_w + 0.8 * FN_w + eps)
+TP_w = sum_{g in GT} max_{x: d(x,g)<=3px} p(x) * k(d(x,g))
+FP_w = sum_{x: p(x)>0} p(x) * (1 - max_g k(d(x,g)))
+FN_w = |GT| - TP_w</pre>
+</section>
+
+<section class="section">
+  <h2><span class="tag">Q&A</span>Why did h33-...-zeros score 0.2778 — and can we beat 0.2778 / 0.3195?</h2>
+  <p><strong>Why the dotted "-zeros" files score high.</strong> The DTI is a credit budget: prediction mass within 300 m of a truth pixel earns triangular-weighted TP credit (up to 1.0 per truth pixel), mass farther than 300 m from any truth pixel is FP charged at alpha = 0.2, and uncovered truth is FN charged at beta = 0.8. A solid fault surface emits far more mass than it can convert to credit — pixels already covered earn nothing extra — so thinning the surface to dots at kernel-relevant offsets raises the <em>mean credit per emitted pixel</em>. Deleting dots within 2 px of the catalogue (the "-zeros" prune) removes mass spent on catalogue pixels, which are not the test truth. GEMSDOE32 measured the break-even at ≈ 0.0548 credit/dot empirically and derived 0.0520 = 0.2 × 0.26 analytically from the published formula — two routes, one answer. That is why sparse dotted files (37k–44k dots) lead the GEMSDOE sites while solid surfaces score ≈ 0.22 or less.</p>
+  <p><strong>Can we beat 0.2778 / 0.3195?</strong> Yes, in principle, by raising credit density at equal emitted mass: (1) the hidden truth is scattered ≈ 1.85 px around the catalogue surface (GEMSDOE25/32 inference), so cover the surface <em>blurred by ~2 px</em>, not the solid line; (2) add independent off-catalogue priors — exactly this lane (Walker Lane structural grain &times; geothermal fields) — so dots land on faults the catalogue misses. <strong>Caveat: unverified.</strong> labels.tif is login-walled, so no holdout DTI and no organizer score exist for this file; nothing here claims a leaderboard score. Current public leader ≈ 0.32 requires roughly 25% more mean credit per pixel at equal mass over the group's best field.</p>
+</section>
+
+<section class="section">
+  <h2><span class="tag">HOLDOUT</span>Holdout protocol</h2>
+  <ul>
+    <li>Hide whole fault segments with a buffer (spatially blocked folds by segment orientation);</li>
+    <li>Derive catalogue-based features only from visible faults;</li>
+    <li>Mask visible faults pixel-exactly;</li>
+    <li>Score pooled DTI over the withheld segment buffers.</li>
+  </ul>
+  <p class="status warn"><strong>Holdout DTI is not measurable in this environment:</strong> <code>labels.tif</code> is login-walled on DrivenData (verified redirect to login), so no HOLDOUT-DTI and no 95% CI can be computed here. No number on this page is a projection or a score.</p>
+</section>
+
+<section class="section">
+  <h2><span class="tag">EXPERIMENTS</span>Experiments (budget: 3 used; no submission slot spent)</h2>
+  <table>
+    <tr><th>#</th><th>Experiment</th><th>Dots</th><th>Validator</th><th>Verdict</th></tr>
+    <tr><td>1</td><td>control &mdash; uniform random sparse dots</td><td>13,995</td><td>all_checks_passed</td><td>negative (lower bound)</td></tr>
+    <tr><td>2</td><td>walkerlane &mdash; structural-grain segments only</td><td>5,358</td><td>all_checks_passed</td><td>negative</td></tr>
+    <tr><td>3</td><td>walkerlane+geothermal &mdash; <strong>primary candidate</strong></td><td>8,477</td><td>all_checks_passed</td><td>negative &mdash; format-validated candidate, organizer score pending</td></tr>
+  </table>
+  <p>Raster sha256 (primary): <code>e75b56167895808b47c5fd078ad7a8fd4f6e9a8075b60f011260b265952558a7</code> &mdash; file <code>docs/downloads/GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate.tif</code>.</p>
+</section>
+
+<section class="section">
+  <h2><span class="tag">RUN CARD</span>Full run card</h2>
+  <p>See <a href="../run_card.json">run_card.json</a> (JSON): hypothesis, mechanism, named non-fault mimicking process, holdout DTI + CI, correlation/overlap vs registry, raster sha256, validator output, submission name + note (&le;140 chars), verdict (promote / negative).</p>
+  <p><strong>Overall verdict: negative.</strong> All artifacts are format-validated candidates; none are organizer-confirmed scores. Promote to a real weekly submission slot only after competition data is placed in <code>data/</code>, holdout DTI beats the current best, and the TIF is regridded against the official <code>sample_submission.tif</code>.</p>
+</section>
+
+<p class="footnote">GEMSDOE72 &mdash; branch arena/121cb545-gemsdoe72 &middot; generated 2026-10-20 &middot; full prompt archived in <code>README.md</code>.</p>
+
+</div>
+</body>
+</html>
