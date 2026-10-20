@@ -1,0 +1,114 @@
+{
+  "candidate_id": "gemsdoe72-h72-hydrothermal-halo-divergence-42k",
+  "slug": "h72-hydrothermal-halo-divergence-42k",
+  "timestamp": "20261020T194529Z",
+  "content_digest8": "1ad095fc",
+  "description": "H72 hydrothermal halo divergence: Th/K Roberts edge + cond gradient + det_elev divergence, 42k dots, 2px spacing, 2px catalogue buffer, 0 on-catalogue",
+  "zeros_tif": {
+    "filename": "gemsdoe72-h72-hydrothermal-halo-divergence-42k-20261020T194529Z-1ad095fc-zeros.tif",
+    "size_bytes": 156160,
+    "sha256": "414956a55615c612b16f5326cbe15ecbfb71a74263aad9e55bdb5f856473846f",
+    "mode": "zeros",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "shape": [
+      3730,
+      3292
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nodata_repr": "None",
+    "emitted_positive_pixels": 42000,
+    "footprint_fraction": 0.008128,
+    "on_catalogue_positive_pixels": 0,
+    "in_footprint_finite_pixels": 5167373,
+    "in_footprint_min": 0.0,
+    "in_footprint_max": 1.0,
+    "full_grid_finite_pixels": 12279160,
+    "checks": {
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "in_footprint_zero_sentinel": true,
+      "in_footprint_range_0_1": true,
+      "outside_footprint_compliant": true,
+      "zero_on_catalogue_leakage": true,
+      "validator_range_0_1_guaranteed": true
+    },
+    "all_checks_passed": true
+  },
+  "nan_tif": {
+    "filename": "gemsdoe72-h72-hydrothermal-halo-divergence-42k-20261020T194529Z-1ad095fc-nan.tif",
+    "size_bytes": 288016,
+    "sha256": "0a5b7bda289038b91966172211e7a1eaba2d317791062a021527f75f8fe0f501",
+    "mode": "nan",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "shape": [
+      3730,
+      3292
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nodata_repr": "nan",
+    "emitted_positive_pixels": 42000,
+    "footprint_fraction": 0.008128,
+    "on_catalogue_positive_pixels": 0,
+    "in_footprint_finite_pixels": 5167373,
+    "in_footprint_min": 0.0,
+    "in_footprint_max": 1.0,
+    "full_grid_finite_pixels": 5167373,
+    "checks": {
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "in_footprint_zero_sentinel": true,
+      "in_footprint_range_0_1": true,
+      "outside_footprint_compliant": true,
+      "zero_on_catalogue_leakage": true,
+      "validator_range_0_1_guaranteed": true
+    },
+    "all_checks_passed": true
+  },
+  "holdout_metrics": {
+    "catalogue_hidden_mean": 0.1035,
+    "sgmc_prevalence_calibrated_dti": 0.0672,
+    "drift_corrected_holdout_mean": 0.1554,
+    "predicted_leaderboard_dti": 0.268,
+    "note": "HOLDOUT-DTI via synthetic holdout (4 quadrants, 20% withheld). Not organizer-confirmed."
+  },
+  "lane": "H72-hydrothermal-alteration-halo-divergence",
+  "footprint_px": 5167373,
+  "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+  ],
+  "unique_note_zeros": "GEMSDOE72 H72 halo-div | 42000 dots, 0 on-catalogue, 2px buffer, Th/K+cond+divergence; HOLDOUT-DTI 0.1554 drift-corr",
+  "unique_note_nan": "GEMSDOE72 H72 halo-div (nan) | 42000 dots; HOLDOUT-DTI 0.1554"
+}
