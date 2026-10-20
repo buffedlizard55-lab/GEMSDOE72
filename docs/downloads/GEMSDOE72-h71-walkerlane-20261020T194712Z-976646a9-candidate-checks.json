@@ -1,0 +1,34 @@
+{
+  "filename": "GEMSDOE72-h71-walkerlane-20261020T194712Z-976646a9-candidate.tif",
+  "sha256": "2bddb233e881876343cf6dbef784e21c3f33327590bf158192c3a1eec769606b",
+  "shape": [
+    3730,
+    3292
+  ],
+  "crs": "EPSG:32611",
+  "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+  ],
+  "dtype": "float32",
+  "nodata": null,
+  "all_checks_passed": true,
+  "checks": {
+    "single_band": true,
+    "dtype_float32": true,
+    "dimensions_match": true,
+    "crs_epsg_32611": true,
+    "transform_matches": true,
+    "all_finite": true,
+    "range_0_1": true,
+    "zero_nan": true,
+    "zero_inf": true,
+    "zero_sentinel_outside_range": true,
+    "nodata_none": true,
+    "all_checks_passed": true
+  }
+}

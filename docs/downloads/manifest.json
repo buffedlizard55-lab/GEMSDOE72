@@ -1,0 +1,26 @@
+{
+  "audit_json": "gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.audit.json",
+  "budget_px": 6000,
+  "crs": "EPSG:32611",
+  "dtype": "float32",
+  "generated_at_utc": "20261020T194809Z",
+  "ok_to_submit_format": true,
+  "score_status": "UNVERIFIED baseline (not organizer-confirmed)",
+  "sha256": "e05f56bceb31d8d5007ddda2069aaa8e9850a864f6c141d6f621c8ebe6c8209f",
+  "shape": [
+    3730,
+    3292
+  ],
+  "submission_tif": "gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.tif",
+  "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+  ],
+  "validator_message": "all format checks passed",
+  "validator_passed": true,
+  "zip": "gemsdoe72-baseline-dotted-budget-20261020T194809Z-5e1a26d8-zeros-outside-footprint.zip"
+}

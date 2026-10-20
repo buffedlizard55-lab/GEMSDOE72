@@ -1,0 +1,86 @@
+/* GEMSDOE72 site styles — clean, single-purpose, fast */
+:root {
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --brand: #0b6b4c;
+  --brand-hover: #085a3e;
+  --bg: #ffffff;
+  --panel: #f7faf7;
+  --border: #d7e3d9;
+  --ok: #15803d;
+  --ok-bg: #ecfdf3;
+  --warn: #b45309;
+  --warn-bg: #fffbeb;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --mono: #111827;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.6;
+}
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.header {
+  background: var(--brand);
+  color: #fff;
+  padding: 28px 20px 24px;
+}
+.header .sitetitle { margin: 0; font-size: 24px; letter-spacing: 0.4px; }
+.header .subtitle { margin: 6px 0 0; font-size: 13.5px; color: #cfeada; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+.section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+h2 { font-size: 20px; margin: 0 0 12px; display: flex; align-items: center; gap: 10px; }
+h2 .tag { font-size: 12px; padding: 2px 8px; border-radius: 10px; background: #eef6f0; color: var(--brand); border: 1px solid var(--border); }
+p { margin: 0 0 14px; }
+ul { margin: 8px 0 14px; padding-left: 22px; }
+li { margin-bottom: 6px; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; background: #f1f5f1; padding: 1px 6px; border-radius: 4px; border: 1px solid #e3eae3; }
+pre { background: #f1f5f1; border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; overflow-x: auto; font-size: 12.5px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { border-bottom: 1px solid var(--border); text-align: left; padding: 8px 10px; vertical-align: top; }
+th { background: #f1f5f1; color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.6px; }
+
+/* Download hero */
+.download-hero { background: var(--panel); border: 2px solid var(--border); border-radius: 10px; padding: 30px; margin: 24px 0; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.download-hero .download-title { font-size: 19px; font-weight: 700; margin: 0; }
+.download-hero .btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--brand); color: #fff; font-weight: 700; font-size: 16px;
+  padding: 14px 26px; border-radius: 8px; border: none; cursor: pointer;
+  align-self: flex-start;
+}
+.download-hero .btn:hover { background: var(--brand-hover); text-decoration: none; }
+.download-hero .btn:active { transform: translateY(1px); }
+.download-meta { font-size: 13px; color: var(--muted); display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; width: 100%; }
+.download-meta b { color: var(--ink); }
+
+/* Status boxes */
+.status { border-radius: 8px; padding: 16px 20px; margin: 20px 0; border: 1px solid; }
+.status.ok { background: var(--ok-bg); border-color: #bbe7d4; color: #065f46; }
+.status.warn { background: var(--warn-bg); border-color: #fdcd9a; color: #7c3a12; }
+.status .title { font-weight: 700; font-size: 15px; display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+.status ul { margin: 6px 0 0; padding-left: 20px; }
+.status li { margin-bottom: 4px; font-size: 14px; }
+
+/* Checklist */
+.checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px 14px; margin-top: 10px; }
+.check { font-size: 12.5px; display: flex; gap: 6px; align-items: center; }
+.check .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--ok); flex: 0 0 10px; }
+
+/* Note box */
+.note-box { border: 1px dashed var(--border); border-radius: 8px; padding: 14px 18px; background: #fbfcfb; margin: 16px 0; }
+.note-box .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+
+.footnote { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 16px; margin-top: 24px; }
+.button { display: inline-block; background: var(--panel); color: var(--ink); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; font-size: 14px; margin-right: 8px; margin-bottom: 8px; }
+.button:hover { background: #e9efea; }
+
+.kbd { font-family: ui-monospace, monospace; font-size: 12px; background: #eef2f1; border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; }
