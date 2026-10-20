@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hypotheses — GEMSDOE72</title>
+<link rel="stylesheet" href="assets/site.css">
+<header class="top"><div class="wrap">
+<h1>Hypotheses — 5 untried candidates, ranked <span class="pill">lane H72</span></h1>
+<nav>
+<a href="index.html">Overview</a>
+<a href="executive-summary.html">Executive summary</a>
+<a class="active" href="hypotheses.html">Hypotheses</a>
+<a href="research.html">Research</a>
+<a href="sources.html">Sources</a>
+<a href="leaderboard.html">Leaderboard</a>
+<a href="irregularities.html">Irregularities</a>
+</nav>
+</div></header>
+<div class="wrap">
+
+<p>We generated 5 geological hypotheses we haven't tried yet (parALLEL-run protocol). Each names: layer(s), physical signature (edge/curvature transform), why it should catch a catalogue-missing fault, and how it differs from anything in this repo. Ranked by expected DTI improvement and implementation cost. Top candidate was validated on our spatially-blocked holdout before touching a weekly slot.</p>
+
+<table>
+<tr><th>rank</th><th>hypothesis</th><th>layers (official band names)</th><th>physical signature (transform)</th><th>why it catches a missing fault (not one in USGS/INGENIOUS)</th><th>how it differs from anything already in repo</th><th>expected ΔDTI</th><th>cost</th><th>status</th></tr>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>H72-A Hydrothermal alteration halo divergence</strong></td>
+<td><code>geodawn_rad_u8</code> (Th, K, U counts; derived Th/K, U/K), <code>cond_surf</code> (17), <code>det_elev</code> (12), <code>det_elev_slope</code> (19)</td>
+<td>Roberts cross on Th/K ratio (edge-detection) + Sobel magnitude on cond_surf (conductive clay cap) + Laplacian divergence on det_elev (σ=10 px ~1 km broad arch) and curvature zero-crossing (σ=2 px). Fuse = √(halo·topo); require ≥2 agree within 300–600 m (dilation 4/6 px).</td>
+<td>Catalogue faults are mapped where Pleistocene scarps are visible. Blind faults under Quaternary alluvium (Qal) have no scarp but retain clay halos (K-depleted, Th-enriched, 10–100 m wide) and conductive smectite caps + 1–3 km arch. Test set was curated from faults experts found by eye *not* in USGS DB — exactly this population.</td>
+<td>No prior repo uses Th/K ratio at all (only TMI/RTP/mag_anom) nor divergence transform. H33-A was 6-physics orientation consensus (structure tensor), not edge+divergence; H33-B/C were skeleton collinearity votes; H32-D was Hessian line products. Roberts cross on radiometric is novel.</td>
+<td><strong>+0.007–0.015</strong></td><td>low (bands 12/17/19 + geodawn_rad already mirrored, sha256-pinned in GEMSDOE24)</td><td class="ok">PROMOTED — this submission (42k, HOLDOUT-DTI 0.1554 drift, 0.0672 SGMC, 0.1035 cat)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>H72-B Broad topographic divergence (damage-zone arch)</td>
+<td><code>det_elev</code> (12), <code>det_elev_slope</code> (19), <code>depth_to_base_surf</code> (15)</td>
+<td>Laplacian at σ=8–12 px (800–1200 m) on detrended elevation = divergence of slope field. Long-wavelength arch under cover.</td>
+<td>Fault damage zone creates 2–5 km flexure even when scarp buried; local curvature (s2) at 2.5 px misses it. Broad divergence is the INGENIOUS-relevant signal (Walker Lane transtension).</td>
+<td>Repo has <code>curv_s1/s2</code> and <code>ridge_s1/2/3</code> at σ=1–3 px local — none at 8–12 px broad. H62-4 was local curvature zero-crossing, not broad divergence.</td>
+<td>+0.010</td><td>low</td><td>live — ablation shows topo alone 0.09072 SGMC vs 0.06059 incumbent (reported in research)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>H72-C 1 m LiDAR sinuosity under cover</td>
+<td><code>lidar_scarp_features_u8.tif</code> (ext, 5 bands, ex_max/step_max/downface)</td>
+<td>Sinuosity = ratio of trace length to endpoint distance for scarp segments >200 m; buried scarps are low-sinuosity (straight) vs channels (sinuous).</td>
+<td>1 m DEM resolves 0.5 m scarps under thin Qal where 100 m DEM cannot. Sinuosity separates tectonic from fluvial lineaments — catalogue mappers used this cue by eye but no submitted detector automated it.</td>
+<td>Repo used LiDAR only as per-pixel corroboration weight, never as sinuosity-segmented trace. GEMSDOE 7/47/60 used LiDAR ridge/top-pct, not sinuosity.</td>
+<td>+0.008</td><td>medium (requires 3DEP 1 m DEM links CSV → fetch, ~2 GB for GeoDAWN tiles)</td><td>data-blocked — URL verified: <code>1m_DEM_links.csv</code> on data page → <code>https://...</code> (login), fetch script ships as <code>scripts/fetch_3dep.sh</code> but not run in sandbox</td>
+</tr>
+<tr>
+<td>4</td>
+<td>H72-D Geothermal spring chemistry gradient</td>
+<td><code>gdr_wellspring_in_footprint.csv</code> (GDR 1391, DOI 10.15121/1881483, CC BY 4.0), <code>cond_surf</code></td>
+<td>Inverse-distance weighted well temperature + SiO₂ (geothermometer) → heat source proximity field; geofenced to GeoDAWN footprint; intersect with structure.</td>
+<td>Blind geothermal faults have no surface rupture but feed warm springs (e.g., Dixie Valley). Well temperature anomalies are the sponsor-adjacent INGENIOUS signal — no prior submission used GDR wells (all used mag/grav/topo only).</td>
+<td>Zero prior submissions used GDR 1391 chemistry; H19-5 used “thermal-pop” but from generic population, not GDR. New external dataset per “Allowed external datasets” rule, freely licensed.</td>
+<td>+0.012</td><td>high (needs GDR CSV download + distillation to 100 m grid; not yet fetched in sandbox, source obtainable: <a href="https://gdr.openei.org/submissions/1391">gdr.openei.org/submissions/1391</a>)</td><td>deferred — source named, obtainable, fetch script <code>scripts/fetch_gdr.sh</code> ships, not run (would exceed budget)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>H72-E Tilt-angle zero-crossing (magnetic) with gravity coherence</td>
+<td><code>tc</code> (6), <code>tmi</code> (14), <code>iso_grav_anom</code> (13), <code>iso_grav_anom_hg</code> (18)</td>
+<td>Tilt = atan(VG/HG) on TMI, zero-cross = magnetic contact; require coincident gravity HG ridge (edge coincidence).</td>
+<td>Magnetic basement steps underlie many Walker Lane faults; tilt edge is depth-insensitive where TMI/RTP amplitude is depth-masked.</td>
+<td>H62-1 (tilt zero-crossing) was tested in GEMSDOE32: 10 variants tied raw (+0.0%), 0/4 blocks beaten — <strong>FALSIFIED</strong>. General law from that: don't re-differentiate derivative products (band 6 already is derivative). This rank-5 is included for completeness, not promoted.</td>
+<td>+0.005</td><td>medium</td><td class="bad">FALSIFIED — do not promote</td>
+</tr>
+</table>
+
+<h2>Validation of top candidate on spatially-blocked holdout</h2>
+<p>Top candidate H72-A was validated before touching weekly slot — 4 quadrants (NW/NE/SW/SE split at median row/col), 1.5 km collar buffer (15 px), 1.2 km domain erosion, 2 draws (seeds 20/21), 20% of faults withheld whole-segment with buffer, every catalogue-based feature derived only from visible faults, visible faults masked pixel-exactly, pooled DTI α=0.2 β=0.8 300 m kernel. At matched emitted mass (42k):</p>
+<ul>
+<li>catalogue_hidden_mean <strong>0.1035</strong> HOLDOUT-DTI vs 0.09832 incumbent (+0.0052)</li>
+<li>sgmc_prevalence_calibrated 0.0672 vs 0.06059 (+0.0066)</li>
+<li>drift_corrected 0.1554 vs 0.14801 (+0.0074) — best live-score predictor (ρ=0.53, LOO MAE 0.053 in GEMSDOE32 calibration)</li>
+<li>Leakage canary: each feature alone AUC ≤0.68 on holdout (no leakage); whole field AUC 0.681.</li>
+<li>Promotion rule (preregistered): beat incumbent on all three instruments + 0 on-catalogue — PASS.</li>
+</ul>
+<p class="mut">If candidate can't be validated without new external data, specific source needed: H72-C needs 3DEP 1 m DEM via <code>1m_DEM_links.csv</code> (data page, requires login, free USGS); H72-D needs GDR 1391 wells CSV at <code>https://gdr.openei.org/submissions/1391</code> (free CC BY). Both obtainable — fetch scripts ship, not run in sandbox (budget).</p>
+
+<h2>Expected vs cost ranking visualization</h2>
+<p class="mut">Rank 1 (H72-A) is high-return, low-cost — promoted. Rank 5 (H72-E) is falsified — never promote despite low cost.</p>
+
+</div>
+<footer><div class="wrap"><a href="index.html">← Overview</a></div></footer>
+</html>

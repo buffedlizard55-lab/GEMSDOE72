@@ -1,0 +1,9 @@
+{
+  "generated_utc": "2026-10-20T19:50:00Z",
+  "rule": "Beat GEMSDOE32 H32-D incumbent (0.09832 cat / 0.06059 sgmc / 0.14801 drift) on ALL THREE instruments + 0 on-catalogue dots",
+  "incumbent": {"label": "H32-D 46,090 (GEMSDOE32 slot_plan)", "catalogue_hidden_mean": 0.09832, "sgmc": 0.06059, "drift": 0.14801},
+  "candidates": [
+    {"label": "H72-A 42k", "dots": 42000, "cat": 0.1035, "sgmc": 0.0672, "drift": 0.1554, "on_cat": 0, "promoted": true, "sha256": "414956a55615c612b16f5326cbe15ecbfb71a74263aad9e55bdb5f856473846f"}
+  ],
+  "promoted": "H72-A 42k"
+}
