@@ -1,21 +1,29 @@
-name: CI
-
+name: ci
+# Unit tests + pinned-mirror verification.  Runs on every pull request and on main.
 on:
-  push:
-    branches: [main, arena/bae9a0ab-gemsdoe72]
-  pull_request:
-    branches: [main, arena/bae9a0ab-gemsdoe72]
-
+  pull_request: {branches: [main]}
+  push: {branches: [main]}
+  schedule: [{cron: '17 6 * * 1'}]
+  workflow_dispatch:
+permissions: {contents: read}
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install dependencies
-        run: pip install numpy rasterio scipy pytest
-      - name: Run metric tests (verifies worked example 0.60)
-        run: python -m pytest tests/ -q
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install -r requirements.txt
+      - name: Unit tests (metric, emission, submission format)
+        run: python -m pytest tests -q
+  mirrors:
+    # The mirrors are owner-hosted; if a byte changes, the digest check fails and nothing silently
+    # enters a submission.  This job is the alarm.
+    runs-on: ubuntu-latest
+    env: {GH_TOKEN: '${{ github.token }}'}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install numpy rasterio
+      - run: python scripts/fetch_data.py --dest /tmp/gemsdoe72/data

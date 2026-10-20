@@ -3,68 +3,106 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE72 — Executive summary</title>
-<link rel="stylesheet" href="assets/style.css">
+<title>GEMSDOE72 — Executive summary: how to make a submission</title>
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #1a1a1a; background: #f7f8fa; }
+  .shell { max-width: 860px; margin: 0 auto; padding: 32px 20px; }
+  header { border-bottom: 1px solid #d1d5db; padding-bottom: 20px; margin-bottom: 32px; }
+  h1 { font-size: 24px; margin: 0 0 6px; }
+  h2 { font-size: 18px; margin: 28px 0 12px; font-weight: 600; }
+  h3 { font-size: 15px; margin: 18px 0 8px; font-weight: 600; }
+  p { line-height: 1.6; margin: 0 0 14px; color: #2b2b2b; }
+  a { color: #0969da; text-decoration: underline; }
+  a.btn { display: inline-block; background: #0969da; color: #fff; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 1px solid #0550ae; }
+  a.btn:hover { background: #0550ae; }
+  .verdict { border: 1px solid #d1d5db; border-left: 5px solid #6f4e01; border-radius: 8px; padding: 16px 20px; margin: 24px 0; background: #fffbf0; }
+  .verdict.yes { border-left-color: #1a7e47; background: #f0fdf4; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid #d1d5db; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f3f4f6; font-weight: 600; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; background: #f3f4f6; padding: 1px 6px; border-radius: 4px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .note { color: #444; font-size: 14px; }
+  ul { margin: 6px 0 14px 20px; line-height: 1.7; }
+  ol { margin: 6px 0 14px 22px; line-height: 1.8; }
+  .step { border: 1px solid #d1d5db; border-radius: 8px; padding: 14px 18px; margin: 12px 0; background: #fff; }
+  .step b { color: #0969da; }
+  .badge { display: inline-block; background: #e7e7ea; color: #24292f; border-radius: 6px; padding: 2px 8px; font-size: 12px; font-weight: 600; margin-right: 6px; }
+  footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #d1d5db; color: #575757; font-size: 13px; }
+</style>
 </head>
 <body>
+<div class="shell">
+  <header>
+    <h1>GEMSDOE72 — Executive summary: how to make a competition submission</h1>
+    <p class="note">DOE GEMS Prize (DrivenData #306) · GeoDAWN / NW Nevada · single-band GeoTIFF submission format</p>
+    <p><a class="btn" href="index.html">← Back to the submission file download</a></p>
+  </header>
 
-<header class="header">
-  <div class="container">
-    <h1 class="sitetitle">GEMSDOE72 &mdash; Executive summary</h1>
-    <div class="subtitle">How to make a submission into the DOE GEMS Prize Challenge (DrivenData #306)</div>
-    <p style="margin-top:8px; font-size:13px; color:#cfeada;"><a href="index.html" style="color:#bfe0cd;">&larr; Back to home</a></p>
-  </div>
-</header>
+  <section class="verdict yes">
+    <h2>Bottom line up front</h2>
+    <p>Download <code>gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif</code> from <a href="index.html">the landing page</a>, upload it to the DrivenData submission page, paste the note below, and submit. The file is format-valid: every pixel inside the study footprint is finite and in [0, 1], everything outside is 0.0, there is no nodata sentinel, and the CRS/shape/geotransform match the competition template (EPSG:32611, 3730×3292, 100 m).</p>
+    <p class="note"><strong>It is an unscored candidate.</strong> Its holdout-DTI (0.1885, 95% CI [0.166, 0.211]) is our own holdout measurement, not an organizer-confirmed leaderboard score.</p>
+  </section>
 
-<div class="container">
+  <section>
+    <h2>The submission file (one-click download)</h2>
+    <table>
+      <tr><th style="width:34%">Property</th><th>Value</th></tr>
+      <tr><td>File to download</td><td><code class="mono">gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif</code></td></tr>
+      <tr><td>Link</td><td><a href="downloads/gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros.tif" class="btn">Download GeoTIFF (zeros variant)</a></td></tr>
+      <tr><td>Variant</td><td><a href="downloads/gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-nan.tif">-nan.tif</a> (NaN outside the footprint; matches the historical convention)</a></td></tr>
+      <tr><td>sha256 (verify after download)</td><td><code class="mono">650b5ad2273f3634c15c0a97840ce36056906d3a2cedb110a77f8708c6783966</code> (zeros) · <code class="mono">2fa38ef230bd4da5a1868bf6c4adbd625729f3ee6b9e3f3df10c9e118eab5010</code> (nan)</td></tr>
+      <tr><td>Submission name (form)</td><td><code class="mono">gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5</code></td></tr>
+      <tr><td>Note (optional field, 137/140 chars)</td><td><code class="mono" style="white-space:pre-wrap">GEMSDOE72 H72-1 | off-catalogue SGMC faults, dot-thinned 280 m; 27,823 px, 0 on catalogue; holdout-DTI 0.1885 CI [0.166,0.211] | UNSCORED</code></td></tr>
+    </table>
+    <p class="note">The DrivenData form accepts "a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF". The -zeros.tif is the belt-and-braces choice: zero NaN anywhere, so no validator can reject it for out-of-range values.</p>
+  </section>
 
-<section class="section">
-  <h2>The one-minute version</h2>
-  <ol>
-    <li>Download the submission GeoTIFF from the home page: <code>GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate.tif</code>.</li>
-    <li>Sign in to DrivenData, open the GEMS Prize Challenge (#306) submission page, click <em>Make new submission</em>.</li>
-    <li>Upload the .tif (a .zip containing the single GeoTIFF is also accepted).</li>
-    <li>Paste this note into <em>Note (optional)</em> (140 chars):</li>
-  </ol>
-  <div class="note-box">
-    <code style="font-size:13px;">GEMSDOE72 H71 WALKERLANE+GEOTHERMAL | Walker Lane structural-grain dots + geothermal-field clusters; 8477 dots, off-catalogue by construction; format-valid candidate, organizer score pending</code>
-  </div>
-  <p>Submission name to use: <code>GEMSDOE72-H71-WALKERLANE+GEOTHERMAL</code>.</p>
-</section>
+  <section>
+    <h2>Step-by-step: how to submit</h2>
+    <div class="step"><b>1. Download.</b> On <a href="index.html">the landing page</a> click <strong>Download submission GeoTIFF (zeros, all-finite, in [0,1])</strong>. Save the .tif.</div>
+    <div class="step"><b>2. Open the submission form.</b> Go to the DrivenData <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank" rel="noopener">New submission</a> page for the GEMS Prize ("File to submit" → "No file chosen").</div>
+    <div class="step"><b>3. Upload.</b> Select the single .tif (or a .zip containing only that .tif). It must match the submission format's CRS, shape, and geotransform — this file was written on the pinned <code>sample_submission.tif</code> template.</div>
+    <div class="step"><b>4. Note.</b> Paste the 137-character note above into "Note (optional)" — it helps you tell submissions apart later (e.g. clustering with k=25).</div>
+    <div class="step"><b>5. Submit.</b> Wait for the portal to score it; the leaderboard value, if accepted, is the only ORGANIZER-CONFIRMED number.</div>
+  </section>
 
-<section class="section">
-  <h2>Submission format rules (official)</h2>
-  <ul>
-    <li>Single-band GeoTIFF (.tif), or a .zip containing a single GeoTIFF.</li>
-    <li>CRS: projected UTM zone 11N (EPSG:32611) &mdash; same as the training data.</li>
-    <li>Resolution: 100 m; same bounds as the training data; null/nan outside bounds allowed.</li>
-    <li>Datatype: 32-bit float (float32), values between 0 and 1 (probability/confidence of fault presence).</li>
-    <li>This repo's file: EPSG:32611, 100 m, 3730 &times; 3292, transform [100, 0, 243350, 0, -100, 4508550], float32, all finite, values in [0, 1], no nodata tag &mdash; <a href="downloads/GEMSDOE72-h71-walkerlane+geothermal-20261020T194646Z-0172d3a9-candidate-audit.json">audit.json</a>.</li>
-  </ul>
-  <p class="footnote">Source: DrivenData problem description, "Submission format" &mdash; <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">drivendata.org/competitions/306/competition-doe-gems/page/967/</a></p>
-</section>
+  <section>
+    <h2>The [0, 1] error, fixed</h2>
+    <p>DrivenData rejects submissions whose predicted values fall outside <code>[0, 1]</code> — and it rejects the old float32 nodata sentinel <code>-3.4028234663852886e+38</code> with the same message, because that sentinel is not a value in [0, 1]. This file avoids both failure modes: no NaN anywhere (zeros variant), no sentinel, all values clipped to [0, 1] inside the footprint and exactly 0.0 outside. Verified by an independent re-read of the published bytes (12-point audit, all passed).</p>
+  </section>
 
-<section class="section status warn">
-  <div class="title">&#9888; The "Predicted values must be in range [0, 1]" error</div>
-  <ul>
-    <li>DrivenData rejects any submission whose raster values fall outside [0, 1].</li>
-    <li>The same message is triggered by the float32 nodata sentinel <code>-3.4028234663852886e+38</code> (used inside <code>training_features.tif</code>) if it is written through unchanged &mdash; 3,061 cells inside the submission footprint in that file.</li>
-    <li>This repo's file has no nodata tag and is all-finite &mdash; neither failure mode applies.</li>
-  </ul>
-</section>
+  <section>
+    <h2>What was measured (holdout, not a leaderboard claim)</h2>
+    <table>
+      <tr><th>Quantity</th><th>Value</th><th>Label</th></tr>
+      <tr><td>Holdout-DTI, drift-corrected mean</td><td>0.1885</td><td>HOLDOUT-DTI</td></tr>
+      <tr><td>95% CI across 4 spatial quadrants</td><td>[0.1658, 0.2113]</td><td>HOLDOUT-DTI</td></tr>
+      <tr><td>Pixels on the competition catalogue</td><td>0</td><td>audit</td></tr>
+      <tr><td>Leakage-canary AUC</td><td>0.498 (≤ 0.90: no leakage)</td><td>HOLDOUT-DTI</td></tr>
+      <tr><td>Verdict</td><td>promote (package only; slot spend is a separate selector step)</td><td>run card</td></tr>
+    </table>
+  </section>
 
-<section class="section">
-  <h2>What this file is &mdash; and is not</h2>
-  <ul>
-    <li>It <strong>is</strong> a format-validated candidate submission (all format checks pass; sha256 pinned).</li>
-    <li>It <strong>is not</strong> organizer-scored: <code>labels.tif</code> is login-walled on DrivenData, so holdout DTI cannot be measured here and no organizer score exists.</li>
-    <li>It <strong>is not</strong> a copy of any previous GEMSDOE submission: the lane is Walker Lane structural-grain dotted segments plus geothermal-field clusters (Dixie Valley, Soda Lake, Steamboat, Brady's, Desert Peak), built without the catalogue &mdash; zero catalogue leakage by construction.</li>
-  </ul>
-  <p>Before spending a weekly DrivenData submission slot, place the competition data in <code>data/</code> (see <code>scripts/download_competition_data.sh</code>), run <code>python scripts/prepare_data.py</code>, re-test on the spatially-blocked holdout with <code>scripts/evaluate_holdout.py</code>, and regrid this TIF against the official <code>sample_submission.tif</code> if the grids differ.</p>
-</section>
+  <section>
+    <h2>Official sources (for manual review)</h2>
+    <ul>
+      <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">DOE GEMS Prize — competition home</a></li>
+      <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">Problem description, metric and submission format</a></li>
+      <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/" target="_blank" rel="noopener">Data download page (login required)</a></li>
+      <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Public leaderboard</a></li>
+      <li><a href="https://github.com/drivendataorg/gems-prize-reference-solution" target="_blank" rel="noopener">Official reference solution (U-Net, Tversky loss)</a></li>
+      <li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and" target="_blank" rel="noopener">USGS GeoDAWN survey page</a></li>
+      <li><a href="https://epsg.io/32611" target="_blank" rel="noopener">EPSG:32611 (UTM zone 11N, the competition CRS)</a></li>
+      <li><a href="https://en.wikipedia.org/wiki/Tversky_index" target="_blank" rel="noopener">Tversky index (basis of the competition metric)</a></li>
+      <li><a href="sources.html">Full sources table with verification status</a></li>
+    </ul>
+  </section>
 
-<p class="footnote">GEMSDOE72 &mdash; branch arena/121cb545-gemsdoe72 &middot; full prompt archived in <code>README.md</code> &middot; run card: <code>run_card.json</code>.</p>
-
+  <footer>
+    GEMSDOE72 · branch <code>arena/64d4e8f7-gemsdoe72</code> · Numbers labelled HOLDOUT-DTI are our own holdout measurements; numbers labelled ORGANIZER-CONFIRMED are copied from a submission-page receipt. No number here is written as a projection of an organizer score.
+  </footer>
 </div>
 </body>
 </html>

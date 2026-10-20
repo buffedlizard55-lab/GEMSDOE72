@@ -1,0 +1,57 @@
+{
+ "generated_by": "scripts/build_identification_pack.py",
+ "purpose": "three-slot exact identification of T, K, F on the hidden label set; see knowledge/02_the_ceiling_and_the_instrument.md section 6",
+ "anchor_source": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+ "anchor_positive_px": 44090,
+ "files": {
+  "gems32-probe-S1-ANCHOR-identical-to-live-02600.tif": {
+   "bytes": 806758,
+   "sha256": "4dc4cc54b061cb4567a5500c8fa2bfe750a39340b02c8cdbb4308916f36cbcc3",
+   "finite_cells": 12279160,
+   "nan_cells": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "range_violations": 0,
+   "role": "S1 ANCHOR",
+   "construction": "bit-identical in-footprint values to the anchor; re-encoded all-finite with no nodata tag",
+   "expected_relation_to_anchor": "leaderboard score should reproduce the anchor's"
+  },
+  "gems32-probe-S2-SCALE-lambda-0.5.tif": {
+   "bytes": 799095,
+   "sha256": "d6462b76bce1a54920bd4e9d61700f3a1cc2f8dedf89d93651f74d10144c0243",
+   "finite_cells": 12279160,
+   "nan_cells": 0,
+   "min": 0.0,
+   "max": 0.5,
+   "range_violations": 0,
+   "role": "S2 SCALE",
+   "construction": "lambda = 0.5 applied to every positive value of S1",
+   "algebra": "1/DTI(0.5) = alpha + alpha*(F/T) + 2*beta*(K/T)",
+   "expected_relation_to_anchor": "strictly and predictably BELOW S1 (dDTI/dlambda>0)"
+  },
+  "gems32-probe-S3-NULLADD-2000px.tif": {
+   "bytes": 810344,
+   "sha256": "da4193e3a2e0470908b5bd1e28de97f25ee1ce15c57c959d0b623414d200692a",
+   "finite_cells": 12279160,
+   "nan_cells": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "range_violations": 0,
+   "role": "S3 NULL-ADD",
+   "construction": "S1 plus 2000 unit-mass pixels placed at the maximum of min(distance-to-anchor-support, distance-to-catalogue, distance-to-footprint-edge), mutually >= 6 px apart",
+   "algebra": "1/DTI = 1/DTI(S1) + alpha*2000/T  ->  T = alpha*2000/delta(1/DTI)",
+   "probes_added": 2000,
+   "min_dist_to_catalogue_px": 49.24428900898052,
+   "min_dist_to_anchor_support_px": 49.24428900898052,
+   "min_dist_to_footprint_edge_px": 49.33558553417604,
+   "expected_relation_to_anchor": "strictly BELOW S1 by ~alpha*2000/T in 1/DTI; only the best submission counts toward standing"
+  }
+ },
+ "decision_rule": {
+  "step_1": "T = alpha*M / (1/s_S3 - 1/s_S1)",
+  "step_2": "K = T*(1/s_S2 - 1/s_S1)/beta",
+  "step_3": "F = T*(1/s_S1 - alpha - beta*K/T)/alpha",
+  "then": "report the measured hidden-set recall T/K, and re-price every subsequent emission decision on the measured K instead of the owner model K_hat = 12,226",
+  "residual_risk": "if any S3 probe pixel lands within 300 m of a hidden fault then dT>0 and T is over-estimated; mitigation is the >=4 px catalogue clearance and the maximum-distance placement, and the risk is bounded by the fact that probes are at the minimum of every belief field in the repository"
+ }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "repo": "buffedlizard55-lab/GEMSDOE72",
+  "register": [
+    {
+      "id": "IR-72-001",
+      "severity": "high",
+      "description": "Conflicting leaderboard high values in circulation",
+      "details": "The prompt cites 0.4413 (first mention) and 0.3195 (later mention) as the current GEMSDOE leaderboard high. The sister GEMSDOE32 registry snapshot (fetched 2026-10-04 from its docs page) reads #1 nchuzhoy 0.3262, #2 DARD 0.3195, #3 alexoktaba 0.3042. The DrivenData public leaderboard (https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) is login-walled from this sandbox and could not be re-fetched to arbitrate.",
+      "action": "No organizer-confirmed score is used anywhere in this repo. All numbers produced here are labelled HOLDOUT-DTI; nothing is written as a projection of an organizer score."
+    },
+    {
+      "id": "IR-72-002",
+      "severity": "medium",
+      "description": "Sister-site leaderboard listings may not correspond to organizer scores",
+      "details": "GEMSDOE32's own site states 'NO ORGANISER SCORE EXISTS for this or any artifact in this repository' for its h33-h33-2-b2 artifact, while the GEMSDOE32 leaderboard listing cites h33-h33-2-b2-zeros: 0.2778 and its own snapshot cites 0.2708 as a base. The relationship between sister-site listings and organizer scores is unverified.",
+      "action": "Treat every sister-site score as cited-only; verify against a submission-page receipt before using any of it as ORGANIZER-CONFIRMED."
+    },
+    {
+      "id": "IR-72-003",
+      "severity": "medium",
+      "description": "Competition training data is login-walled; not organizer-authenticated here",
+      "details": "training_features.tif, labels.tif and sample_submission.tif require DrivenData login (https://www.drivendata.org/competitions/306/competition-doe-gems/data/). This repo restores integrity-pinned owner mirrors (buffedlizard55-lab/GEMSDOE and GEMSDOE24 at pinned git refs, sha256-verified) solely to run the holdout; the bytes are NOT organizer-authenticated.",
+      "action": "Anyone reproducing results must re-download from the official data page with their own credentials and re-verify sha256."
+    },
+    {
+      "id": "IR-72-004",
+      "severity": "info",
+      "description": "Grid geometry taken from the pinned mirrors (to be re-verified against the official template)",
+      "details": "EPSG:32611, 100 m, width 3292 x height 3730, origin (243350, 4508550), footprint 5,167,373 px, catalogue positives 60,988 px, as measured on the restored labels.tif / sample_submission.tif.",
+      "action": "Re-measure from data/sample_submission.tif after official download; CI job verify-data fails on any mismatch."
+    }
+  ]
+}

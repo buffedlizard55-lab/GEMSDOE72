@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "GEMSDOE72-PREREG-1",
+  "statement": "Holdout-DTI lane: does the off-catalogue SGMC geologic-map fault-trace emission (H72-1), dot-thinned at min_dist=2.8 px and masked pixel-exactly on the competition catalogue, beat the random control (A4-style) and the single-band TMI-gradient arm (H72-2) on the spatially-blocked proxy truth, under the official metric (DTI, alpha=0.2, beta=0.8, R=300 m)?",
+  "blocks": "4 quadrants of the footprint, 15 px (1.5 km) collar between train and held-out block, whole fault segments hidden at 20% per draw (draws 20 and 21)",
+  "hide_frac": 0.20,
+  "draws": [20, 21],
+  "budget_px": null,
+  "prior_dti": null,
+  "arms": {
+    "H72-1_sgmc_off_catalogue_d1_thinned_2.8": "SGMC off-catalogue traces dilated 1 px, dot-thinned min_dist=2.8 px, catalogue masked pixel-exactly",
+    "H72-2_tmi_gradient_top8k": "training_features band 03 tmi_hg top-8000 px by gradient magnitude inside the footprint",
+    "A4_random_control": "8,000 uniform random in-domain pixels"
+  },
+  "promotion_rule": "packaged candidate must have drift-corrected holdout mean > random control mean on all 4 quadrants and leakage-canary AUC <= 0.90",
+  "honesty": "The proxy truth is the visible catalogue plus the SGMC off-catalogue secondary truth calibrated to an estimated 12,691 hidden truth pixels. This instrument CANNOT measure the hidden new-fault set of round 2; a pass licenses packaging a candidate, never a claim of an organizer score."
+}

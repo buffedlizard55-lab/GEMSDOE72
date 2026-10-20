@@ -1,0 +1,9 @@
+# Extra packages the parallel session's tree (src/gemsdoe32/, merged from arena/01a104ba) lists for its
+# own scripts. Kept out of requirements.txt because installing them on the CI runner broke the job
+# (resolver failure against the numpy pin above) and because nothing under tests/ or scripts/ that CI
+# runs needs them. Install explicitly if you run that tree's data-prep utilities.
+tifffile>=2023.1.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+shapely>=2.0.0
+geopandas>=0.13.0

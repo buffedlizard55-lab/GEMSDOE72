@@ -1,242 +1,209 @@
-"""Exact re-implementation of the GEMS distance-weighted Tversky index (DTI).
+#!/usr/bin/env python3
+"""GEMSDOE72 holdout-DTI evaluation for one candidate emission mask.
 
-Source (official problem description, verified 2026-10-20):
-https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/
+Implements the lane method verbatim:
 
-DTI(alpha, beta) = TP_w / (TP_w + alpha * FP_w + beta * FN_w + eps)
+    Holdout = hide-and-recover: withhold whole fault segments with a buffer,
+    derive every catalogue-based feature only from the visible faults, mask
+    visible faults pixel-exactly, score pooled DTI (alpha 0.2, beta 0.8,
+    300 m triangular kernel).
 
-with alpha = 0.2 (false-positive penalty), beta = 0.8 (false-negative penalty)
-and a triangular kernel k(d) = max(1 - d/R, 0) with range R = 300 m.
-At the competition's 100 m resolution, R = 3 px. Distances d are Euclidean
-distances between pixel centres in pixels.
+Every number it prints is a HOLDOUT-DTI number (evaluator version, number of
+withheld positives, 95% CI across the four spatial quadrants) -- never a
+projection of an organizer score.
 
-    TP_w = sum_{g in G}  max_{x: d(x,g)<=R}  p(x) * k(d(x, g))
-    FP_w = sum_{x: p(x)>0}  p(x) * (1 - max_g k(d(x, g)))
-    FN_w = sum_{g in G}  (1 - max_{x: d(x,g)<=R} p(x) * k(d(x, g)))
-
-Note FN_w = |G| - TP_w because the inner max lies in [0, 1].
-
-All numbers produced by this module are HOLDOUT-DTI numbers (evaluator version,
-spatially-blocked holdout, alpha=0.2, beta=0.8, R=300 m triangular kernel) and
-are never organizer-confirmed scores.
+Usage:
+    .venv/bin/python scripts/evaluate_holdout.py --builtin sgmc_off_catalogue --name H72-1
+    .venv/bin/python scripts/evaluate_holdout.py --builtin tmi_gradient --budget 8000 --name H72-2
+    .venv/bin/python scripts/evaluate_holdout.py --builtin random --budget 8000 --name RANDOM-CTRL
+    .venv/bin/python scripts/evaluate_holdout.py --mask /path/to/mask.npy --name CUSTOM
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import math
+import os
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
-from scipy import ndimage
+import rasterio
 
-ALPHA = 0.2
-BETA = 0.8
-R_M = 300.0
-PIXEL_SIZE_M = 100.0
-EPS = 1e-12
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
+from gemsdoe72 import holdout as H, metric as M, emission as E, grid  # noqa: E402
 
-def distance_weighted_tversky(
-    p: np.ndarray,
-    gt: np.ndarray,
-    alpha: float = ALPHA,
-    beta: float = BETA,
-    pixel_size_m: float = PIXEL_SIZE_M,
-    R_m: float = R_M,
-) -> dict:
-    """Distance-weighted Tversky index for probability raster p vs binary gt.
-
-    p : (H, W) float32, values in [0, 1], all finite.
-    gt: (H, W) {0, 1}, 1 = ground-truth fault pixel.
-    Returns a dict with TP_w, FP_w, FN_w, DTI, n_gt, n_pred.
-    """
-    p = np.asarray(p, dtype=np.float64)
-    gt = np.asarray(gt, dtype=np.float64)
-    if p.shape != gt.shape:
-        raise ValueError(f"shape mismatch: p {p.shape} vs gt {gt.shape}")
-    if not np.all(np.isfinite(p)):
-        raise ValueError("p contains non-finite values")
-    if np.any((p < 0) | (p > 1)):
-        raise ValueError("p contains values outside [0, 1]")
-
-    gt_mask = gt > 0
-    n_gt = int(gt_mask.sum())
-    n_pred = int((p > 0).sum())
-
-    if n_gt == 0:
-        return {
-            "TP_w": 0.0,
-            "FP_w": float(p.sum()),
-            "FN_w": 0.0,
-            "DTI": 0.0,
-            "n_gt": 0,
-            "n_pred": n_pred,
-            "note": "empty ground truth",
-        }
-
-    R_px = R_m / pixel_size_m
-    H, W = p.shape
-
-    # ---- FP_w: distance from every cell to the nearest GT pixel ----------
-    # dist[x] = distance to nearest GT pixel (px). w(x) = max_g k(d(x,g))
-    #         = max(1 - dist[x]/R_px, 0)  (the nearest GT gives the largest k)
-    dist = ndimage.distance_transform_edt(~gt_mask)  # inf where no GT at all
-    dist = np.where(np.isfinite(dist), dist, R_px + 1.0)
-    w = np.clip(1.0 - dist / R_px, 0.0, 1.0)
-    fp_w = float((p * (1.0 - w)).sum())
-
-    # ---- TP_w / FN_w: for every GT pixel, best prediction within R -------
-    tp_w = 0.0
-    half = int(math.ceil(R_px))
-    ys, xs = np.nonzero(gt_mask)
-    for gy, gx in zip(ys.tolist(), xs.tolist()):
-        r0, r1 = max(0, gy - half), min(H, gy + half + 1)
-        c0, c1 = max(0, gx - half), min(W, gx + half + 1)
-        nb = p[r0:r1, c0:c1]
-        if nb.size == 0:
-            continue
-        yy, xx = np.nonzero(nb)
-        dy = (yy + r0) - gy
-        dx = (xx + c0) - gx
-        d = np.hypot(dy, dx)
-        k = np.clip(1.0 - d / R_px, 0.0, 1.0)
-        best = float((nb[yy, xx] * k).max()) if nb[yy, xx].size else 0.0
-        tp_w += best
-
-    fn_w = float(n_gt - tp_w)
-    dti = tp_w / (tp_w + alpha * fp_w + beta * fn_w + EPS)
-
-    return {
-        "TP_w": float(tp_w),
-        "FP_w": fp_w,
-        "FN_w": fn_w,
-        "DTI": float(dti),
-        "n_gt": n_gt,
-        "n_pred": n_pred,
-    }
+DATA = Path(os.environ.get("GEMS_DATA_DIR", str(ROOT / ".cache" / "gems_data")))
 
 
-def holdout_folds_from_segments(
-    gt: np.ndarray,
-    segment_buffer_px: int = 6,
-    n_folds: int = 4,
-) -> list[np.ndarray]:
-    """Spatially-blocked holdout: withhold whole fault segments.
-
-    Connected components of the gt mask are fault segments. Segments are
-    assigned to folds by the angle of their principal axis (4 directional
-    blocks) so no fold shares segment orientation with another, then each
-    fold's test mask = pixels within `segment_buffer_px` of its withheld
-    segments. Train = all other pixels. Visible faults are masked pixel-exactly
-    before feature derivation (caller applies the mask to features).
-
-    Returns a list of (train_mask, test_mask) boolean arrays, one per fold.
-    """
-    gt = np.asarray(gt, dtype=np.float64)
-    gt_mask = gt > 0
-    labeled, n_seg = ndimage.label(gt_mask)
-    if n_seg == 0:
-        return []
-
-    # Orientation of each segment (principal axis via covariance of coords).
-    slices = ndimage.find_objects(labeled)
-    angles = []
-    for sl in slices:
-        yy, xx = np.nonzero(labeled[sl] == (slices.index(sl) + 1))
-        if len(yy) < 3:
-            angles.append(0.0)
-            continue
-        yy = yy.astype(np.float64) + sl[0].start
-        xx = xx.astype(np.float64) + sl[1].start
-        c = np.cov(yy, xx)
-        # principal axis angle of the *line* (undirected, in [0, pi))
-        ang = 0.5 * math.atan2(2 * c[0, 1], c[0, 0] - c[1, 1])
-        angles.append(ang % math.pi)
-
-    order = np.argsort(angles)
-    folds = np.array_split(order, n_folds)  # segment indices per fold
-
-    masks = []
-    for fold_seg_idxs in folds:
-        test = np.zeros_like(gt_mask, dtype=bool)
-        for si in fold_seg_idxs:
-            seg = labeled == (si + 1)
-            dilated = ndimage.binary_dilation(
-                seg, iterations=segment_buffer_px
-            )
-            test |= dilated
-        train = ~test
-        masks.append((train, test))
-    return masks
+def auc_score(y_true: np.ndarray, y_score: np.ndarray) -> float:
+    """Rank-based AUC (Mann-Whitney U) with average ranks for ties."""
+    y_true = np.asarray(y_true).ravel().astype(bool)
+    y_score = np.asarray(y_score, dtype=np.float64).ravel()
+    pos = y_score[y_true]
+    neg = y_score[~y_true]
+    if pos.size == 0 or neg.size == 0:
+        return float("nan")
+    order = np.argsort(y_score, kind="mergesort")
+    ranks = np.empty(order.size, dtype=np.float64)
+    sorted_vals = y_score[order]
+    i = 0
+    while i < order.size:
+        j = i
+        while j + 1 < order.size and sorted_vals[j + 1] == sorted_vals[i]:
+            j += 1
+        avg = 0.5 * (i + 1) + 0.5 * (j + 1)
+        ranks[order[i:j + 1]] = avg
+        i = j + 1
+    u = float(ranks[y_true].sum() - pos.size * (pos.size + 1) / 2.0)
+    return float(u / (pos.size * neg.size))
 
 
-def pooled_holdout_dti(
-    p: np.ndarray,
-    gt: np.ndarray,
-    folds: list[tuple[np.ndarray, np.ndarray]],
-    alpha: float = ALPHA,
-    beta: float = BETA,
-    pixel_size_m: float = PIXEL_SIZE_M,
-    R_m: float = R_M,
-) -> dict:
-    """Score pooled DTI across holdout folds (counts pooled before the ratio)."""
-    tp_w = fp_w = fn_w = 0.0
-    n_gt = n_pred = 0
-    per_fold = []
-    for fold_idx, (train, test) in enumerate(folds):
-        # Features derived only from visible faults: predictions p are already
-        # conditioned on visible faults by the caller; here we score the
-        # withheld segment buffers only.
-        res = distance_weighted_tversky(
-            np.where(test, p, 0.0),
-            np.where(test, gt, 0.0),
-            alpha=alpha,
-            beta=beta,
-            pixel_size_m=pixel_size_m,
-            R_m=R_m,
-        )
-        tp_w += res["TP_w"]
-        fp_w += res["FP_w"]
-        fn_w += res["FN_w"]
-        n_gt += res["n_gt"]
-        n_pred += res["n_pred"]
-        per_fold.append(res)
-    dti = tp_w / (tp_w + alpha * fp_w + beta * fn_w + EPS)
-    return {
-        "TP_w": tp_w,
-        "FP_w": fp_w,
-        "FN_w": fn_w,
-        "DTI": float(dti),
-        "n_gt": n_gt,
-        "n_pred": n_pred,
-        "per_fold": per_fold,
-    }
+def ci95(values: list[float]) -> tuple[float, float, float]:
+    arr = np.asarray(values, dtype=float)
+    mean = float(arr.mean())
+    if arr.size > 1:
+        se = float(arr.std(ddof=1)) / np.sqrt(arr.size)
+        return mean, mean - 2.0 * se, mean + 2.0 * se
+    return mean, mean, mean
 
 
-def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Evaluate DTI on a holdout set")
-    ap.add_argument("--predictions", required=True, help="prediction GeoTIFF")
-    ap.add_argument("--labels", required=True, help="ground-truth label GeoTIFF")
-    ap.add_argument("--alpha", type=float, default=ALPHA)
-    ap.add_argument("--beta", type=float, default=BETA)
-    args = ap.parse_args(argv)
+def mask_sgmc_off_catalogue(ctx: H.HoldoutContext, dilate_px: int = 0) -> np.ndarray:
+    """H72-1: USGS SGMC geologic-map fault traces off the competition
+    catalogue. Independent of the catalogue by construction; the holdout
+    engine masks visible faults pixel-exactly at scoring time."""
+    from scipy import ndimage
+    m = ctx.sgmc_off & ctx.foot
+    if dilate_px:
+        m = ndimage.binary_dilation(m, iterations=int(dilate_px))
+        m = m & ctx.foot & ~ctx.labels
+    return m
 
-    try:
-        import rasterio
-    except ImportError as exc:  # pragma: no cover - environment guard
-        print(f"ERROR: rasterio required: {exc}", file=sys.stderr)
+
+def mask_tmi_gradient(ddir: Path, footprint: np.ndarray, budget: int) -> np.ndarray:
+    """H72-2: aeromagnetic horizontal-gradient lineaments (band 03 ``tmi_hg``
+    of the pinned numerical-features stack), top-k by gradient magnitude
+    inside the footprint."""
+    with rasterio.open(ddir / "training_features.tif") as s:
+        band = s.tags(3).get("band_name", "band_3")
+        field = s.read(3).astype(np.float32)
+    valid = np.isfinite(field) & footprint
+    field = np.where(valid, field, -np.inf)
+    return E.topk_mask(field, budget, footprint)
+
+
+def mask_random(footprint: np.ndarray, budget: int, seed: int = 0) -> np.ndarray:
+    """A4 random control: ``budget`` uniform random in-domain pixels."""
+    rng = np.random.default_rng(seed)
+    flat = np.argwhere(footprint)
+    pick = rng.choice(flat.size, size=min(budget, flat.size), replace=False)
+    m = np.zeros(footprint.shape, bool)
+    m[tuple(flat[pick].T)] = True
+    return m
+
+
+def pooled_auc_mask_vs_hidden(mask: np.ndarray, ctx: H.HoldoutContext) -> float:
+    """Leakage canary: rank AUC of the candidate mask against the held-out
+    (hidden) truth, pooled over the 8 blocked draws. A catalogue-independent
+    layer should be far below 0.90; above 0.90 means leakage until proven
+    otherwise."""
+    y_true, y_score = [], []
+    for cell in ctx.cells:
+        sl = cell.bbox
+        m_sub = (mask[sl] & cell.active_sub).ravel()
+        t_sub = np.zeros(cell.active_sub.shape, bool)
+        t_sub[cell.truth_coords] = True
+        y_true.append(t_sub.ravel().astype(np.float64))
+        y_score.append(m_sub.astype(np.float64))
+    return auc_score(np.concatenate(y_true), np.concatenate(y_score))
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--mask", type=Path, default=None,
+                    help="path to a boolean .npy mask (must match the grid)")
+    ap.add_argument("--builtin", choices=("sgmc_off_catalogue", "sgmc_off_catalogue_d1",
+                                          "tmi_gradient", "random"),
+                    default="sgmc_off_catalogue")
+    ap.add_argument("--budget", type=int, default=8000)
+    ap.add_argument("--name", required=True, help="candidate id used in outputs")
+    ap.add_argument("--hide-frac", type=float, default=0.20)
+    ap.add_argument("--dilate", type=int, default=1)
+    ap.add_argument("--out", type=Path, default=None,
+                    help="write evidence JSON here (default evidence/holdout_<name>.json)")
+    a = ap.parse_args()
+
+    if not DATA.exists():
+        print(f"[FATAL] competition data not found at {DATA}. Run "
+              "`bash scripts/download_competition_data.sh` first.", file=sys.stderr)
         return 2
 
-    with rasterio.open(args.predictions) as src:
-        p = src.read(1).astype(np.float64)
-    with rasterio.open(args.labels) as src:
-        gt = src.read(1).astype(np.float64)
+    ctx = H.load_holdout_context(DATA, hide_frac=a.hide_frac)
+    foot, labels = ctx.foot, ctx.labels
 
-    res = distance_weighted_tversky(p, gt, alpha=args.alpha, beta=args.beta)
-    print(json.dumps(res, indent=2))
+    if a.mask is not None:
+        mask = np.load(a.mask).astype(bool) & foot
+        builtin = "file"
+    elif a.builtin == "sgmc_off_catalogue":
+        mask = mask_sgmc_off_catalogue(ctx, dilate_px=0)
+        builtin = "sgmc_off_catalogue"
+    elif a.builtin == "sgmc_off_catalogue_d1":
+        mask = mask_sgmc_off_catalogue(ctx, dilate_px=a.dilate)
+        builtin = f"sgmc_off_catalogue_d{a.dilate}"
+    elif a.builtin == "tmi_gradient":
+        mask = mask_tmi_gradient(DATA, foot, a.budget)
+        builtin = "tmi_gradient"
+    else:
+        mask = mask_random(foot, a.budget)
+        builtin = "random"
+
+    mask = mask & ~labels  # pixel-exact catalogue mask (belt and braces)
+    res = H.evaluate_candidate_holdout(mask, ctx, name=a.name)
+
+    # Leakage canary: mask vs held-out truth AUC (mask is binary, so it ranks
+    # emitted pixels above non-emitted ones).
+    canary_auc = pooled_auc_mask_vs_hidden(mask, ctx)
+
+    # 95% CI over the four quadrant means (drift-corrected per-quadrant).
+    q = list(res["drift_corrected_per_quadrant"].values())
+    mean, lo, hi = ci95(q)
+
+    out = {
+        "schema_version": 1,
+        "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "evaluator": "holdout-DTI (GEMSDOE72 lane; alpha=0.2, beta=0.8, R=300 m = 3 px)",
+        "holdout": "hide-and-recover: 8 blocked draws (4 quadrants x draws 20/21), "
+                   f"hide_frac={a.hide_frac}, collar=15 px, domain erosion=12 px",
+        "candidate": {"name": a.name, "builtin": builtin},
+        "data_root": str(DATA),
+        "numbers_are": "HOLDOUT-DTI only -- no organizer score is claimed or projected",
+        "emitted_pixels": res["emitted_pixels"],
+        "share_of_footprint": res["share_of_footprint"],
+        "on_catalogue_pixels": res["on_catalogue_pixels"],
+        "on_catalogue_waste_frac": res["on_catalogue_waste_frac"],
+        "hug_share": res["hug_share"],
+        "catalogue_hidden_mean_dti": res["catalogue_hidden_mean"],
+        "catalogue_hidden_std": res["catalogue_hidden_std"],
+        "catalogue_hidden_per_quadrant": res["catalogue_hidden_per_quadrant"],
+        "catalogue_hidden_per_draw": res["catalogue_hidden_per_draw"],
+        "drift_corrected_holdout_mean": res["drift_corrected_holdout_mean"],
+        "drift_corrected_holdout_std": res["drift_corrected_holdout_std"],
+        "drift_corrected_per_quadrant": res["drift_corrected_per_quadrant"],
+        "drift_corrected_95ci": [lo, mean, hi],
+        "leakage_canary_auc_mask_vs_hidden_truth": canary_auc,
+        "leakage_canary_flag": bool(canary_auc > 0.90),
+        "sgmc_prevalence_calibrated_dti": res["sgmc_prevalence_calibrated_dti"],
+        "catalogue_hidden_folds": res["catalogue_hidden_folds"],
+    }
+    print(json.dumps(out, indent=1))
+
+    out_path = a.out or (ROOT / "evidence" / f"holdout_{a.name}.json")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(out, indent=2) + "\n")
+    print(f"[OK] evidence written to {out_path}")
     return 0
 
 

@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-10-20T19:58:51+00:00",
+  "evaluator": "holdout-DTI (GEMSDOE72 lane; alpha=0.2, beta=0.8, R=300 m = 3 px)",
+  "holdout": "hide-and-recover: 8 blocked draws (4 quadrants x draws 20/21), hide_frac=0.2, collar=15 px, domain erosion=12 px",
+  "candidate": {
+    "name": "H72-1-sgmc-best",
+    "builtin": "file"
+  },
+  "data_root": "/home/user/GEMSDOE72/.cache/gems_data",
+  "numbers_are": "HOLDOUT-DTI only -- no organizer score is claimed or projected",
+  "emitted_pixels": 27823,
+  "share_of_footprint": 0.0053843606799818785,
+  "on_catalogue_pixels": 0,
+  "on_catalogue_waste_frac": 0.0,
+  "hug_share": 0.03676814146569385,
+  "catalogue_hidden_mean_dti": 0.002581206131541075,
+  "catalogue_hidden_std": 0.00033275693043228956,
+  "catalogue_hidden_per_quadrant": {
+    "NW": 0.002656599075008044,
+    "NE": 0.0026996180142635873,
+    "SW": 0.002034624347237688,
+    "SE": 0.0029339830896549807
+  },
+  "catalogue_hidden_per_draw": {
+    "draw20": 0.00302117816964781,
+    "draw21": 0.0021412340934343402
+  },
+  "drift_corrected_holdout_mean": 0.1885241363489814,
+  "drift_corrected_holdout_std": 0.019683695635677283,
+  "drift_corrected_per_quadrant": {
+    "NW": 0.20781307689400225,
+    "NE": 0.16240069955067205,
+    "SW": 0.20730268566545335,
+    "SE": 0.17658008328579794
+  },
+  "drift_corrected_95ci": [
+    0.16579536240117151,
+    0.1885241363489814,
+    0.2112529102967913
+  ],
+  "leakage_canary_auc_mask_vs_hidden_truth": 0.49849564858242373,
+  "leakage_canary_flag": false,
+  "sgmc_prevalence_calibrated_dti": 0.49790159616583973,
+  "catalogue_hidden_folds": {
+    "draw20_fold0": {
+      "dti": 0.0030570480107895096,
+      "coverage": 0.0037203467540214167,
+      "tp": 7.1095826469349275,
+      "fp": 3977.073262114491,
+      "n_truth": 1911,
+      "emitted": 3982
+    },
+    "draw20_fold1": {
+      "dti": 0.0028616297720511644,
+      "coverage": 0.004965004346605339,
+      "tp": 11.672725218869154,
+      "fp": 10979.567310500974,
+      "n_truth": 2351,
+      "emitted": 10989
+    },
+    "draw20_fold2": {
+      "dti": 0.0024728794679385294,
+      "coverage": 0.00259079278585103,
+      "tp": 9.547071415861044,
+      "fp": 4554.004799269901,
+      "n_truth": 3685,
+      "emitted": 4561
+    },
+    "draw20_fold3": {
+      "dti": 0.0036931554278120363,
+      "coverage": 0.004578354947045239,
+      "tp": 14.765194704220896,
+      "fp": 7075.179708546639,
+      "n_truth": 3225,
+      "emitted": 7086
+    },
+    "draw21_fold0": {
+      "dti": 0.002256150139226579,
+      "coverage": 0.0026563708080354484,
+      "tp": 5.607598775762831,
+      "fp": 3977.754123004745,
+      "n_truth": 2111,
+      "emitted": 3982
+    },
+    "draw21_fold1": {
+      "dti": 0.00253760625647601,
+      "coverage": 0.004492791151637239,
+      "tp": 10.176171958458346,
+      "fp": 10980.554575746384,
+      "n_truth": 2265,
+      "emitted": 10989
+    },
+    "draw21_fold2": {
+      "dti": 0.0015963692265368468,
+      "coverage": 0.00168354231543435,
+      "tp": 6.03381565851671,
+      "fp": 4556.525359171073,
+      "n_truth": 3584,
+      "emitted": 4561
+    },
+    "draw21_fold3": {
+      "dti": 0.002174810751497925,
+      "coverage": 0.0027344306574851986,
+      "tp": 8.476735038204115,
+      "fp": 7079.966184341482,
+      "n_truth": 3100,
+      "emitted": 7086
+    }
+  }
+}
